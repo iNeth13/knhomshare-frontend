@@ -74,7 +74,7 @@ export default function UserProvider({ children }) {
     const redirect = search && search.split('=')[1] === 'write' ? '/write' : '/';
     try {
       dispatch({ type: USER_SIGN_IN_REQ });
-      const response = await fetch("api/user/signin", {
+      const response = await fetch(`${process.env.REACT_APP_DEFAULT_URL}/api/user/signin`, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
