@@ -1,0 +1,30 @@
+.custom-signin-container {
+  padding: 2rem;
+  position: absolute;
+  background-color: rgba(254, 254, 254, 0.8);
+  min-width: 30%;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
+}
+
+.form-footer{
+    display : flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+@media screen and (max-width : 992px){
+  .form-footer{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width : 576px){
+    .custom-signin-container{
+      width: 70%;
+    }
+  
+}

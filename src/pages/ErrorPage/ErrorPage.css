@@ -1,0 +1,23 @@
+.custom-container {
+  display: flex;
+  height: calc(700px - 90px);
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../assets/404Error.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-direction: column;
+  width: 100%;
+}
+.error-info-container{
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top : 8rem;
+    background-color: rgba(254, 254, 254, 0.9);
+}
+.custom-link{
+    text-decoration: underline !important;
+}

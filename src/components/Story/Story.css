@@ -1,0 +1,20 @@
+.story-user-info-container {
+  margin-bottom: 0.5rem;
+}
+.story-info-container {
+  display: flex;
+  width: 100%;
+}
+.story-right-info {
+  width: 30%;
+}
+.story-left-info {
+  width: 70%;
+}
+
+.cos-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+}

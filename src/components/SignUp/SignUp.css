@@ -1,0 +1,35 @@
+.custom-signup-container {
+  padding: 2rem;
+  position: absolute;
+  background-color: rgba(254, 254, 254, 0.8);
+  width: 30%;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
+  height : 500px;
+  overflow: scroll;
+}
+
+.custom-signup-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.custom-signup-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+@media screen and (max-width : 992px){
+  .custom-signup-container{
+    width: 55%;
+  }
+
+}
+
+@media screen and (max-width : 576px){
+  .custom-signup-container{
+    width: 70%;
+  }
+
+}

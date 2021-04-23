@@ -1,0 +1,58 @@
+.title-max {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.custom-file-input-btn {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 8px 17.6px;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.8;
+  font-size: 14px;
+}
+.custom-file-input-btn:hover {
+  background-color: #343a40;
+  color: #fff;
+  opacity: 1;
+}
+.image-preview-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.image-preview-container_ {
+  width: 70%;
+  margin: .5rem 0;
+  position: relative;
+}
+.image-preview {
+  width: 100%;
+  max-height: 500px;
+}
+.remove-image {
+  position: absolute;
+  color: #f4f4f4;
+  font-size: 2rem;
+  cursor: pointer;
+  border: 1px solid grey;
+  opacity: 0.7;
+  right: 0;
+  background-color: black;
+}
+.remove-image:hover {
+  opacity: 0.5;
+}
+.editor-size{
+    min-height: 500px;
+}
+
+@media screen and (max-width: 576px) {
+  .custom-write-header {
+    width: 100% !important;
+    justify-content: space-evenly !important;
+    padding: 2rem 0rem !important;
+  }
+}

@@ -1,0 +1,2 @@
+export const RESET_USER_ERROR = "RESET_USER_ERROR";
+export const RESET_STORY_ERROR = "RESET_STORY_ERROR";

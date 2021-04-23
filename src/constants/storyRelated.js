@@ -1,0 +1,1 @@
+export const TITLE_MAX_CHARACTERS = 100

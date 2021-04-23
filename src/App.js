@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Switch, Route } from "react-router-dom";
+
+//css bootstrap
+
+import Header from "./components/Header/Header";
+import Homepage from "./pages/Homepage/Homepage";
+import TopicPage from "./pages/TopicPage/TopicPage";
+import Toolbar from "./components/Toolbar/Toolbar";
+import AuthenticationPage from "./pages/Authentication/AuthenticationPage";
+import WritePage from "./pages/WritePage/WritePage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Header />
+      <Toolbar />
+      <Switch>
+        <Route path="/" component={Homepage} exact />
+        <Route path="/topics" component={TopicPage} exact />
+        <Route path="/auth" component={AuthenticationPage} exact />
+        <Route path="/write" component={WritePage} exact />
+        <Route path="*" component={ErrorPage} exact />
+      </Switch>
+    </React.Fragment>
   );
 }
 

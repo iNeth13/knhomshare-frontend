@@ -1,0 +1,16 @@
+.custom-auth-container {
+  background-image: url("../../assets/brand.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 70%;
+  height: 600px;
+  opacity: 0.5;
+  position: relative;
+}
+@media screen and (max-width: 576px) {
+  .custom-auth-container {
+    background-size: contain;
+    width: 100%;
+  }
+}

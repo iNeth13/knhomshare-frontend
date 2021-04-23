@@ -1,0 +1,19 @@
+.p-tag{
+    cursor: pointer;
+
+}
+.p-tag:hover{
+    color : rgba(0, 0, 0, 0.5)
+}
+
+@media screen and (max-width : 576px){
+    .popover{
+        max-width: 99vw !important;
+        border : none;
+    }
+    .sm-only{
+        margin-top: 2rem;
+        width: 100vw;
+        height: calc(100% - 90px);
+    }
+}

@@ -1,0 +1,5 @@
+@media screen and (min-width: "992px") and (max-width: "768px") {
+    .container-margin_{
+        margin : 0 !important ;
+    }
+}
