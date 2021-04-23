@@ -20,7 +20,10 @@ const usePopover = (setShowOverlay) => {
                   border: "1px solid black",
                 }}
                 roundedCircle
-                src={`${user && user.profilePic}`}
+                src={
+                  user &&
+                  `${process.env.REACT_APP_DEFAULT_URL}/${user.profilePic}`
+                }
               ></Image>
             </div>
             <div className=" d-flex flex-column justify-content-center">
