@@ -5,12 +5,13 @@ import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
 import "./TopContainer.css";
 
 import { Container, Row, Col, Image } from "react-bootstrap";
-import Recommend from "../Recommend/Recommend";
+//import Recommend from "../Recommend/Recommend";
 import TopStoriesLoader from "../ContentLoaders/TopStoriesLoader";
 //components for top homepage
 //this will show popular stories
 
 const Story = React.lazy(() => import("../Story/Story"));
+const Recommend = React.lazy(() => import("../Recommend/Recommend"));
 
 export default function TopContainer() {
   let name = "inetca";
@@ -122,15 +123,51 @@ export default function TopContainer() {
         <Col lg={4} md={12} sm={12} xs={12}>
           <div className="d-flex flex-column custom-md">
             {/*recommended authors*/}
-            <Recommend
-              recommendedData={recommendAuthors}
-              recommendedType="author"
-            />
+            <p
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                fontSize: "15px",
+              }}
+            >
+              Authors To Follow
+            </p>
+            <Suspense fallback={<TopStoriesLoader />}>
+              {recommendAuthors.map((author) => {
+                const { bio, image, name } = author;
+                return (
+                  <Recommend
+                    bio={bio}
+                    image={image}
+                    name={name}
+                    recommendedType="author"
+                  />
+                );
+              })}
+            </Suspense>
             {/*recommended topics*/}
-            <Recommend
-              recommendedData={recommendTopics}
-              recommendedType="topic"
-            />
+            <p
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                fontSize: "15px",
+              }}
+            >
+              Topics To Follow
+            </p>
+            <Suspense fallback={<TopStoriesLoader />}>
+              {recommendAuthors.map((author) => {
+                const { bio, image, name } = author;
+                return (
+                  <Recommend
+                    bio={bio}
+                    image={image}
+                    name={name}
+                    recommendedType="author"
+                  />
+                );
+              })}
+            </Suspense>
           </div>
         </Col>
       </Row>
