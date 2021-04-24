@@ -1,9 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 
 //css bootstrap
-
 import Header from "./components/Header/Header";
 import Homepage from "./pages/Homepage/Homepage";
 import TopicPage from "./pages/TopicPage/TopicPage";

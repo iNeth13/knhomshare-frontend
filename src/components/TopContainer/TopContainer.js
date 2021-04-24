@@ -1,14 +1,16 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
 import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
 
 import "./TopContainer.css";
 
 import { Container, Row, Col, Image } from "react-bootstrap";
-import Story from "../Story/Story";
 import Recommend from "../Recommend/Recommend";
+import TopStoriesLoader from "../ContentLoaders/TopStoriesLoader";
 //components for top homepage
 //this will show popular stories
+
+const Story = React.lazy(() => import("../Story/Story"));
 
 export default function TopContainer() {
   let name = "inetca";
@@ -104,8 +106,16 @@ export default function TopContainer() {
                 </p>
               </Link>
             </Col>
-            <Col lg={6} md={6} sm={6} xs={12} style={{borderRight:'1px solid grey'}}>
-              <Story stories={stories} topContainer />
+            <Col
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              style={{ borderRight: "1px solid grey" }}
+            >
+              <Suspense fallback={<TopStoriesLoader />}>
+                <Story stories={stories} topContainer />
+              </Suspense>
             </Col>
           </Row>
         </Col>

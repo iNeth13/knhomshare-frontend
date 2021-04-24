@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import draftToHtml from "draftjs-to-html";
-import ReactHtmlParser from "react-html-parser";
 import "./WriteForm.css";
 import "../../../node_modules/draft-js/dist/Draft.css";
 
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-import { convertToHTML } from "draft-convert";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 //bootstraps
