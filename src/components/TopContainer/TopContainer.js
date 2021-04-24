@@ -153,7 +153,7 @@ export default function TopContainer() {
                       bio={bio}
                       profilePic={profilePic}
                       username={username}
-                      recommendedType='author'
+                      recommendedType="author"
                     />
                   </Suspense>
                 );
@@ -168,19 +168,19 @@ export default function TopContainer() {
             >
               Topics To Follow
             </p>
-            <Suspense fallback={<TopStoriesLoader />}>
-              {recommendAuthors.map((author) => {
-                const { bio, image, name } = author;
-                return (
+            {recommendAuthors.map((author) => {
+              const { bio, image, name } = author;
+              return (
+                <Suspense fallback={<RecommendLoader />}>
                   <Recommend
                     bio={bio}
                     image={image}
                     name={name}
                     recommendedType="author"
                   />
-                );
-              })}
-            </Suspense>
+                </Suspense>
+              );
+            })}
           </div>
         </Col>
       </Row>
