@@ -10,15 +10,18 @@ import { BrowserRouter as Router } from "react-router-dom";
 //imported context
 import UserProvider from "./context/provider/userContext";
 import StoryProvider from "./context/provider/storyContext";
+import AuthorProvider from "./context/provider/authorContext";
 
 //bootstrap css
 
 ReactDOM.render(
   <Router>
     <UserProvider>
-      <StoryProvider>
-        <App />
-      </StoryProvider>
+      <AuthorProvider>
+        <StoryProvider>
+          <App />
+        </StoryProvider>
+      </AuthorProvider>
     </UserProvider>
   </Router>,
   document.getElementById("root")

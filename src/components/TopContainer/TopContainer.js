@@ -1,19 +1,28 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Link } from "react-router-dom";
 import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
 
 import "./TopContainer.css";
 
 import { Container, Row, Col, Image } from "react-bootstrap";
-//import Recommend from "../Recommend/Recommend";
-import TopStoriesLoader from "../ContentLoaders/TopStoriesLoader";
-//components for top homepage
-//this will show popular stories
 
+//contextAPI
+import { useAuthorContext } from "../../context/provider/authorContext";
+
+//content loaders
+import TopStoriesLoader from "../ContentLoaders/TopStoriesLoader";
+import RecommendLoader from "../ContentLoaders/RecommendLoader";
+
+//components for top homepage
+//components using react.lazy();
+
+//this will show popular stories
 const Story = React.lazy(() => import("../Story/Story"));
+//this will show recommend stories and authors
 const Recommend = React.lazy(() => import("../Recommend/Recommend"));
 
 export default function TopContainer() {
+  const { handleRecommendAuthor, recommendedAuthors } = useAuthorContext();
   let name = "inetca";
   let title =
     "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";
@@ -74,6 +83,9 @@ export default function TopContainer() {
       image: img,
     },
   ];
+  useEffect(() => {
+    handleRecommendAuthor();
+  }, []);
   return (
     <div className="">
       <Row style={{ minHeight: "466px" }}>
@@ -114,7 +126,7 @@ export default function TopContainer() {
               xs={12}
               style={{ borderRight: "1px solid grey" }}
             >
-              <Suspense fallback={<TopStoriesLoader />}>
+              <Suspense fallback={<RecommendLoader />}>
                 <Story stories={stories} topContainer />
               </Suspense>
             </Col>
@@ -132,19 +144,20 @@ export default function TopContainer() {
             >
               Authors To Follow
             </p>
-            <Suspense fallback={<TopStoriesLoader />}>
-              {recommendAuthors.map((author) => {
-                const { bio, image, name } = author;
+            {recommendedAuthors &&
+              recommendedAuthors.map((author) => {
+                const { bio, profilePic, username } = author;
                 return (
-                  <Recommend
-                    bio={bio}
-                    image={image}
-                    name={name}
-                    recommendedType="author"
-                  />
+                  <Suspense fallback={<RecommendLoader />}>
+                    <Recommend
+                      bio={bio}
+                      profilePic={profilePic}
+                      username={username}
+                      recommendedType='author'
+                    />
+                  </Suspense>
                 );
               })}
-            </Suspense>
             {/*recommended topics*/}
             <p
               style={{
