@@ -11,12 +11,15 @@ import {
 
 const authorContext = React.createContext();
 
-const initialState = {};
+const initialState = {
+
+};
 
 export default function AuthorProvider({ children }) {
   const [state, dispatch] = useReducer(authorReducer, initialState);
   const handleRecommendAuthor = async () => {
     try {
+      dispatch({ type: AUTHOR_RECOMMEND_REQ });
       const response = await fetch(
         `${process.env.REACT_APP_DEFAULT_URL}/api/author/recommend-author`
       );
@@ -27,9 +30,12 @@ export default function AuthorProvider({ children }) {
           payload: responseData.message,
         });
       }
-      dispatch({type : AUTHOR_RECOMMEND_SUCCESS,payload : responseData.author});
+      dispatch({
+        type: AUTHOR_RECOMMEND_SUCCESS,
+        payload: responseData.author,
+      });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
   return (

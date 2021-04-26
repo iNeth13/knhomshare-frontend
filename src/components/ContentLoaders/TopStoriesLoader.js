@@ -6,7 +6,7 @@ const TopStoriesLoader = (props) => (
     speed={2}
     width={350}
     height={169}
-    viewBox="0 0 350 169"
+    viewBox="-10 0 350 169"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"
     {...props}

@@ -20,6 +20,7 @@ import {
 
 //react-icons
 import { FaImages, FaPlus, FaTimes, FaEye } from "react-icons/fa";
+import {BiX} from 'react-icons/bi'
 
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -29,6 +30,7 @@ import WritePreview from "../WriteForm/WritePreview/WritePreview";
 import Loader from "../Loader/Loader";
 import topics from "../../constants/topics";
 import ErrorBanner from "../ErrorBanner/ErrorBanner";
+import AlertMessage from "../AlertMessage/AlertMessage";
 
 const storySchema = Yup.object().shape({
   title: Yup.string()
@@ -43,9 +45,10 @@ const storySchema = Yup.object().shape({
 
 export default function WriteForm({
   user,
-  handleStoryPost,
+  sMessage,
   sLoading,
   error,
+  handleStoryPost,
   handleResetStoryError,
 }) {
   const [editorState, setEditorState] = useState(() =>
@@ -61,7 +64,7 @@ export default function WriteForm({
 
   const handleSetImages = (e) => {
     [...e.target.files].map((file, index) => {
-      console.log(file);
+    
       setImagesPreview((prev) => {
         const name = file.name;
         return [...prev, { url: URL.createObjectURL(file), name }];
@@ -112,10 +115,11 @@ export default function WriteForm({
     setAllTags(allTopics);
   };
   //end here
-  console.log(convertedContent);
+  
   useEffect(() => {
     handleErrorModalHide(true);
   }, [error]);
+
   useEffect(() => {
     if (allTags.length === 0) {
       getAllTopics();
@@ -151,8 +155,10 @@ export default function WriteForm({
             errors,
             touched,
           }) => (
-            <Form onSubmit={handleSubmit} encType='multipart/form-data'>
-              {console.log(values)}
+            <Form onSubmit={handleSubmit} encType="multipart/form-data">
+               {sMessage && (
+                <AlertMessage variant="success" alertMessage={sMessage} />
+              )}
               <div
                 className="py-5 d-flex justify-content-between custom-write-header"
                 style={{ width: "350px" }}
@@ -263,12 +269,13 @@ export default function WriteForm({
                   editorClassName="editor-size"
                 />
               )}
+              {/* images preview */}
               {imagesPreview.length > 0 && (
                 <div className="image-preview-container">
                   {imagesPreview.map((image, index) => {
                     return (
                       <div className="image-preview-container_" key={index}>
-                        <FaTimes
+                        <BiX
                           className="remove-image"
                           onClick={() => handleRemoveImagePreview(image.url)}
                         />

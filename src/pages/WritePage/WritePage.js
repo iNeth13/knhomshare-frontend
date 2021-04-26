@@ -11,11 +11,15 @@ import { useStoryContext } from "../../context/provider/storyContext";
 export default function WritePage() {
   const { push } = useHistory();
   const { user } = useUserContext();
-  const { handleStoryPost, sLoading, error ,handleResetStoryError} = useStoryContext();
+  const { handleStoryPost, sLoading, error ,handleResetStoryError,sMessage,handleResetPostMessage} = useStoryContext();
   if (!user) {
     push("/auth?redirect=write");
   }
-  console.log(sLoading);
+  if(sMessage){
+    setTimeout(()=>{
+      handleResetPostMessage();
+    },5000)
+  }
   return (
     <div>
       <Container fluid="lg md sm xs" className="">
@@ -25,6 +29,7 @@ export default function WritePage() {
           sLoading={sLoading}
           error={error}
           handleResetStoryError={handleResetStoryError}
+          sMessage={sMessage}
         />
       </Container>
     </div>

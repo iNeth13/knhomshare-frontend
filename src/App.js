@@ -10,6 +10,7 @@ import Toolbar from "./components/Toolbar/Toolbar";
 import AuthenticationPage from "./pages/Authentication/AuthenticationPage";
 import WritePage from "./pages/WritePage/WritePage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import SingleStoryPage from "./pages/SingleStoryPage/SingleStoryPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/topics" component={TopicPage} exact />
         <Route path="/auth" component={AuthenticationPage} exact />
         <Route path="/write" component={WritePage} exact />
+        <Route path="/story/:id" component={SingleStoryPage} exact/>
         <Route path="*" component={ErrorPage} exact />
       </Switch>
     </React.Fragment>

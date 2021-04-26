@@ -5,20 +5,28 @@ import {
 } from "../action/authorAction";
 
 const authorReducer = (state, action) => {
-    switch(action.type){
-        case AUTHOR_RECOMMEND_REQ:
-            
-        case AUTHOR_RECOMMEND_SUCCESS:
-            console.log(action.payload);
-            return {
-                ...state,
-                recommendedAuthors : action.payload
-            }
-        case AUTHOR_RECOMMEND_FAIL:
+  switch (action.type) {
+    case AUTHOR_RECOMMEND_REQ:
+      return {
+        ...state,
+        aLoading: true,
+      };
+    case AUTHOR_RECOMMEND_SUCCESS:
+      console.log(action.payload);
+      return {
+        ...state,
+        recommendedAuthors: action.payload,
+        aLoading: false,
+      };
+    case AUTHOR_RECOMMEND_FAIL:
+      return {
+        ...state,
+        aLoading: false,
+      };
 
-        default :
-        return state;
-    }
+    default:
+      return state;
+  }
 };
 
 export default authorReducer;

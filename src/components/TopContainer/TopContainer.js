@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
 
@@ -8,9 +8,9 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 
 //contextAPI
 import { useAuthorContext } from "../../context/provider/authorContext";
+import { useStoryContext } from "../../context/provider/storyContext";
 
 //content loaders
-import TopStoriesLoader from "../ContentLoaders/TopStoriesLoader";
 import RecommendLoader from "../ContentLoaders/RecommendLoader";
 
 //components for top homepage
@@ -22,11 +22,15 @@ const Story = React.lazy(() => import("../Story/Story"));
 const Recommend = React.lazy(() => import("../Recommend/Recommend"));
 
 export default function TopContainer() {
-  const { handleRecommendAuthor, recommendedAuthors } = useAuthorContext();
+  const {
+    handleRecommendAuthor,
+    recommendedAuthors,
+    aLoading,
+  } = useAuthorContext();
+  const { handlePopularStories, sLoading, popularStories } = useStoryContext();
   let name = "inetca";
   let title =
     "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";
-  console.log(title.length);
   let content =
     "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";
   let stories = [
@@ -52,23 +56,7 @@ export default function TopContainer() {
       content,
     },
   ];
-  let recommendAuthors = [
-    {
-      name: "author1",
-      image: img,
-      bio: "write something here",
-    },
-    {
-      name: "author1",
-      image: img,
-      bio: "write something here",
-    },
-    {
-      name: "author1",
-      image: img,
-      bio: "write something here",
-    },
-  ];
+
   let recommendTopics = [
     {
       name: "author1",
@@ -85,7 +73,10 @@ export default function TopContainer() {
   ];
   useEffect(() => {
     handleRecommendAuthor();
+    handlePopularStories();
   }, []);
+  console.log(aLoading);
+  console.log(popularStories);
   return (
     <div className="">
       <Row style={{ minHeight: "466px" }}>
@@ -127,7 +118,11 @@ export default function TopContainer() {
               style={{ borderRight: "1px solid grey" }}
             >
               <Suspense fallback={<RecommendLoader />}>
-                <Story stories={stories} topContainer />
+                <Story
+                  stories={popularStories?.slice(1, 4)}
+                  topContainer
+                  sLoading={sLoading}
+                />
               </Suspense>
             </Col>
           </Row>
@@ -135,52 +130,57 @@ export default function TopContainer() {
         <Col lg={4} md={12} sm={12} xs={12}>
           <div className="d-flex flex-column custom-md">
             {/*recommended authors*/}
-            <p
-              style={{
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                fontSize: "15px",
-              }}
-            >
-              Authors To Follow
-            </p>
-            {recommendedAuthors &&
-              recommendedAuthors.map((author) => {
-                const { bio, profilePic, username } = author;
+            <div className="azw1d">
+              <p
+                style={{
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  fontSize: "15px",
+                }}
+              >
+                Authors To Follow
+              </p>
+              {aLoading
+                ? [1, 2, 3].map(() => <RecommendLoader />)
+                : recommendedAuthors?.map((author) => {
+                    const { bio, profilePic, username } = author;
+                    return (
+                      <Suspense fallback={<RecommendLoader />}>
+                        <Recommend
+                          bio={bio}
+                          image={profilePic}
+                          name={username}
+                          recommendedType="author"
+                        />
+                      </Suspense>
+                    );
+                  })}
+            </div>
+            {/*recommended topics*/}
+            <div className="azw1d">
+              <p
+                style={{
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  fontSize: "15px",
+                }}
+              >
+                Topics To Follow
+              </p>
+
+              {recommendTopics.map((topic) => {
+                const { image, name } = topic;
                 return (
                   <Suspense fallback={<RecommendLoader />}>
                     <Recommend
-                      bio={bio}
-                      profilePic={profilePic}
-                      username={username}
-                      recommendedType="author"
+                      image={image}
+                      name={name}
+                      recommendedType="topic"
                     />
                   </Suspense>
                 );
               })}
-            {/*recommended topics*/}
-            <p
-              style={{
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                fontSize: "15px",
-              }}
-            >
-              Topics To Follow
-            </p>
-            {recommendAuthors.map((author) => {
-              const { bio, image, name } = author;
-              return (
-                <Suspense fallback={<RecommendLoader />}>
-                  <Recommend
-                    bio={bio}
-                    image={image}
-                    name={name}
-                    recommendedType="author"
-                  />
-                </Suspense>
-              );
-            })}
+            </div>
           </div>
         </Col>
       </Row>
