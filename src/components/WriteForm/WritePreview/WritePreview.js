@@ -11,7 +11,6 @@ export default function WritePreview({
   imagesPreview,
   convertedContent,
 }) {
-  console.log(imagesPreview);
   return (
     <Modal
       show={showModal}

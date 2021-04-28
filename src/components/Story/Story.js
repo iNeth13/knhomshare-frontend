@@ -15,24 +15,21 @@ export default function Story({
   mainContainer,
   sLoading,
 }) {
-  console.log(stories);
-
   return (
     <Row className="cos-row">
       {sLoading && topContainer ? (
-        [1, 2, 3].map(() => <TopStoriesLoader />)
+        [1, 2, 3].map((number, index) => <TopStoriesLoader key={index} />)
       ) : (
         <div>
-          {stories.map((story) => {
-            const { title, user, content, createdAt } = story;
+          {stories.map((story, index) => {
+            const { title, user, content, createdAt, _id } = story;
             const { username, profilePic } = user;
             let transformedContent = ReactHtmlParser(content.paragraph);
-            console.log(transformedContent);
             transformedContent =
               transformedContent.find((type) => type.type === "p").props
                 .children[0].props?.children[0] || "";
             const newDateFormat = changeDateFormat(createdAt);
-            const { hour, minute, day, month, year } = newDateFormat;
+            const { hour, minute, day, month, year, date } = newDateFormat;
             return (
               <Col
                 lg={12}
@@ -41,10 +38,11 @@ export default function Story({
                 sm={12}
                 style={{
                   minHeight: "150px",
-                  minWidth: `${mainContainer && "760px"}`,
                 }}
+                key={index}
               >
-                <Link>
+                {/* profile Pic , username and date */}
+                <div>
                   <div className="story-user-info-container">
                     <Image
                       style={{
@@ -72,40 +70,51 @@ export default function Story({
                         marginLeft: "1rem",
                       }}
                     >
-                      {day} {month} {year}
+                      {day} {date} {month} {year}
                       <span className="ml-2">
                         {hour}:{minute}
                         {hour >= 12 ? `pm` : `am`}
                       </span>
                     </span>
                   </div>
-                </Link>
-                <Link style={{ width: "100%" }}>
+                </div>
+                {/* main story including title , photo , paragraph */}
+                <div style={{ width: "100%" }}>
                   <div className="story-info-container">
                     <div className="story-left-info">
-                      <h6 className={`${mainContainer ? "mb-3" : "mb-0"}`}>
-                        {topContainer
-                          ? title.slice(0, 70)
-                          : title.slice(0, 100)}
-                      </h6>
-                      <p className={`${!mainContainer ? "d-none" : ""}`}>
-                        {transformedContent.slice(0, 110)}...
-                      </p>
+                      <Link to={`story/${_id}`}>
+                        <h6 className={`${mainContainer ? "mb-3" : "mb-0"}`}>
+                          {topContainer
+                            ? title.slice(0, 70)
+                            : title.slice(0, 100)}
+                        </h6>
+                      </Link>
+                      {/*  this content will show on main container but hide on top container instead (for style purpose) */}
+                      <Link to={`story/${_id}`}>
+                        <p className={`${!mainContainer ? "d-none" : ""}`}>
+                          {transformedContent.slice(0, 110)}...
+                        </p>
+                      </Link>
                     </div>
                     <div className="story-right-info">
-                      <Image
-                        thumbnail
-                        src={`${process.env.REACT_APP_DEFAULT_URL}/${content.images[0]}`}
-                        className="story-right-image"
-                        style={{ height: `${topContainer ? "100%" : ""}` }}
-                      />
+                      <Link to={`story/${_id}`}>
+                        <Image
+                          thumbnail
+                          src={`${process.env.REACT_APP_DEFAULT_URL}/${content.images[0]}`}
+                          className="story-right-image"
+                          style={{ height: `${topContainer ? "70px" : ""}` }}
+                        />
+                      </Link>
                     </div>
                   </div>
-                  <p className={`${mainContainer ? "d-none" : ""}`}>
-                    {transformedContent.slice(0, 70)}
-                    ...
-                  </p>
-                </Link>
+                  {/* this content will hide on main container */}
+                  <Link to={`story/${_id}`}>
+                    <p className={`${mainContainer ? "d-none" : ""}`}>
+                      {transformedContent.slice(0, 70)}
+                      ...
+                    </p>
+                  </Link>
+                </div>
               </Col>
             );
           })}

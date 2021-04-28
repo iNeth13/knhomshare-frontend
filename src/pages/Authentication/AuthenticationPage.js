@@ -10,11 +10,9 @@ import { Container, Button } from "react-bootstrap";
 export default function AuthenticationPage() {
   const [signup, setSignupMode] = useState(false);
   const { search } = useLocation();
-  console.log(search);
   const handleModeChange = (value)=>{
     setSignupMode(value)
   }
-  console.log(signup)
   return (
     <Container
       className="d-flex justify-content-center align-items-center"

@@ -19,7 +19,6 @@ export default function MainStoriesLoader(props) {
     updateSize();
     window.addEventListener("resize", updateSize);
   }, []);
-  console.log(x);
   return (
     <ContentLoader
       speed={2}
@@ -29,7 +28,7 @@ export default function MainStoriesLoader(props) {
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
     >
-      <rect x={x || 500} y="43" rx="0" ry="0" width="255" height="125" />
+      <rect x={x || 470} y="43" rx="0" ry="0" width="255" height="125" />
       <circle cx="21" cy="27" r="15" />
       <rect x="43" y="25" rx="5" ry="5" width="108" height="6" />
       <rect x="162" y="26" rx="5" ry="5" width="71" height="4" />

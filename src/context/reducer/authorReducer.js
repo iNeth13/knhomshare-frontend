@@ -12,7 +12,6 @@ const authorReducer = (state, action) => {
         aLoading: true,
       };
     case AUTHOR_RECOMMEND_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         recommendedAuthors: action.payload,

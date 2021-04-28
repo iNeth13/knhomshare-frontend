@@ -14,14 +14,14 @@ import Loader from "../Loader/Loader";
 
 export default function SignIn({ handleModeChange }) {
   const { handleSignin, error, loading } = useUserContext();
-  console.log(error);
   const [signinState, setSigninState] = useState([]);
   const SigninSchema = Yup.object().shape({
     emailOrUsername: Yup.string()
-    .min(5,'Username must be longer than 5 characters.')
+      .min(5, "Username must be longer than 5 characters.")
       .matches(
-        /^(?:[A-Z\d][A-Z\d_-]{4,10}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i
-      ,'Invalid Email Address')
+        /^(?:[A-Z\d][A-Z\d_-]{4,10}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
+        "Invalid Email Address"
+      )
       .required("Email/Username is required to Signin."),
     password: Yup.string()
       .min(6, "Password must be 6 characters long.")
@@ -59,7 +59,6 @@ export default function SignIn({ handleModeChange }) {
             touched,
           }) => (
             <Form onSubmit={handleSubmit}>
-              {console.log(errors, touched)}
               <FormGroup>
                 <Form.Label className="d-flex align-items-center">
                   <FaEnvelope className="form-icons mr-2" />

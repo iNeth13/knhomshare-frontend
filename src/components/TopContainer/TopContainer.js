@@ -16,10 +16,10 @@ import RecommendLoader from "../ContentLoaders/RecommendLoader";
 //components for top homepage
 //components using react.lazy();
 
+//this will show recommend stories and authors
+import Recommend from "../Recommend/Recommend";
 //this will show popular stories
 const Story = React.lazy(() => import("../Story/Story"));
-//this will show recommend stories and authors
-const Recommend = React.lazy(() => import("../Recommend/Recommend"));
 
 export default function TopContainer() {
   const {
@@ -75,8 +75,6 @@ export default function TopContainer() {
     handleRecommendAuthor();
     handlePopularStories();
   }, []);
-  console.log(aLoading);
-  console.log(popularStories);
   return (
     <div className="">
       <Row style={{ minHeight: "466px" }}>
@@ -98,7 +96,7 @@ export default function TopContainer() {
 
                 <span className="by-info">@{name}</span>
               </div>
-              <Link to="#">
+              <Link>
                 <h5
                   style={{ overflow: "hidden" }}
                   onClick={() => console.log("to sth")}
@@ -141,18 +139,19 @@ export default function TopContainer() {
                 Authors To Follow
               </p>
               {aLoading
-                ? [1, 2, 3].map(() => <RecommendLoader />)
-                : recommendedAuthors?.map((author) => {
+                ? [1, 2, 3].map((number, index) => (
+                    <RecommendLoader key={index} />
+                  ))
+                : recommendedAuthors?.map((author, index) => {
                     const { bio, profilePic, username } = author;
                     return (
-                      <Suspense fallback={<RecommendLoader />}>
-                        <Recommend
-                          bio={bio}
-                          image={profilePic}
-                          name={username}
-                          recommendedType="author"
-                        />
-                      </Suspense>
+                      <Recommend
+                        bio={bio}
+                        image={profilePic}
+                        name={username}
+                        recommendedType="author"
+                        key={index}
+                      />
                     );
                   })}
             </div>
@@ -168,16 +167,15 @@ export default function TopContainer() {
                 Topics To Follow
               </p>
 
-              {recommendTopics.map((topic) => {
+              {recommendTopics.map((topic, index) => {
                 const { image, name } = topic;
                 return (
-                  <Suspense fallback={<RecommendLoader />}>
-                    <Recommend
-                      image={image}
-                      name={name}
-                      recommendedType="topic"
-                    />
-                  </Suspense>
+                  <Recommend
+                    image={image}
+                    name={name}
+                    recommendedType="topic"
+                    key={index}
+                  />
                 );
               })}
             </div>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState,Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
+import { Helmet } from "react-helmet";
 import { Container } from "react-bootstrap";
 
 //imported Components
 import TopContainer from "../../components/TopContainer/TopContainer";
-import MainContainer from '../../components/MainContainer/MainContainer';
+import MainContainer from "../../components/MainContainer/MainContainer";
 
 import { useUserContext } from "../../context/provider/userContext";
 
@@ -12,6 +13,9 @@ export default function Homepage() {
 
   return (
     <Container fluid="lg md sm">
+      <Helmet>
+        <title>Knhom Share | Where People Spreads Their Ideas</title>
+      </Helmet>
       <TopContainer />
       <MainContainer />
     </Container>

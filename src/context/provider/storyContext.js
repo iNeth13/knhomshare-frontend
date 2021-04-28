@@ -9,11 +9,12 @@ import {
   STORY_GET_NEWEST_REQ,
   STORY_GET_NEWEST_SUCCESS,
   STORY_GET_NEWEST_FAIL,
+  STORY_GET_SINGLE_REQ,
+  STORY_GET_SINGLE_SUCCESS,
+  STORY_GET_SINGLE_FAIL,
 } from "../action/storyAction";
 import { RESET_STORY_ERROR, RESET_POST_MESSAGE } from "../action/sharedAction";
 import storyReducer from "../reducer/storyReducer";
-
-import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
 
 const storyContext = createContext();
 
@@ -21,42 +22,9 @@ const initialValues = {
   sLoading: false,
   error: null,
 };
-let name = "inetca";
-let title =
-  "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";
-console.log(title.length);
-let content =
-  "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle title title title title title title  title title titletitletitletitletitletitletitletitletitletitle title title title title title title  title title titletitletitletitletitletitletitletitletitletitle title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";
-let stories = [
-  {
-    user: "user",
-    userImage: img,
-    image: img,
-    title,
-    content,
-  },
-  {
-    user: "user",
-    userImage: img,
-    image: img,
-    title,
-    content,
-  },
-  {
-    user: "user",
-    userImage: img,
-    image: img,
-    title,
-    content,
-  },
-];
-
 export default function StoryProvider({ children }) {
   const [state, dispatch] = useReducer(storyReducer, initialValues);
   const handleStoryPost = async (title, images, tags, content, user) => {
-    console.log(title, images, tags, content);
-    console.log(user);
-    console.log(images);
     const formData = new FormData();
     formData.append("title", title);
     for (const image of images) {
@@ -78,14 +46,11 @@ export default function StoryProvider({ children }) {
         }
       );
       const responseData = await response.json();
-      console.log(responseData, response);
       if (!response.ok) {
         throw new Error(responseData.message);
       }
-      console.log(responseData.story);
       dispatch({ type: STORY_POST_SUCCESS });
     } catch (error) {
-      console.log(error.message);
       dispatch({ type: STORY_POST_FAIL, payload: error.message });
     }
   };
@@ -97,7 +62,6 @@ export default function StoryProvider({ children }) {
         `${process.env.REACT_APP_DEFAULT_URL}/api/story/popular?page=${1}`
       );
       const responseData = await response.json();
-      console.log(responseData.pageCount, responseData.popularStories);
       if (!response.ok) {
         throw new Error(responseData.message);
       }
@@ -110,23 +74,41 @@ export default function StoryProvider({ children }) {
     }
   };
 
-  const handleNewestStories = async () => {
+  const handleNewestStories = async (page) => {
     try {
       dispatch({ type: STORY_GET_NEWEST_REQ });
       const response = await fetch(
-        `${process.env.REACT_APP_DEFAULT_URL}/api/story/get-newest`
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/get-newest?page=${page}`
       );
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
       }
-      console.log(responseData);
       dispatch({
         type: STORY_GET_NEWEST_SUCCESS,
-        payload: responseData.stories,
+        payload: {
+          stories: responseData.stories,
+          allStories: responseData.allStories,
+        },
       });
     } catch (error) {
       dispatch({ type: STORY_GET_NEWEST_FAIL, payload: error.message });
+    }
+  };
+
+  const handleSingleStory = async (id) => {
+    try {
+      dispatch({ type: STORY_GET_SINGLE_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/${id}`
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      dispatch({ type: STORY_GET_SINGLE_SUCCESS, payload: responseData.story });
+    } catch (error) {
+      dispatch({ type: STORY_GET_SINGLE_FAIL, payload: error.message });
     }
   };
 
@@ -145,6 +127,7 @@ export default function StoryProvider({ children }) {
         handleResetPostMessage,
         handlePopularStories,
         handleNewestStories,
+        handleSingleStory,
       }}
     >
       {children}
