@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { Helmet } from "react-helmet";
 import { Container } from "react-bootstrap";
+import openSocket from "socket.io-client";
 
 //imported Components
 import TopContainer from "../../components/TopContainer/TopContainer";
@@ -10,7 +11,7 @@ import { useUserContext } from "../../context/provider/userContext";
 
 export default function Homepage() {
   const {} = useUserContext();
-
+ 
   return (
     <Container fluid="lg md sm">
       <Helmet>

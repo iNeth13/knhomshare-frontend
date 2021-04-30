@@ -3,6 +3,12 @@ import {
   STORY_POST_REQ,
   STORY_POST_SUCCESS,
   STORY_POST_FAIL,
+  STORY_POST_COMMENT_REQ,
+  STORY_POST_COMMENT_SUCCESS,
+  STORY_POST_COMMENT_FAIL,
+  STORY_GET_COMMENT_REQ,
+  STORY_GET_COMMENT_SUCCESS,
+  STORY_GET_COMMENT_FAIL,
   STORY_GET_POPULAR_REQ,
   STORY_GET_POPULAR_SUCCESS,
   STORY_GET_POPULAR_FAIL,
@@ -53,6 +59,43 @@ export default function StoryProvider({ children }) {
     } catch (error) {
       dispatch({ type: STORY_POST_FAIL, payload: error.message });
     }
+  };
+
+  const handleStoryComment = async (comment, user, storyId) => {
+    console.log("line 62");
+    console.log(comment, user, storyId);
+    try {
+      dispatch({ type: STORY_POST_COMMENT_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/post-comment`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user.userId,
+            comment: comment,
+            storyId: storyId,
+          }),
+          method: "POST",
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        console.log(responseData.message);
+      }
+      // dispatch({type : STORY_POST_COMMENT_SUCCESS,payload})
+      console.log(responseData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetStoryComment = () => {
+    try {
+      dispatch({ type: STORY_GET_COMMENT_REQ });
+    } catch (error) {}
   };
 
   const handlePopularStories = async () => {
@@ -128,6 +171,8 @@ export default function StoryProvider({ children }) {
         handlePopularStories,
         handleNewestStories,
         handleSingleStory,
+        handleStoryComment,
+        handleGetStoryComment,
       }}
     >
       {children}

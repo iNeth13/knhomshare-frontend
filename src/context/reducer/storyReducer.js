@@ -2,6 +2,9 @@ import {
   STORY_POST_REQ,
   STORY_POST_SUCCESS,
   STORY_POST_FAIL,
+  STORY_GET_COMMENT_REQ,
+  STORY_GET_COMMENT_SUCCESS,
+  STORY_GET_COMMENT_FAIL,
   STORY_GET_POPULAR_REQ,
   STORY_GET_POPULAR_SUCCESS,
   STORY_GET_POPULAR_FAIL,
@@ -81,7 +84,7 @@ const storyReducer = (state, action) => {
       return {
         ...state,
         singleStory: action.payload,
-        sLoading : false,
+        sLoading: false,
       };
     case STORY_GET_SINGLE_FAIL:
 

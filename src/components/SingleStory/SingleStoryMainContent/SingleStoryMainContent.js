@@ -39,7 +39,7 @@ export default function SingleStoryMainContent({ singleStory }) {
             );
           })}
       </div>
-      <div>
+      <div className='px-3'>
         <CommentSection singleStory={singleStory} />
       </div>
     </div>

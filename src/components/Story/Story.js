@@ -21,7 +21,7 @@ export default function Story({
         [1, 2, 3].map((number, index) => <TopStoriesLoader key={index} />)
       ) : (
         <div>
-          {stories.map((story, index) => {
+          {stories?.map((story, index) => {
             const { title, user, content, createdAt, _id } = story;
             const { username, profilePic } = user;
             let transformedContent = ReactHtmlParser(content.paragraph);
