@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./MainContainer.css";
 
 import { Row, Col } from "react-bootstrap";
-import { io } from "socket.io-client";
+import openSocket from "socket.io-client";
 import { FiEdit3 } from "react-icons/fi";
 
 import MainStoriesLoader from "../ContentLoaders/MainStoriesLoader";
@@ -10,7 +10,6 @@ import Story from "../Story/Story";
 import { useStoryContext } from "../../context/provider/storyContext";
 
 export default function MainContainer() {
-  let socket;
   const {
     popularStories,
     newestStories,
@@ -19,7 +18,7 @@ export default function MainContainer() {
     allStories,
   } = useStoryContext();
   const [page, setPage] = useState(3);
-  const [clientNewestStories, setClientNewestStories] = useState(newestStories);
+  const [newest, setNewest] = useState();
   let loader = useRef(null);
   const handleObserver = (entities) => {
     const target = entities[0];
@@ -40,16 +39,24 @@ export default function MainContainer() {
   }, []);
   useEffect(() => {
     handleNewestStories(3);
-    socket = io(process.env.REACT_APP_DEFAULT_URL);
-    console.log(socket.on((data) => console.log(data)));
-    socket.on((data) => {
-      setClientNewestStories(data.story);
+    let socket = openSocket(process.env.REACT_APP_DEFAULT_URL);
+    console.log(newestStories);
+    console.log(page === 3);
+    console.log(page);
+    socket.on("posts", (data) => {
+      if (data.story && page < 4) {
+        handleNewestStories(3);
+      } else {
+        return null;
+      }
     });
-  }, [, socket]);
+  }, []);
+
   useEffect(() => {
     handleNewestStories(page);
   }, [page]);
-  console.log(clientNewestStories);
+
+  console.log(newestStories);
   return (
     <Row>
       <Col lg={8} md={8} sm={12} xs={12}>

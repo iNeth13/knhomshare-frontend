@@ -20,7 +20,7 @@ import {
 
 //react-icons
 import { FaImages, FaPlus, FaTimes, FaEye } from "react-icons/fa";
-import {BiX} from 'react-icons/bi'
+import { BiX } from "react-icons/bi";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -40,6 +40,10 @@ const storySchema = Yup.object().shape({
       "Title should not be longer than 100 characters long"
     )
     .required("Title is required."),
+  subtitle: Yup.string()
+    .min(10, "Subtitle must contain at least 10 characters.")
+    .max(150, "Subtitle should not be longer than 150 characters long.")
+    .required("Subtitle is required."),
   tags: Yup.array().required("Please choose at least 1 tags."),
 });
 
@@ -58,13 +62,13 @@ export default function WriteForm({
   const [imagesPreview, setImagesPreview] = useState([]);
   const [imagesUpload, setImagesUpload] = useState([]);
   const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [allTags, setAllTags] = useState([]);
 
   const handleSetImages = (e) => {
     [...e.target.files].map((file, index) => {
-    
       setImagesPreview((prev) => {
         const name = file.name;
         return [...prev, { url: URL.createObjectURL(file), name }];
@@ -115,7 +119,7 @@ export default function WriteForm({
     setAllTags(allTopics);
   };
   //end here
-  
+
   useEffect(() => {
     handleErrorModalHide(true);
   }, [error]);
@@ -133,17 +137,20 @@ export default function WriteForm({
         <Formik
           initialValues={{
             title: "" || title,
+            subtitle: "" || subtitle,
             tags: [],
           }}
           validationSchema={storySchema}
           onSubmit={(values) => {
             setTitle(values.title);
+            setSubtitle(values.subtitle);
             handleStoryPost(
               values.title,
               imagesUpload,
               values.tags,
               convertedContent,
-              user
+              user,
+              values.subtitle
             );
           }}
         >
@@ -156,7 +163,7 @@ export default function WriteForm({
             touched,
           }) => (
             <Form onSubmit={handleSubmit} encType="multipart/form-data">
-               {sMessage && (
+              {sMessage && (
                 <AlertMessage variant="success" alertMessage={sMessage} />
               )}
               <div
@@ -199,7 +206,7 @@ export default function WriteForm({
                   onBlur={handleBlur}
                   value={values.title}
                   name="title"
-                  placeholder="Title of your amazing story...!"
+                  placeholder="Title of your amazing story."
                   className="border-0"
                   style={{
                     backgroundColor: "#f4f4f4",
@@ -217,7 +224,31 @@ export default function WriteForm({
                   </Form.Control.Feedback>
                 )}
               </FormGroup>
-              {touched.title && !errors.title && (
+              <FormGroup>
+                <p style={{ fontWeight: "bold" }}>
+                  Something short but meaningful to describe your whole story.
+                </p>
+                <Form.Control
+                  type="text"
+                  as="textarea"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  name="subtitle"
+                  placeholder="What a creative way to describe your story."
+                  autoComplete="off"
+                  value={values.subtitle}
+                  style={{}}
+                />
+                {touched.subtitle && errors.subtitle && (
+                  <Form.Control.Feedback
+                    style={{ display: "block" }}
+                    type="invalid"
+                  >
+                    {errors.subtitle}
+                  </Form.Control.Feedback>
+                )}
+              </FormGroup>
+              {values.title.length >= 5 && (
                 <FormGroup>
                   <Form.Label style={{ fontWeight: "bold" }} className="mb-0">
                     + What tags does your article belong to?

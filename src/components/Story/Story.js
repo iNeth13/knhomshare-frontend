@@ -22,12 +22,13 @@ export default function Story({
       ) : (
         <div>
           {stories?.map((story, index) => {
-            const { title, user, content, createdAt, _id } = story;
+            const { title, user, content, createdAt, _id, subtitle } = story;
             const { username, profilePic } = user;
-            let transformedContent = ReactHtmlParser(content.paragraph);
-            transformedContent =
-              transformedContent.find((type) => type.type === "p").props
-                .children[0].props?.children[0] || "";
+            let parsedContent = ReactHtmlParser(content.paragraph);
+            let transformedContent = parsedContent.find(
+              (type) => type.type === "p"
+            );
+            console.log(parsedContent);
             const newDateFormat = changeDateFormat(createdAt);
             const { hour, minute, day, month, year, date } = newDateFormat;
             return (
@@ -50,7 +51,7 @@ export default function Story({
                         width: "25px",
                         marginRight: "5px",
                       }}
-                      src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
+                      src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic} `}
                       rounded
                       onClick={() => console.log("to profile")}
                     />
@@ -92,7 +93,7 @@ export default function Story({
                       {/*  this content will show on main container but hide on top container instead (for style purpose) */}
                       <Link to={`story/${_id}`}>
                         <p className={`${!mainContainer ? "d-none" : ""}`}>
-                          {transformedContent.slice(0, 110)}...
+                          {subtitle}...
                         </p>
                       </Link>
                     </div>
@@ -100,7 +101,11 @@ export default function Story({
                       <Link to={`story/${_id}`}>
                         <Image
                           thumbnail
-                          src={`${process.env.REACT_APP_DEFAULT_URL}/${content.images[0]}`}
+                          src={
+                            content.images.length >= 1
+                              ? `${process.env.REACT_APP_DEFAULT_URL}/${content.images[0]}`
+                              : ""
+                          }
                           className="story-right-image"
                           style={{ height: `${topContainer ? "70px" : ""}` }}
                         />
@@ -110,7 +115,7 @@ export default function Story({
                   {/* this content will hide on main container */}
                   <Link to={`story/${_id}`}>
                     <p className={`${mainContainer ? "d-none" : ""}`}>
-                      {transformedContent.slice(0, 70)}
+                      {subtitle}
                       ...
                     </p>
                   </Link>

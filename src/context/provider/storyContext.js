@@ -30,9 +30,10 @@ const initialValues = {
 };
 export default function StoryProvider({ children }) {
   const [state, dispatch] = useReducer(storyReducer, initialValues);
-  const handleStoryPost = async (title, images, tags, content, user) => {
+  const handleStoryPost = async (title, images, tags, content, user,subtitle) => {
     const formData = new FormData();
     formData.append("title", title);
+    formData.append('subtitle',subtitle)
     for (const image of images) {
       formData.append("images", image);
     }
