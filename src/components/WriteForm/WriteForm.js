@@ -69,26 +69,35 @@ export default function WriteForm({
 
   const handleSetImages = (e) => {
     [...e.target.files].map((file, index) => {
+      //i converted file into url and add it to file object and file objects share the same url
+      //this is easy for removing unwanted image or wrong images
+      const url = URL.createObjectURL(file);
       setImagesPreview((prev) => {
         const name = file.name;
-        return [...prev, { url: URL.createObjectURL(file), name }];
+        return [...prev, { url, name }];
       });
       setImagesUpload((prev) => {
+        file.url = url;
         return [...prev, file];
       });
     });
   };
   //related to image
   const handleRemoveImagePreview = (imgName) => {
+    console.log(imgName);
     const remainingImages = imagesPreview.filter((image, index) => {
+      console.log(image);
       return image.url !== imgName;
     });
     const remaningImagesUpload = imagesUpload.filter((image) => {
+      console.log(image.url === imgName);
       return image.url !== imgName;
     });
+    console.log(remaningImagesUpload);
     setImagesUpload(remaningImagesUpload);
     setImagesPreview(remainingImages);
   };
+  console.log(imagesUpload);
 
   //show modal
   const handleShowModal = (value) => {

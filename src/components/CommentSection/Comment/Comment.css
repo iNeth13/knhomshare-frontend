@@ -1,0 +1,6 @@
+.like-button {
+  font-size: 20px;
+}
+.like-button:hover {
+  cursor: pointer;
+}

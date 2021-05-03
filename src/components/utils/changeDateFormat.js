@@ -25,9 +25,12 @@ const changeDateFormat = (createdAt) => {
   ];
   const day = days[date.getDay()];
   const month = months[date.getMonth()];
+  const hourAndMinute =
+    date.getHours() < 12
+      ? `${date.getHours()}:${date.getMinutes()}am`
+      : `${date.getHours() - 12}:${date.getMinutes()}pm`;
   return {
-    hour: date.getHours(),
-    minute: date.getMinutes(),
+    hourAndMinute,
     date: date.getDate(),
     day: day,
     month: month,

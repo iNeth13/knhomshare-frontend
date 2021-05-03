@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import openSocket from "socket.io-client";
 import "./WriteComment.css";
 
 import { Image, Button, Form } from "react-bootstrap";
@@ -7,7 +8,7 @@ import * as Yup from "yup";
 
 import { useStoryContext } from "../../../context/provider/storyContext";
 
-export default function WriteComment({ user,storyId }) {
+export default function WriteComment({ user, storyId }) {
   const { handleStoryComment } = useStoryContext();
   const commentSchema = Yup.object().shape({
     comment: Yup.string("Please write something first.").required(
@@ -18,7 +19,7 @@ export default function WriteComment({ user,storyId }) {
   console.log(profilePic);
   return (
     <div className="d-flex write-comment-container">
-      <div className="" style={{ width: "" }}>
+      <div className="" style={{ width: "7%" }}>
         <Image
           style={{ height: "30px", width: "30px" }}
           roundedCircle
@@ -30,9 +31,9 @@ export default function WriteComment({ user,storyId }) {
           comment: "",
         }}
         validationSchema={commentSchema}
-        onSubmit={(values) => {
-          console.log("hi");
-          handleStoryComment(values.comment, user , storyId);
+        onSubmit={(values, { resetForm }) => {
+          handleStoryComment(values.comment, user, storyId);
+          resetForm({});
         }}
       >
         {({
@@ -43,7 +44,7 @@ export default function WriteComment({ user,storyId }) {
           handleBlur,
           values,
         }) => (
-          <Form style={{ width: "100%" }} onSubmit={handleSubmit}>
+          <Form style={{ width: "93%" }} onSubmit={handleSubmit}>
             {console.log(values, errors, touched)}
             <Form.Group style={{ marginBottom: "0" }}>
               <Form.Control

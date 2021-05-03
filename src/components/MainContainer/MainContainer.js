@@ -42,7 +42,7 @@ export default function MainContainer() {
     let socket = openSocket(process.env.REACT_APP_DEFAULT_URL);
     console.log(newestStories);
     console.log(page === 3);
-    console.log(page);
+    console.log(socket);
     socket.on("posts", (data) => {
       if (data.story && page < 4) {
         handleNewestStories(3);

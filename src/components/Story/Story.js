@@ -30,7 +30,7 @@ export default function Story({
             );
             console.log(parsedContent);
             const newDateFormat = changeDateFormat(createdAt);
-            const { hour, minute, day, month, year, date } = newDateFormat;
+            const { hourAndMinute, day, month, year, date } = newDateFormat;
             return (
               <Col
                 lg={12}
@@ -72,10 +72,7 @@ export default function Story({
                       }}
                     >
                       {day} {date} {month} {year}
-                      <span className="ml-2">
-                        {hour}:{minute}
-                        {hour >= 12 ? `pm` : `am`}
-                      </span>
+                      <span className="ml-2">{hourAndMinute}</span>
                     </span>
                   </div>
                 </div>

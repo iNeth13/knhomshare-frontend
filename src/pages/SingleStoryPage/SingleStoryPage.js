@@ -41,7 +41,11 @@ export default function SingleStoryPage() {
           )}
         </Col>
         <Col className="custom-main-content">
-          <SingleStoryMainContent singleStory={singleStory} />
+          {sLoading ? (
+            <Loader />
+          ) : (
+            <SingleStoryMainContent singleStory={singleStory} />
+          )}
         </Col>
         <Col lg={3} md={3} sm={12} className="">
           <SingleStoryRightContent />
