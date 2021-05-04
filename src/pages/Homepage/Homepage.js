@@ -18,7 +18,7 @@ export default function Homepage() {
         <title>Knhom Share | Where People Spreads Their Ideas</title>
       </Helmet>
       <TopContainer />
-      <MainContainer />
+      <MainContainer containerTitle="Newest Stories"/>
     </Container>
   );
 }

@@ -41,19 +41,23 @@ export default function UserProvider({ children }) {
   const { search, pathname } = useLocation();
   console.log(useLocation());
   const [state, dispatch] = useReducer(userReducer, initialValues);
+
   const handleSignUp = async (values) => {
     try {
       if (values.password !== values.confirmPassword) {
         throw new Error("Passwords do not match", 401);
       }
       dispatch({ type: USER_SIGN_UP_REQ });
-      const response = await fetch("/api/user/signup", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/user/signup`,
+        {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const responseData = await response.json();
       if (!response.ok) {
         dispatch({ type: USER_SIGN_UP_FAIL, payload: responseData.message });
@@ -68,13 +72,24 @@ export default function UserProvider({ children }) {
   };
 
   const handleSignin = async (values) => {
-    const redirect =
-      search && search.split("=")[1] === "write"
-        ? "/write"
-        : "story"
-        ? `/story/${search.split("=")[2]}`
-        : "/";
-    console.log("redirect" + redirect);
+    // const redirect =
+    //   search && search.split("=")[1] === "write"
+    //     ? "/write"
+    //     : "story"
+    //     ? `/story/${search.split("=")[2]}`
+    //     : "homepage"
+    //     ? "/"
+    //     : "";
+    let redirect;
+    if (search.split("=")[1].startsWith("write")) {
+      redirect = "/write";
+    } else if (search.split("=")[1].startsWith("story")) {
+      redirect = `/story/${search.split("=")[2]}`;
+    } else if (search.split("=")[1].startsWith("homepage")) {
+      redirect = "/";
+    }
+    console.log(search.split("="));
+    console.log("redirect : " + redirect);
     try {
       dispatch({ type: USER_SIGN_IN_REQ });
       const response = await fetch(

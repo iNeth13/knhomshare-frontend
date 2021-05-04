@@ -7,6 +7,7 @@ import "./Story.css";
 import { Col, Row, Image } from "react-bootstrap";
 
 import TopStoriesLoader from "../ContentLoaders/TopStoriesLoader";
+import AlertMessage from "../AlertMessage/AlertMessage";
 
 //this component is for every single story
 export default function Story({
@@ -17,6 +18,12 @@ export default function Story({
 }) {
   return (
     <Row className="cos-row">
+      {stories && stories.length === 0 && (
+        <AlertMessage
+          variant="dark"
+          alertMessage="No Story matched your keyword."
+        />
+      )}
       {sLoading && topContainer ? (
         [1, 2, 3].map((number, index) => <TopStoriesLoader key={index} />)
       ) : (
@@ -25,10 +32,6 @@ export default function Story({
             const { title, user, content, createdAt, _id, subtitle } = story;
             const { username, profilePic } = user;
             let parsedContent = ReactHtmlParser(content.paragraph);
-            let transformedContent = parsedContent.find(
-              (type) => type.type === "p"
-            );
-            console.log(parsedContent);
             const newDateFormat = changeDateFormat(createdAt);
             const { hourAndMinute, day, month, year, date } = newDateFormat;
             return (

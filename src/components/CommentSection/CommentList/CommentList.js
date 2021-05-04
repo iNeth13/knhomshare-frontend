@@ -17,7 +17,6 @@ export default function CommentList({ comments }) {
         comments.map((c, index) => {
           const { _id, user, comment, createdAt } = c;
           const newDateObject = changeDateFormat(createdAt);
-          const {} = user;
           return (
             <Comment
               comment={comment}

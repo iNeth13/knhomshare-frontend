@@ -36,7 +36,7 @@ export default function Comment({ user, comment, date }) {
           style={{ width: "15%" }}
         >
           <div>
-            <span style={{fontSize:'12px',marginRight:'5px'}}>0 Likes</span>  
+            <span style={{fontSize:'12px',marginRight:'10px'}}>0 Likes</span>  
             <BiLike className='like-button' />
           </div>
           <BiDislike style={{ fontSize: "20px" }} />

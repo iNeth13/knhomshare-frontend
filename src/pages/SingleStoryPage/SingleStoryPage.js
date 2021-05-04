@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import "./SingleStoryPage.css";
 import favIcon from "../../assets/knhomShare.ico";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import { Row, Col, Container } from "react-bootstrap";
+
+import Img from "../../assets/404Error.png";
 
 //context API
 import { useStoryContext } from "../../context/provider/storyContext";
@@ -14,12 +16,21 @@ import SingleStoryLeftContent from "../../components/SingleStory/SingleStoryLeft
 import SingleStoryMainContent from "../../components/SingleStory/SingleStoryMainContent/SingleStoryMainContent";
 import SingleStoryRightContent from "../../components/SingleStory/SingleStoryRightContent/SingleStoryRightContent";
 import Loader from "../../components/Loader/Loader";
+import AlertMessage from "../../components/AlertMessage/AlertMessage";
 
 export default function SingleStoryPage() {
   const { id } = useParams();
-  const { handleSingleStory, singleStory = "", sLoading } = useStoryContext();
+  const { push } = useHistory();
+  const {
+    handleSingleStory,
+    singleStory = "",
+    sLoading,
+    error,
+    handleResetStoryError,
+  } = useStoryContext();
   useEffect(() => {
     handleSingleStory(id);
+    handleResetStoryError();
   }, [id]);
   return (
     <Container fluid>
@@ -31,7 +42,9 @@ export default function SingleStoryPage() {
       </Helmet>
       <Row
         className="overflow-hidden single-story-container"
-        style={{ height: "auto" }}
+        style={{
+          minHeight: "5rem",
+        }}
       >
         <Col lg={3} md={3} sm={12} className="">
           {sLoading ? (
@@ -43,6 +56,8 @@ export default function SingleStoryPage() {
         <Col className="custom-main-content">
           {sLoading ? (
             <Loader />
+          ) : error ? (
+            <AlertMessage variant="danger" alertMessage={error} />
           ) : (
             <SingleStoryMainContent singleStory={singleStory} />
           )}

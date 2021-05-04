@@ -87,6 +87,11 @@ const storyReducer = (state, action) => {
         sLoading: false,
       };
     case STORY_GET_SINGLE_FAIL:
+      return {
+        ...state,
+        sLoading: false,
+        error: action.payload,
+      };
 
     case RESET_STORY_ERROR:
       return {

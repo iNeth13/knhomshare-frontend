@@ -11,6 +11,7 @@ import AuthenticationPage from "./pages/Authentication/AuthenticationPage";
 import WritePage from "./pages/WritePage/WritePage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SingleStoryPage from "./pages/SingleStoryPage/SingleStoryPage";
+import SearchResult from "./pages/SearchResult/SearchResult";
 
 function App() {
   return (
@@ -19,10 +20,11 @@ function App() {
       <Toolbar />
       <Switch>
         <Route path="/" component={Homepage} exact />
+        <Route path="/search/:keyword" component={SearchResult} exact />
         <Route path="/topics" component={TopicPage} exact />
         <Route path="/auth" component={AuthenticationPage} exact />
         <Route path="/write" component={WritePage} exact />
-        <Route path="/story/:id" component={SingleStoryPage} exact/>
+        <Route path="/story/:id" component={SingleStoryPage} exact />
         <Route path="*" component={ErrorPage} exact />
       </Switch>
     </React.Fragment>

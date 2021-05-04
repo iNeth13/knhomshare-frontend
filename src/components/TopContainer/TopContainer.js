@@ -28,7 +28,6 @@ export default function TopContainer() {
     aLoading,
   } = useAuthorContext();
   const { handlePopularStories, sLoading, popularStories } = useStoryContext();
-  console.log(popularStories)
   let name = "inetca";
   let title =
     "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";

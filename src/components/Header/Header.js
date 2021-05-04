@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
 import "./Header.css";
-import { NavLink, useParams, useLocation } from "react-router-dom";
+import { NavLink, useParams, useLocation, useHistory } from "react-router-dom";
 
 import { useUserContext } from "../../context/provider/userContext";
+import { useStoryContext } from "../../context/provider/storyContext";
 
 import brand from "../../assets/brand.png";
 import {
@@ -19,13 +20,25 @@ import { FaSearch, FaBell } from "react-icons/fa";
 import usePopover from "../utils/usePopover";
 
 export default function Header() {
+  const {
+    sLoading,
+    handleStorySearch,
+    handleNewestStories,
+  } = useStoryContext();
+  const { push } = useHistory();
   const { user } = useUserContext();
   const [showSearchBox, setShowSearchBox] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const target = useRef(null);
   const [popover] = usePopover(setShowOverlay);
-  const redirect = useLocation.search ? useLocation.search : "signin";
-  console.log(user);
+  const [searchValue, setSearchValue] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleNewestStories(3, searchValue);
+    setSearchValue("");
+    setShowSearchBox(false);
+    push(`/search/${searchValue}`);
+  };
   return (
     <Navbar bg="light" className="fixed-top">
       <Container fluid="lg md xs">
@@ -43,7 +56,7 @@ export default function Header() {
         </Navbar.Brand>
         <span className="py-4 mx-2" style={{ borderLeft: "2px solid grey" }} />
         <Navbar.Collapse>
-          <Navbar.Text style={{ fontWeight: "normal", color: "black" }}>
+          <Navbar.Text style={{ fontWeight: "normal", color: "black" }} className='header-text'>
             Join us and spread your ideas!{" "}
           </Navbar.Text>
           <Nav
@@ -52,14 +65,17 @@ export default function Header() {
           >
             <Collapse
               in={showSearchBox}
-              style={{ position: "absolute", right: "300px" }}
+              className='search-box'
             >
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Control
                   placeholder="Enter something..."
                   size="sm"
                   className="border-0"
+                  name="search-box"
+                  value={searchValue}
                   style={{ outline: "none", boxShadow: "none" }}
+                  onChange={(e) => setSearchValue(e.target.value)}
                 />
               </Form>
             </Collapse>
@@ -89,7 +105,7 @@ export default function Header() {
                   </Overlay>
                 </div>
               ) : (
-                <NavLink to={`/auth?${redirect}&redirect=/`}>Sign In</NavLink>
+                <NavLink to={`/auth?redirect=homepage`}>Sign In</NavLink>
               )}
             </Nav.Item>
           </Nav>

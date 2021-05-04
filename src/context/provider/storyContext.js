@@ -30,10 +30,17 @@ const initialValues = {
 };
 export default function StoryProvider({ children }) {
   const [state, dispatch] = useReducer(storyReducer, initialValues);
-  const handleStoryPost = async (title, images, tags, content, user,subtitle) => {
+  const handleStoryPost = async (
+    title,
+    images,
+    tags,
+    content,
+    user,
+    subtitle
+  ) => {
     const formData = new FormData();
     formData.append("title", title);
-    formData.append('subtitle',subtitle)
+    formData.append("subtitle", subtitle);
     for (const image of images) {
       formData.append("images", image);
     }
@@ -118,11 +125,35 @@ export default function StoryProvider({ children }) {
     }
   };
 
-  const handleNewestStories = async (page) => {
+  const handleNewestStories = async (page, keyword) => {
+    console.log(keyword, page);
     try {
       dispatch({ type: STORY_GET_NEWEST_REQ });
       const response = await fetch(
-        `${process.env.REACT_APP_DEFAULT_URL}/api/story/get-newest?page=${page}`
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/get-newest?keyword=${keyword}&page=${page}`
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      dispatch({
+        type: STORY_GET_NEWEST_SUCCESS,
+        payload: {
+          stories: responseData.stories,
+          allStories: responseData.allStories,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: STORY_GET_NEWEST_FAIL, payload: error.message });
+    }
+  };
+
+  const handleStorySearch = async (keyword) => {
+    let page = 1;
+    try {
+      dispatch({ type: STORY_GET_NEWEST_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/search/${keyword}`
       );
       const responseData = await response.json();
       if (!response.ok) {
@@ -174,6 +205,7 @@ export default function StoryProvider({ children }) {
         handleSingleStory,
         handleStoryComment,
         handleGetStoryComment,
+        handleStorySearch,
       }}
     >
       {children}
