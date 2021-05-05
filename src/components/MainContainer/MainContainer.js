@@ -11,16 +11,14 @@ import MainStoriesLoader from "../ContentLoaders/MainStoriesLoader";
 import Story from "../Story/Story";
 import { useStoryContext } from "../../context/provider/storyContext";
 
-export default function MainContainer({ containerTitle }) {
+export default function MainContainer() {
   const { newestStories, handleNewestStories, nLoading } = useStoryContext();
-  const { keyword } = useParams();
   const [page, setPage] = useState(3);
-  const [newest, setNewest] = useState();
   let loader = useRef(null);
   const handleObserver = (entities) => {
     const target = entities[0];
     if (target.isIntersecting) {
-      setPage((prev) => prev + 1);
+      setPage((prev) => prev + 3);
     }
   };
   useEffect(() => {
@@ -35,12 +33,11 @@ export default function MainContainer({ containerTitle }) {
     }
   }, []);
   useEffect(() => {
-    handleNewestStories(3, keyword);
+    handleNewestStories(3);
     let socket = openSocket(process.env.REACT_APP_DEFAULT_URL);
-    console.log(keyword);
     socket.on("posts", (data) => {
       if (data.story && page < 4) {
-        handleNewestStories(3, keyword);
+        handleNewestStories(3);
       } else {
         return null;
       }
@@ -48,7 +45,7 @@ export default function MainContainer({ containerTitle }) {
   }, []);
 
   useEffect(() => {
-    handleNewestStories(page, keyword);
+    handleNewestStories(page);
   }, [page]);
   return (
     <Row>
@@ -62,7 +59,7 @@ export default function MainContainer({ containerTitle }) {
             paddingTop: "2rem",
           }}
         >
-          <FiEdit3 /> {containerTitle}
+          <FiEdit3 /> Newest Stories
         </p>
         <Story stories={newestStories || []} mainContainer />
         <div ref={loader}>{nLoading && <MainStoriesLoader />}</div>

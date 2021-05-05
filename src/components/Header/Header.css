@@ -4,25 +4,12 @@
 }
 .header-text {
 }
-.search-box {
+.search-box-container {
   position: absolute;
   right: 300px !important;
 }
 @media screen and (min-width: 768px) and (max-width: 992px) {
-  .search-box {
+  .search-box-container {
     right: 200px !important;
-  }
-}
-@media screen and (max-width: 768px) {
-  .search-box {
-    right: 0 !important;
-    right: 50% !important;
-    top: 50%;
-    transform: translate(50%, 50%);
-    width: 100%;
-    color :black;
-  }
-  .header-text{
-    display: none;
   }
 }

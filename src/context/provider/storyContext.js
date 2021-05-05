@@ -18,6 +18,9 @@ import {
   STORY_GET_SINGLE_REQ,
   STORY_GET_SINGLE_SUCCESS,
   STORY_GET_SINGLE_FAIL,
+  STORY_GET_SEARCH_REQ,
+  STORY_GET_SEARCH_SUCCESS,
+  STORY_GET_SEARCH_FAIL,
 } from "../action/storyAction";
 import { RESET_STORY_ERROR, RESET_POST_MESSAGE } from "../action/sharedAction";
 import storyReducer from "../reducer/storyReducer";
@@ -148,28 +151,28 @@ export default function StoryProvider({ children }) {
     }
   };
 
-  const handleStorySearch = async (keyword) => {
-    let page = 1;
+  const handleStorySearch = async (page, keyword) => {
     try {
-      dispatch({ type: STORY_GET_NEWEST_REQ });
+      dispatch({ type: STORY_GET_SEARCH_REQ });
       const response = await fetch(
-        `${process.env.REACT_APP_DEFAULT_URL}/api/story/search/${keyword}`
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/get-newest?keyword=${keyword}&page=${page}`
       );
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
       }
       dispatch({
-        type: STORY_GET_NEWEST_SUCCESS,
-        payload: {
-          stories: responseData.stories,
-          allStories: responseData.allStories,
-        },
+        type: STORY_GET_SEARCH_SUCCESS,
+        payload: responseData.stories,
       });
     } catch (error) {
-      dispatch({ type: STORY_GET_NEWEST_FAIL, payload: error.message });
+      dispatch({ type: STORY_GET_SEARCH_FAIL, payload: error.message });
     }
   };
+
+  const handleResetStorySearch = ()=>{
+    dispatch({type:"RESET_STORY_SEARCH"})
+  }
 
   const handleSingleStory = async (id) => {
     try {
@@ -206,6 +209,7 @@ export default function StoryProvider({ children }) {
         handleStoryComment,
         handleGetStoryComment,
         handleStorySearch,
+        handleResetStorySearch
       }}
     >
       {children}

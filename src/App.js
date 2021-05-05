@@ -12,6 +12,8 @@ import WritePage from "./pages/WritePage/WritePage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SingleStoryPage from "./pages/SingleStoryPage/SingleStoryPage";
 import SearchResult from "./pages/SearchResult/SearchResult";
+import SearchPageForMobile from "./pages/SearchPageForMobile/SearchPageForMobile";
+import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
       <Switch>
         <Route path="/" component={Homepage} exact />
         <Route path="/search/:keyword" component={SearchResult} exact />
+        <Route path="/search" component={SearchPageForMobile} exact />
+        <Route path="/profile" component={UserProfilePage} exact />
         <Route path="/topics" component={TopicPage} exact />
         <Route path="/auth" component={AuthenticationPage} exact />
         <Route path="/write" component={WritePage} exact />

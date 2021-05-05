@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Popover, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useStoryContext } from "../../context/provider/storyContext";
 import { useUserContext } from "../../context/provider/userContext";
 import "./popover.css";
 
 const usePopover = (setShowOverlay) => {
+  const { push } = useHistory();
   const { handleSignout, user } = useUserContext();
-  const [showPopover, setShowPopover] = useState(false);
+  const { handleNewestStories } = useStoryContext();
   const popver = (
     <Popover className="sm-only">
       <div className="">
@@ -46,7 +48,12 @@ const usePopover = (setShowOverlay) => {
             <p className="p-tag">Write</p>
           </Link>
           <p className="p-tag">Favorite</p>
-          <p className="p-tag">Account</p>
+          <Link
+            to="/profile?action=account"
+            onClick={() => setShowOverlay(false)}
+          >
+            <p className="p-tag">Account</p>
+          </Link>
           <p
             style={{ fontStyle: "italic", color: "rgba(0,0,0,0.5)" }}
             className="disabled"
@@ -63,8 +70,16 @@ const usePopover = (setShowOverlay) => {
       </div>
     </Popover>
   );
+  const getInputedValue = (n, value, setShowSearchBox, setSearchValue) => {
+    handleNewestStories(n, value);
+    if (setShowSearchBox && setSearchValue) {
+      setSearchValue("");
+      setShowSearchBox(false);
+    }
+    push(`/search/${value}`);
+  };
 
-  return [popver];
+  return [popver, getInputedValue];
 };
 
 export default usePopover;

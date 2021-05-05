@@ -18,12 +18,6 @@ export default function Story({
 }) {
   return (
     <Row className="cos-row">
-      {stories && stories.length === 0 && (
-        <AlertMessage
-          variant="dark"
-          alertMessage="No Story matched your keyword."
-        />
-      )}
       {sLoading && topContainer ? (
         [1, 2, 3].map((number, index) => <TopStoriesLoader key={index} />)
       ) : (
@@ -31,7 +25,6 @@ export default function Story({
           {stories?.map((story, index) => {
             const { title, user, content, createdAt, _id, subtitle } = story;
             const { username, profilePic } = user;
-            let parsedContent = ReactHtmlParser(content.paragraph);
             const newDateFormat = changeDateFormat(createdAt);
             const { hourAndMinute, day, month, year, date } = newDateFormat;
             return (

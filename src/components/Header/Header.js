@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import "./Header.css";
 import { NavLink, useParams, useLocation, useHistory } from "react-router-dom";
 
@@ -13,6 +13,8 @@ import {
   Collapse,
   Container,
   Overlay,
+  Fade,
+  Modal,
 } from "react-bootstrap";
 import { FaSearch, FaBell } from "react-icons/fa";
 
@@ -30,15 +32,28 @@ export default function Header() {
   const [showSearchBox, setShowSearchBox] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const target = useRef(null);
-  const [popover] = usePopover(setShowOverlay);
+  const [popover, getInputedValue] = usePopover(setShowOverlay);
   const [searchValue, setSearchValue] = useState("");
+  const [windowWidth, setWindowWidth] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleNewestStories(3, searchValue);
-    setSearchValue("");
-    setShowSearchBox(false);
-    push(`/search/${searchValue}`);
+    if (searchValue.length > 1) {
+      getInputedValue(3, searchValue, setShowSearchBox, setSearchValue);
+    }
   };
+  const handleShowSearchBox = () => {
+    setShowSearchBox(!showSearchBox);
+    if (windowWidth < 768) {
+      push("/search");
+    }
+  };
+  useLayoutEffect(() => {
+    const getWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    getWindowWidth();
+    window.addEventListener("resize", getWindowWidth);
+  }, []);
   return (
     <Navbar bg="light" className="fixed-top">
       <Container fluid="lg md xs">
@@ -56,34 +71,34 @@ export default function Header() {
         </Navbar.Brand>
         <span className="py-4 mx-2" style={{ borderLeft: "2px solid grey" }} />
         <Navbar.Collapse>
-          <Navbar.Text style={{ fontWeight: "normal", color: "black" }} className='header-text'>
+          <Navbar.Text
+            style={{ fontWeight: "normal", color: "black" }}
+            className="header-text"
+          >
             Join us and spread your ideas!{" "}
           </Navbar.Text>
           <Nav
             className="ml-auto d-flex align-items-center justify-content-between"
             style={{ minWidth: "130px" }}
           >
-            <Collapse
-              in={showSearchBox}
-              className='search-box'
-            >
-              <Form onSubmit={handleSubmit}>
-                <Form.Control
-                  placeholder="Enter something..."
-                  size="sm"
-                  className="border-0"
-                  name="search-box"
-                  value={searchValue}
-                  style={{ outline: "none", boxShadow: "none" }}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                />
-              </Form>
-            </Collapse>
+            {windowWidth > 768 && (
+              <Fade in={showSearchBox} className="search-box-container">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Control
+                    placeholder="Enter something..."
+                    size="sm"
+                    className="border-0 search-box"
+                    name="search-box"
+                    value={searchValue}
+                    style={{ outline: "none", boxShadow: "none" }}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                  />
+                </Form>
+              </Fade>
+            )}
+
             <Nav.Item>
-              <FaSearch
-                className="icon"
-                onClick={() => setShowSearchBox(!showSearchBox)}
-              />
+              <FaSearch className="icon" onClick={handleShowSearchBox} />
             </Nav.Item>
             <Nav.Item>
               <FaBell className="icon" />
