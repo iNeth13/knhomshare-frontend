@@ -8,6 +8,21 @@
   position: absolute;
   right: 300px !important;
 }
+@media screen and (max-width: 509px) {
+  .header-text {
+    font-size: 12px;
+  }
+  .brand-image {
+    width: 90px !important;
+    height: 70px !important;
+  }
+}
+@media screen and (max-width: 400px) {
+  .brand-image {
+    width: 70px !important;
+    height: 50px !important;
+  }
+}
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .search-box-container {
     right: 200px !important;

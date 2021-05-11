@@ -1,1 +1,4 @@
-export const TITLE_MAX_CHARACTERS = 100
+export const TITLE_MAX_CHARACTERS = 100;
+export const TITLE_MIN_CHARACTERS = 5;
+export const SUBTITLE_MIN_CHARACTERS = 10;
+export const SUBTITLE_MAX_CHARACTERS = 150;

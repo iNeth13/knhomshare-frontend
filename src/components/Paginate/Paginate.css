@@ -1,0 +1,34 @@
+.pagination {
+  align-items: center !important;
+  justify-content: center !important;
+  padding : 1rem 0;
+}
+.page-btn {
+  font-size: 16px;
+  padding: 0.3rem 0.7rem;
+}
+.break-me {
+  padding: 0.3rem 0.7rem;
+}
+.active-page {
+  background-color: #343a40;
+  border-radius: .7rem;
+}
+.active-link-page {
+  color: white !important;
+}
+.preview-arrow{
+    margin-right: 3rem;
+}
+.next-arrow{
+    margin-left: 3rem;
+}
+
+@media screen and (max-width:576px) {
+    .preview-arrow{
+        margin-right: 1rem;
+    }
+    .next-arrow{
+        margin-left: 1rem;
+    }
+}

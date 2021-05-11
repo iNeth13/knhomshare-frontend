@@ -26,14 +26,19 @@ export default function SignUp({ handleModeChange }) {
     password: Yup.string()
       .min(8, "Password is too short.")
       .matches(
-        /^(?=.*[A-Za-z ])(?=.*\d)(?=.*[@$!%*#^?&()])[A-Za-z\d@$!%*#?& ]{8,}$/,
+        /^(?=.*[A-Za-z ])(?=.*\d)(?=.*[@$!%*#^?&()])[A-Za-z\d@$!%*#?&() ]{8,}$/,
         "Minimum eight characters, at least one letter, one number and one special character(!,@,#,$,%,^,&,*,(,) )."
       )
       .required("Password is empty."),
     confirmPassword: Yup.string()
-      .min(8, "Confirm Password is too short.")
-
-      .required("Confirm Password is empty."),
+      .when("password", {
+        is: (val) => (val && val.length > 0 ? true : false),
+        then: Yup.string().oneOf(
+          [Yup.ref("password")],
+          "Passwords are not matched"
+        ),
+      })
+      .required("Confirm Passowrd is empty."),
     gender: Yup.string().required("Please choose your gender."),
   });
   return (

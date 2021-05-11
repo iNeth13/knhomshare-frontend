@@ -54,10 +54,10 @@ export default function Story({
 
                     <span
                       className="by-info"
-                      style={{ fontSize: "18px" }}
+                      style={{ fontSize: "16px" }}
                       onClick={() => console.log("to profile")}
                     >
-                      @{username}
+                      {username}
                     </span>
                     <span
                       className=""
@@ -76,7 +76,7 @@ export default function Story({
                 <div style={{ width: "100%" }}>
                   <div className="story-info-container">
                     <div className="story-left-info">
-                      <Link to={`story/${_id}`}>
+                      <Link to={`/story/${_id}`}>
                         <h6 className={`${mainContainer ? "mb-3" : "mb-0"}`}>
                           {topContainer
                             ? title.slice(0, 70)
@@ -84,14 +84,14 @@ export default function Story({
                         </h6>
                       </Link>
                       {/*  this content will show on main container but hide on top container instead (for style purpose) */}
-                      <Link to={`story/${_id}`}>
+                      <Link to={`/story/${_id}`}>
                         <p className={`${!mainContainer ? "d-none" : ""}`}>
                           {subtitle}...
                         </p>
                       </Link>
                     </div>
                     <div className="story-right-info">
-                      <Link to={`story/${_id}`}>
+                      <Link to={`/story/${_id}`}>
                         <Image
                           thumbnail
                           src={
@@ -106,7 +106,7 @@ export default function Story({
                     </div>
                   </div>
                   {/* this content will hide on main container */}
-                  <Link to={`story/${_id}`}>
+                  <Link to={`/story/${_id}`}>
                     <p className={`${mainContainer ? "d-none" : ""}`}>
                       {subtitle}
                       ...

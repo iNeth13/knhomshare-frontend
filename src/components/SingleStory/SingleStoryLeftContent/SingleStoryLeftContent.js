@@ -35,6 +35,7 @@ export default function SingleStoryLeftContent({ singleStory }) {
             src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
             style={{ width: "50px", height: "50px" }}
             roundedCircle
+            className="user-profile"
           />
           <div>
             <span className="single-story-left-username">@{username}</span>
@@ -48,6 +49,7 @@ export default function SingleStoryLeftContent({ singleStory }) {
             </p>
           </div>
         </div>
+        <p className='show-on-sm'>{bio}</p>
         <div className="user-info-container-">
           <p className="single-story-bio">
             {bio ? bio : "This author hasn't added any bio yet."}

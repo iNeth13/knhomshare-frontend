@@ -3,17 +3,22 @@
   flex-direction: column;
 }
 .side-btn {
-    border:none;
-    border-bottom: 1px solid black;
-    border-radius: 0%;
-    outline: none !important;
-    text-transform: uppercase;
+  border: none;
+  border-bottom: 1px solid grey;
+  border-radius: 0%;
+  outline: none !important;
+  text-transform: uppercase;
 }
-@media screen and (max-width:768px) {
-    .side-btn-wrapper{
-        flex-direction: row;
-    }
-    .side-btn{
-        font-size: 10px;
-    }
+@media screen and (max-width: 767px) {
+  .side-btn-wrapper {
+    flex-direction: row;
+  }
+  .side-btn {
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .side-btn {
+    font-size: 8px;
+  }
 }

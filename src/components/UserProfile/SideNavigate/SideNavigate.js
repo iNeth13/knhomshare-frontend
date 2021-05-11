@@ -9,12 +9,16 @@ export default function SideNavigate({ setNavigate }) {
   const { search } = useLocation();
   const [activeNav, setActiveNav] = useState("");
   const handleClick = (toComponent) => {
-    push(`/profile?action=${toComponent}`);
+    if (toComponent === "my-stories") {
+      push(`/profile?action=${toComponent}&page=1`);
+    } else {
+      push(`/profile?action=${toComponent}`);
+    }
     setActiveNav(toComponent);
   };
   useEffect(() => {
     const getQuery = search && search.split("=")[1];
-    setActiveNav(getQuery);
+    setActiveNav(getQuery.split("&")[0]);
   }, []);
   console.log(activeNav);
   return (

@@ -10,16 +10,14 @@ import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 //bootstraps
 import {
   Form,
-  Container,
   Button,
   FormGroup,
-  ButtonGroup,
   Row,
   Col,
 } from "react-bootstrap";
 
 //react-icons
-import { FaImages, FaPlus, FaTimes, FaEye } from "react-icons/fa";
+import { FaImages, FaPlus, FaEye } from "react-icons/fa";
 import { BiX } from "react-icons/bi";
 
 import { Formik } from "formik";
@@ -34,7 +32,7 @@ import AlertMessage from "../AlertMessage/AlertMessage";
 
 const storySchema = Yup.object().shape({
   title: Yup.string()
-    .min(5, "Title must be atleast 5 characters long")
+    .min(5, "Title must be at least 5 characters long")
     .max(
       TITLE_MAX_CHARACTERS,
       "Title should not be longer than 100 characters long"
@@ -66,7 +64,6 @@ export default function WriteForm({
   const [showModal, setShowModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [allTags, setAllTags] = useState([]);
-
   const handleSetImages = (e) => {
     [...e.target.files].map((file, index) => {
       //i converted file into url and add it to file object and file objects share the same url
@@ -189,6 +186,7 @@ export default function WriteForm({
                     multiple={true}
                     style={{ display: "none" }}
                     name="images"
+                    accept=".jpeg,.jpg,.png"
                   />
                 </Form.Label>
 

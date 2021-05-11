@@ -66,6 +66,7 @@ export default function Header() {
                 width: "110px",
                 height: "70px",
               }}
+              className='brand-image'
             />
           </NavLink>
         </Navbar.Brand>

@@ -1,0 +1,62 @@
+.user-stories-list-container {
+  height: 80px;
+  overflow: hidden;
+  box-shadow: 7px 5px 5px 0px rgba(233, 233, 233, 0.67);
+  -webkit-box-shadow: 7px 5px 5px 0px rgba(233, 233, 233, 0.67);
+  -moz-box-shadow: 7px 5px 5px 0px rgba(233, 233, 233, 0.67);
+}
+
+.user-stories-info {
+  height: 70%;
+  display: flex;
+justify-content: space-between;
+  width: 100%;
+}
+.user-stories-left {
+  width: 80%;
+}
+.user-stories-right {
+  width: 20%;
+}
+.user-stories-title {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-stories-footer {
+  height: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-stories-publish {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: italic;
+}
+.user-stories-btn {
+  font-size: 20px;
+  padding: 0 0.2rem;
+}
+.user-stories-edit-btn {
+  cursor: pointer;
+  color: #34656d;
+}
+.user-stories-delete-btn {
+  margin-left: 0.7rem;
+  color: #d44000;
+  cursor: pointer;
+}
+
+@media screen and (max-width:910px) {
+    .user-stories-title{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .user-stories-list-container{
+        margin-bottom: 1rem;
+    }
+}

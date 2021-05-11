@@ -21,6 +21,12 @@ import {
   STORY_GET_SEARCH_REQ,
   STORY_GET_SEARCH_SUCCESS,
   STORY_GET_SEARCH_FAIL,
+  STORY_GET_EDIT_REQ,
+  STORY_GET_EDIT_SUCCESS,
+  STORY_GET_EDIT_FAIL,
+  STORY_DELETE_REQ,
+  STORY_DELETE_SUCCESS,
+  STORY_DELETE_FAIL,
 } from "../action/storyAction";
 import { RESET_STORY_ERROR, RESET_POST_MESSAGE } from "../action/sharedAction";
 import storyReducer from "../reducer/storyReducer";
@@ -170,9 +176,9 @@ export default function StoryProvider({ children }) {
     }
   };
 
-  const handleResetStorySearch = ()=>{
-    dispatch({type:"RESET_STORY_SEARCH"})
-  }
+  const handleResetStorySearch = () => {
+    dispatch({ type: "RESET_STORY_SEARCH" });
+  };
 
   const handleSingleStory = async (id) => {
     try {
@@ -187,6 +193,54 @@ export default function StoryProvider({ children }) {
       dispatch({ type: STORY_GET_SINGLE_SUCCESS, payload: responseData.story });
     } catch (error) {
       dispatch({ type: STORY_GET_SINGLE_FAIL, payload: error.message });
+    }
+  };
+
+  const handleStoryEdit = async (storyId, token, method, values = {}) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    let options =
+      method === "GET"
+        ? {
+            route: `${process.env.REACT_APP_DEFAULT_URL}/api/story/edit/${storyId}`,
+            option: {
+              headers,
+            },
+          }
+        : {
+            route: `${process.env.REACT_APP_DEFAULT_URL}/api/story/edit/${storyId}/submit`,
+            option: {
+              headers,
+              body: JSON.stringify({
+                title: values.title,
+                subtitle: values.subtitle,
+                paragraph: values.content,
+              }),
+              method: "PATCH",
+            },
+          };
+
+    try {
+      dispatch({ type: STORY_GET_EDIT_REQ, payload: method });
+      const response = await fetch(options.route, options.option);
+      const responseData = await response.json();
+      console.log(responseData);
+      dispatch({
+        type: STORY_GET_EDIT_SUCCESS,
+        payload: {
+          story: responseData.story,
+          message: responseData.message,
+          method,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: STORY_GET_EDIT_FAIL,
+        payload: { error: error.message, method },
+      });
     }
   };
 
@@ -209,7 +263,8 @@ export default function StoryProvider({ children }) {
         handleStoryComment,
         handleGetStoryComment,
         handleStorySearch,
-        handleResetStorySearch
+        handleResetStorySearch,
+        handleStoryEdit,
       }}
     >
       {children}

@@ -17,6 +17,12 @@ import {
   STORY_GET_SEARCH_REQ,
   STORY_GET_SEARCH_SUCCESS,
   STORY_GET_SEARCH_FAIL,
+  STORY_GET_EDIT_REQ,
+  STORY_GET_EDIT_SUCCESS,
+  STORY_GET_EDIT_FAIL,
+  STORY_DELETE_REQ,
+  STORY_DELETE_SUCCESS,
+  STORY_DELETE_FAIL,
 } from "../action/storyAction";
 import { RESET_STORY_ERROR, RESET_POST_MESSAGE } from "../action/sharedAction";
 
@@ -105,6 +111,27 @@ const storyReducer = (state, action) => {
         ...state,
         sLoading: false,
         storySearchResult: action.payload,
+      };
+    case STORY_GET_EDIT_REQ:
+      return {
+        ...state,
+        editStoryLoading: true,
+        editSubmitLoading: action.payload === "PATCH" && true,
+      };
+    case STORY_GET_EDIT_SUCCESS:
+      return {
+        ...state,
+        editStoryLoading: false,
+        editSubmitLoading: action.payload.method === "PATCH" && false,
+        story: action.payload.story,
+        message: action.payload.message,
+      };
+    case STORY_GET_EDIT_FAIL:
+      return {
+        ...state,
+        editStoryLoading: false,
+        editSubmitLoading: action.payload.method === "PATCH" && false,
+        error: action.payload.error,
       };
     case "RESET_STORY_SEARCH":
       return {

@@ -6,4 +6,5 @@
   right: 0;
   transform: translate(-50%, 0%);
   position: absolute;
+  display: block !important;
 }
