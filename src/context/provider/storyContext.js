@@ -79,8 +79,8 @@ export default function StoryProvider({ children }) {
   };
 
   const handleStoryComment = async (comment, user, storyId) => {
-    console.log("line 62");
-    console.log(comment, user, storyId);
+    // console.log("line 62");
+    // console.log(comment, user, storyId);
     try {
       dispatch({ type: STORY_POST_COMMENT_REQ });
       const response = await fetch(
@@ -100,12 +100,11 @@ export default function StoryProvider({ children }) {
       );
       const responseData = await response.json();
       if (!response.ok) {
-        console.log(responseData.message);
+        //console.log(responseData.message);
       }
       // dispatch({type : STORY_POST_COMMENT_SUCCESS,payload})
-      console.log(responseData);
+      //console.log(responseData);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -135,7 +134,7 @@ export default function StoryProvider({ children }) {
   };
 
   const handleNewestStories = async (page, keyword) => {
-    console.log(keyword, page);
+    //console.log(keyword, page);
     try {
       dispatch({ type: STORY_GET_NEWEST_REQ });
       const response = await fetch(
@@ -226,7 +225,7 @@ export default function StoryProvider({ children }) {
       dispatch({ type: STORY_GET_EDIT_REQ, payload: method });
       const response = await fetch(options.route, options.option);
       const responseData = await response.json();
-      console.log(responseData);
+      //console.log(responseData);
       dispatch({
         type: STORY_GET_EDIT_SUCCESS,
         payload: {
@@ -236,7 +235,6 @@ export default function StoryProvider({ children }) {
         },
       });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: STORY_GET_EDIT_FAIL,
         payload: { error: error.message, method },

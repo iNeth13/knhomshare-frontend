@@ -82,7 +82,6 @@ export default function UserProvider({ children }) {
       dispatch({ type: USER_SIGN_UP_SUCCESS, payload: responseData.data });
       push("/");
     } catch (error) {
-      console.log(error);
       dispatch({ type: USER_SIGN_UP_FAIL, payload: error.message });
     }
   };
@@ -104,8 +103,6 @@ export default function UserProvider({ children }) {
     } else if (search.split("=")[1].startsWith("homepage")) {
       redirect = "/";
     }
-    console.log(search.split("="));
-    console.log("redirect : " + redirect);
     try {
       dispatch({ type: USER_SIGN_IN_REQ });
       const response = await fetch(
@@ -131,7 +128,6 @@ export default function UserProvider({ children }) {
   };
 
   const handleUserProfile = async (token, page) => {
-    console.log(token, page);
     try {
       dispatch({ type: USER_PROFILE_REQ });
       const response = await fetch(
@@ -162,7 +158,6 @@ export default function UserProvider({ children }) {
   };
 
   const handleUserStories = async (token, page) => {
-    console.log(page);
     try {
       dispatch({ type: "USER_GET_STORIES_REQ" });
       const response = await fetch(
@@ -179,7 +174,7 @@ export default function UserProvider({ children }) {
       if (!response.ok) {
         throw new Error();
       }
-      console.log(responseData);
+     
       dispatch({
         type: "USER_GET_STORIES_SUCCESS",
         payload: {
@@ -189,7 +184,6 @@ export default function UserProvider({ children }) {
         },
       });
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -198,7 +192,6 @@ export default function UserProvider({ children }) {
       dispatch({ type: USER_PROFILE_CHANGE_REQ });
       const formData = new FormData();
       formData.append("image", file);
-      console.log(formData, userId);
       const response = await fetch(
         `${process.env.REACT_APP_DEFAULT_URL}/api/user/change-profile/${userId}`,
         {
@@ -236,7 +229,6 @@ export default function UserProvider({ children }) {
     userId,
     userToken
   ) => {
-    console.log(newUsername, newBio, userId, userToken);
     try {
       dispatch({ type: USER_USERNAME_BIO_CHANGE_REQ });
       const response = await fetch(
@@ -257,7 +249,6 @@ export default function UserProvider({ children }) {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
-      console.log(responseData);
       const getUserFromLocalStorage = getFromLocal("c-user");
       getUserFromLocalStorage.username = responseData.responseData.username;
       setToLocal("c-user", getUserFromLocalStorage);
@@ -295,10 +286,10 @@ export default function UserProvider({ children }) {
       );
       const responseData = await response.json();
       if (!response.ok) {
-        console.log(responseData.message);
+       // console.log(responseData.message);
         throw new Error(responseData.message);
       }
-      console.log(responseData.message);
+      //(responseData.message);
       dispatch({
         type: USER_PASSWORD_CHANGE_SUCCESS,
         payload: responseData.message,
@@ -307,10 +298,6 @@ export default function UserProvider({ children }) {
       dispatch({ type: USER_PASSWORD_CHANGE_FAIL, payload: error.message });
     }
   };
-
-  const handleStoryEdit = async (storyId)=>{
-    console.log(storyId)
-  }
 
   const handleSignout = () => {
     localStorage.setItem("c-user", []);
@@ -333,7 +320,6 @@ export default function UserProvider({ children }) {
         handleUsernameAndBioChange,
         handlePasswordChange,
         handleUserStories,
-        handleStoryEdit
       }}
     >
       {children}

@@ -35,7 +35,7 @@ export default function AuthorProvider({ children }) {
         payload: responseData.author,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
   return (

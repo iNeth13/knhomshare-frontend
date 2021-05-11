@@ -32,6 +32,9 @@ export default function UserStories({ totalPages, stories }) {
     );
   }, [page]);
   useEffect(() => {
+    if(!storyId){
+      return null;
+    }
     handleStoryEdit(storyId, user.token, "GET", {});
   }, [storyId]);
   return (

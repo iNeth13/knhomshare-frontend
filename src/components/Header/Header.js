@@ -83,7 +83,7 @@ export default function Header() {
             style={{ minWidth: "130px" }}
           >
             {windowWidth > 768 && (
-              <Fade in={showSearchBox} className="search-box-container">
+              <Collapse in={showSearchBox} className="search-box-container">
                 <Form onSubmit={handleSubmit}>
                   <Form.Control
                     placeholder="Enter something..."
@@ -95,9 +95,8 @@ export default function Header() {
                     onChange={(e) => setSearchValue(e.target.value)}
                   />
                 </Form>
-              </Fade>
+              </Collapse>
             )}
-
             <Nav.Item>
               <FaSearch className="icon" onClick={handleShowSearchBox} />
             </Nav.Item>
