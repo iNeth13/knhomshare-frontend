@@ -14,6 +14,10 @@ import AuthorProvider from "./context/provider/authorContext";
 
 //bootstrap css
 
+if (process.env.NODE_ENV === "production") {
+  console.log = function () {};
+}
+
 ReactDOM.render(
   <Router>
     <UserProvider>
