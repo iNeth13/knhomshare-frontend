@@ -13,7 +13,7 @@ export default function Homepage() {
   const {} = useUserContext();
  
   return (
-    <Container fluid="lg md sm">
+    <Container fluid="lg md sm" className="h-100">
       <Helmet>
         <title>Knhom Share | Where People Spreads Their Ideas</title>
       </Helmet>

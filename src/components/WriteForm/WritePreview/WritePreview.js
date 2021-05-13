@@ -1,7 +1,9 @@
 import React from "react";
 import "./WritePreview.css";
-import { Modal } from "react-bootstrap";
-import ReactHtmlParser from 'react-html-parser'
+import { Button, Modal } from "react-bootstrap";
+import ReactHtmlParser from "react-html-parser";
+
+import { FaEye } from "react-icons/fa";
 
 export default function WritePreview({
   handleShowModal,
@@ -19,28 +21,25 @@ export default function WritePreview({
       centered
       className="modal-container"
     >
-      <Modal.Header className="px-5 d-flex flex-column pb-0">
-        {title.length > 0 ? (
-          <h5 style={{ width: "100%" }}>{title}</h5>
-        ) : (
-          <h5>No title yet!</h5>
-        )}
-        {tags.length > 0 ? (
-          tags.map((tag, index) => {
-            return (
-              <div className="d-flex" key={index}>
-                <p>tags: </p>
-                <i className="ml-1"> {tag}</i>
-              </div>
-            );
-          })
-        ) : (
-          <i>no tags</i>
-        )}
+      <Modal.Header className="" closeButton>
+        <Modal.Title as="h6" style={{ marginRight: "2rem" }}>
+          <FaEye style={{ color: "#34656d" }} /> <span>Preview</span>
+        </Modal.Title>
       </Modal.Header>
-      {title.length > 0 && (
-        <Modal.Body className="w-100 ">
-          {imagesPreview.length>0 && (
+      {title.length > 1 && (
+        <Modal.Body className="w-100">
+          <div className="px-5 mb-2">
+            <h5>{title}</h5>
+            <div>
+              tags :{" "}
+              {tags.map((tag, index) => (
+                <Button size="sm" variant="outline-dark">
+                  {tag}
+                </Button>
+              ))}
+            </div>
+          </div>
+          {imagesPreview.length >= 1 && (
             <div className="d-flex justify-content-center" id="image-container">
               <img
                 src={imagesPreview && imagesPreview[0]?.url}
@@ -49,7 +48,10 @@ export default function WritePreview({
             </div>
           )}
           <div className="mt-3 px-5">{ReactHtmlParser(convertedContent)}</div>
-          <div className="d-flex justify-content-center flex-column align-items-center" id="image-container">
+          <div
+            className="d-flex justify-content-center flex-column align-items-center"
+            id="image-container"
+          >
             {imagesPreview &&
               imagesPreview
                 .slice(1, imagesPreview.length)

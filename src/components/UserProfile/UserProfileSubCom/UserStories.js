@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import "./UserStories.css";
 
@@ -16,7 +16,8 @@ const EditModal = React.lazy(() => import("../../EditModal/EditModal"));
 
 export default function UserStories({ totalPages, stories }) {
   const { userStoriesLoading, user, handleUserStories } = useUserContext();
-  const { handleStoryEdit, editSubmitLoading, message } = useStoryContext();
+  const { handleStoryEdit, editSubmitLoading, message, editTime, deleteTime } =
+    useStoryContext();
   const { search } = useLocation();
   const history = useHistory();
   const [page, setPage] = useState();
@@ -25,14 +26,15 @@ export default function UserStories({ totalPages, stories }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const query = new URLSearchParams(search).get("page");
   useEffect(() => {
-    console.log(page);
+    console.log("i got called line 29 " + page + editTime);
     handleUserStories(user.token, !page ? Number(query) : page);
     history.push(
       `/profile?action=my-stories&page=${!page ? Number(query) : page}`
     );
-  }, [page]);
+    setShowDeleteModal(false);
+  }, [page, editTime, deleteTime]);
   useEffect(() => {
-    if(!storyId){
+    if (!storyId) {
       return null;
     }
     handleStoryEdit(storyId, user.token, "GET", {});
@@ -60,16 +62,16 @@ export default function UserStories({ totalPages, stories }) {
       </div>
       <Row
         style={{ minHeight: "500px" }}
-        className="justify-content-center user-stories-custom-row"
+        className=" user-stories-custom-row justify-content-center"
       >
         {userStoriesLoading ? (
           <Loader />
-        ) : (
+        ) : stories && stories.length >= 1 ? (
           stories?.map((story) => {
             const { createdAt, content, subtitle, title, _id } = story;
             const image = content.images[0];
             return (
-              <Col lg={6} md={6} sm={12} key={_id}>
+              <Col lg={6} md={6} sm={12} key={_id} className="a7x2">
                 <UserStoriesList
                   createdAt={createdAt}
                   image={image}
@@ -83,6 +85,16 @@ export default function UserStories({ totalPages, stories }) {
               </Col>
             );
           })
+        ) : (
+          <div>
+            You have not published any stories yet. Feel free to{" "}
+            <Link
+              to="/write"
+              style={{ fontStyle: "italic", borderBottom: "1px solid black" }}
+            >
+              write one.
+            </Link>
+          </div>
         )}
       </Row>
       <Paginate totalPages={totalPages} setPage={setPage} />

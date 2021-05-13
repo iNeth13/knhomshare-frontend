@@ -37,7 +37,6 @@ export default function UserProfilePage({ history }) {
   useEffect(() => {
     handleUserProfile(user.token);
   }, []);
-  console.log(totalPages, userInfo);
   if (pathname === "/profile" && !search) {
     history.push("/profile?action=account");
   }

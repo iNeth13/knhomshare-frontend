@@ -9,11 +9,11 @@ import {} from "react-router-dom";
 import {} from "react-bootstrap";
 import {} from "react-icons";
 
-export default function CommentList({ comments }) {
-  console.log(comments)
+export default function CommentList({ comments,storyId }) {
+  console.log(comments);
   return (
     <div className="py-3">
-      {comments ? (
+      {comments && comments.length > 0 ? (
         comments.map((c, index) => {
           const { _id, user, comment, createdAt } = c;
           const newDateObject = changeDateFormat(createdAt);
@@ -21,8 +21,10 @@ export default function CommentList({ comments }) {
             <Comment
               comment={comment}
               date={newDateObject}
-              user={user}
+              storyUser={user}
               key={index}
+              commentId={_id}
+              storyId={storyId}
             />
           );
         })

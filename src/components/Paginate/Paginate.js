@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
-export default function Paginate({ totalPages, setPage}) {
+export default function Paginate({ totalPages, setPage }) {
   //   <Pagination>
   //     <Pagination.First disabled={page === 1 && true} />
   //     <Pagination.Prev disabled={page === 1 && true} />
@@ -54,10 +54,10 @@ export default function Paginate({ totalPages, setPage}) {
       breakClassName={"break-me"}
       activeClassName={"active-page"}
       activeLinkClassName={"active-link-page"}
-      previousLabel={<RiArrowLeftSLine />}
+      previousLabel={totalPages > 1 && <RiArrowLeftSLine />}
       previousClassName={"preview-arrow"}
       nextClassName={"next-arrow"}
-      nextLabel={<RiArrowRightSLine />}
+      nextLabel={totalPages > 1 && <RiArrowRightSLine />}
       pageClassName={"page-btn"}
       onPageChange={handlePageChange}
       forcePage={parseInt(pageQuery) - 1}

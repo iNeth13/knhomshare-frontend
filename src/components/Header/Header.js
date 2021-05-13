@@ -22,11 +22,8 @@ import { FaSearch, FaBell } from "react-icons/fa";
 import usePopover from "../utils/usePopover";
 
 export default function Header() {
-  const {
-    sLoading,
-    handleStorySearch,
-    handleNewestStories,
-  } = useStoryContext();
+  const { sLoading, handleStorySearch, handleNewestStories } =
+    useStoryContext();
   const { push } = useHistory();
   const { user } = useUserContext();
   const [showSearchBox, setShowSearchBox] = useState(false);
@@ -54,8 +51,9 @@ export default function Header() {
     getWindowWidth();
     window.addEventListener("resize", getWindowWidth);
   }, []);
+  console.log(showOverlay);
   return (
-    <Navbar bg="light" className="fixed-top">
+    <Navbar bg="light" className="fixed-top nav-border-shadow" >
       <Container fluid="lg md xs">
         <Navbar.Brand className="p-0">
           <NavLink to="/">
@@ -66,7 +64,7 @@ export default function Header() {
                 width: "110px",
                 height: "70px",
               }}
-              className='brand-image'
+              className="brand-image"
             />
           </NavLink>
         </Navbar.Brand>
@@ -78,10 +76,13 @@ export default function Header() {
           >
             Join us and spread your ideas!{" "}
           </Navbar.Text>
-          <Nav
-            className="ml-auto d-flex align-items-center justify-content-between"
-            style={{ minWidth: "130px" }}
+          <Navbar.Text
+            style={{ fontWeight: "normal", color: "black" }}
+            className="header-text-mobile"
           >
+            Good Day!
+          </Navbar.Text>
+          <Nav className="ml-auto d-flex align-items-center justify-content-between">
             {windowWidth > 768 && (
               <Collapse in={showSearchBox} className="search-box-container">
                 <Form onSubmit={handleSubmit}>
@@ -100,13 +101,20 @@ export default function Header() {
             <Nav.Item>
               <FaSearch className="icon" onClick={handleShowSearchBox} />
             </Nav.Item>
-            <Nav.Item>
-              <FaBell className="icon" />
+            <Nav.Item className="ml-3">
+              <FaBell className="icon " />
             </Nav.Item>
-            <Nav.Item style={{ fontWeight: "bold", cursor: "pointer" }}>
+            <Nav.Item
+              style={{ fontWeight: "bold", cursor: "pointer" }}
+              className="ml-3"
+            >
               {user ? (
                 <div>
-                  <div onClick={() => setShowOverlay(true)} ref={target}>
+                  <div
+                    onClick={() => setShowOverlay(true)}
+                    ref={target}
+                    className="header-username"
+                  >
                     {user && user.username}
                   </div>
                   <Overlay
@@ -120,7 +128,12 @@ export default function Header() {
                   </Overlay>
                 </div>
               ) : (
-                <NavLink to={`/auth?redirect=homepage`}>Sign In</NavLink>
+                <NavLink
+                  to={`/auth?redirect=homepage`}
+                  onClick={() => setShowOverlay(false)}
+                >
+                  Sign In
+                </NavLink>
               )}
             </Nav.Item>
           </Nav>

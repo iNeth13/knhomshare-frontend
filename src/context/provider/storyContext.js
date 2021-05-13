@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useReducer } from "react";
+import React, { useContext, createContext, useReducer, useEffect } from "react";
 import {
   STORY_POST_REQ,
   STORY_POST_SUCCESS,
@@ -27,15 +27,20 @@ import {
   STORY_DELETE_REQ,
   STORY_DELETE_SUCCESS,
   STORY_DELETE_FAIL,
+  STORY_DELETE_COMMENT_REQ,
+  STORY_DELETE_COMMENT_SUCCESS,
+  STORY_DELETE_COMMENT_FAIL,
 } from "../action/storyAction";
 import { RESET_STORY_ERROR, RESET_POST_MESSAGE } from "../action/sharedAction";
 import storyReducer from "../reducer/storyReducer";
+import { useLocation } from "react-router";
 
 const storyContext = createContext();
 
 const initialValues = {
   sLoading: false,
   error: null,
+  deleteTime: null,
 };
 export default function StoryProvider({ children }) {
   const [state, dispatch] = useReducer(storyReducer, initialValues);
@@ -104,8 +109,7 @@ export default function StoryProvider({ children }) {
       }
       // dispatch({type : STORY_POST_COMMENT_SUCCESS,payload})
       //console.log(responseData);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleGetStoryComment = () => {
@@ -130,6 +134,32 @@ export default function StoryProvider({ children }) {
       });
     } catch (error) {
       dispatch({ type: STORY_GET_POPULAR_FAIL, payload: error.message });
+    }
+  };
+
+  const handleDeleteStoryComment = async (storyId, commentId, userToken) => {
+    console.log(storyId, commentId);
+    try {
+      dispatch({ type: STORY_DELETE_COMMENT_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/delete-comment`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ storyId, commentId }),
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      dispatch({ type: STORY_DELETE_COMMENT_SUCCESS, payload: {} });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: STORY_DELETE_COMMENT_FAIL, payload: error.message });
     }
   };
 
@@ -232,6 +262,7 @@ export default function StoryProvider({ children }) {
           story: responseData.story,
           message: responseData.message,
           method,
+          editTime: responseData.editTime,
         },
       });
     } catch (error) {
@@ -242,12 +273,37 @@ export default function StoryProvider({ children }) {
     }
   };
 
+  const handleStoryDelete = async (storyId) => {
+    try {
+      dispatch({ type: STORY_DELETE_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/delete/${storyId}`,
+        { method: "DELETE" }
+      );
+      const responseData = await response.json();
+      dispatch({
+        type: STORY_DELETE_SUCCESS,
+        payload: {
+          deleteTime: responseData.deleteTime,
+          message: responseData.message,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: STORY_DELETE_FAIL, payload: error.message });
+    }
+  };
+
   const handleResetStoryError = () => {
     dispatch({ type: RESET_STORY_ERROR });
   };
   const handleResetPostMessage = () => {
     dispatch({ type: RESET_POST_MESSAGE });
   };
+
+  useEffect(() => {
+    dispatch({ type: "RESET_EDIT_MESSAGE" });
+  }, [useLocation().search]);
+
   return (
     <storyContext.Provider
       value={{
@@ -263,6 +319,8 @@ export default function StoryProvider({ children }) {
         handleStorySearch,
         handleResetStorySearch,
         handleStoryEdit,
+        handleStoryDelete,
+        handleDeleteStoryComment,
       }}
     >
       {children}

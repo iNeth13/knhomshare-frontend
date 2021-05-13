@@ -1,0 +1,52 @@
+.about-page-header {
+  box-shadow: 0px 5px 3px 0px rgba(244, 244, 244, 0.75);
+  -webkit-box-shadow: 0px 5px 3px 0px rgba(244, 244, 244, 0.75);
+  -moz-box-shadow: 0px 5px 3px 0px rgba(244, 244, 244, 0.75);
+}
+.text-container {
+  margin: 2rem 0;
+  padding: 0 20rem;
+}
+.to-topics-link {
+  color: white !important;
+  border-bottom: 1px solid white;
+}
+.about-text-line-height {
+  line-height: 2rem;
+  margin-bottom: 2rem;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 992px) {
+  .text-container {
+    margin: 2rem 0;
+    padding: 0 15rem;
+  }
+}
+@media screen and (max-width: 875px) and (min-width: 768px) {
+  .text-container {
+    margin: 2rem 0;
+    padding: 0 12rem;
+  }
+}
+@media screen and (max-width: 768px) and (min-width: 576px) {
+  .text-container {
+    margin: 2rem 0;
+    padding: 0 7rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .text-container {
+    margin: 2rem 0;
+    padding: 0 5rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .greeting-text{
+    
+  }
+  .text-container {
+    margin: 2rem 0;
+    padding: 0 2rem;
+  }
+}

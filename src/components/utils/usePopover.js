@@ -54,6 +54,9 @@ const usePopover = (setShowOverlay) => {
           >
             <p className="p-tag">Account</p>
           </Link>
+          <Link to="/topics" onClick={() => setShowOverlay(false)}>
+            <p className="p-tag">Topics List</p>
+          </Link>
           <p
             style={{ fontStyle: "italic", color: "rgba(0,0,0,0.5)" }}
             className="disabled"

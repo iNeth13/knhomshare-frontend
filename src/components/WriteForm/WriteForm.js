@@ -8,13 +8,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 //bootstraps
-import {
-  Form,
-  Button,
-  FormGroup,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Form, Button, FormGroup, Row, Col } from "react-bootstrap";
 
 //react-icons
 import { FaImages, FaPlus, FaEye } from "react-icons/fa";
@@ -126,6 +120,12 @@ export default function WriteForm({
   };
   //end here
 
+  const keyBindingFn = (e) => {
+    if (e.key === "Enter") {
+      return null;
+    }
+  };
+
   useEffect(() => {
     handleErrorModalHide(true);
   }, [error]);
@@ -147,7 +147,8 @@ export default function WriteForm({
             tags: [],
           }}
           validationSchema={storySchema}
-          onSubmit={(values) => {
+          onSubmit={(values, action) => {
+            console.log(action);
             setTitle(values.title);
             setSubtitle(values.subtitle);
             handleStoryPost(
@@ -209,6 +210,7 @@ export default function WriteForm({
               <FormGroup>
                 <Form.Control
                   type="text"
+                  as="input"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.title}
@@ -221,6 +223,11 @@ export default function WriteForm({
                     fontWeight: "bold",
                   }}
                   autoComplete="off"
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
                 {errors.title && touched.title && (
                   <Form.Control.Feedback
@@ -301,7 +308,6 @@ export default function WriteForm({
                       "textAlign",
                       "history",
                       "fontFamily",
-                      "link",
                     ],
                   }}
                   editorClassName="editor-size"

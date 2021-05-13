@@ -18,9 +18,19 @@ export default function Recommend({ bio, image, name, recommendedType }) {
         className="mr-2"
       />
       <div style={{ width: "50%" }}>
-        <p className="mb-0">{name}</p>
+        <p className="mb-0" style={{ fontWeight: "bold" }}>
+          {name}
+        </p>
         {recommendedType === "author" ? (
-          <span>{bio && bio.slice(0, 20)}...</span>
+          <div style={{ fontSize: "14px" }}>
+            {bio && bio.length > 1 ? (
+              bio.slice(0, 40)
+            ) : (
+              <div style={{ fontStyle: "italic" }}>
+                this author does not have bio yet.
+              </div>
+            )}
+          </div>
         ) : (
           ""
         )}

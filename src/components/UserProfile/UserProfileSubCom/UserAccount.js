@@ -92,7 +92,6 @@ export default function UserAccount({
       return prev;
     });
   };
-  console.log(error);
   return (
     <div className="">
       <div>

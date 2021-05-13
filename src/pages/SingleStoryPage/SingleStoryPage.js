@@ -32,6 +32,7 @@ export default function SingleStoryPage() {
     handleSingleStory(id);
     handleResetStoryError();
   }, [id]);
+  console.log(singleStory);
   return (
     <Container fluid>
       <Helmet>

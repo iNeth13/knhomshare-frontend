@@ -10,11 +10,9 @@ html{
 body {
   margin: 0 !important;
   padding : 0 !important;
-  box-sizing: content-box;
   font-family: "Roboto", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
 input{
   box-shadow: none !important;

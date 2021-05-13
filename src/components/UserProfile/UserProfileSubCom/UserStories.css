@@ -1,15 +1,26 @@
-.user-stories-list-cus-header{
-position: relative;
+.user-stories-custom-row {
+  display: flex !important;
+  align-content: flex-start !important;
+  justify-content: center !important;
 }
-.user-stories-list-cus-alert{
+.user-stories-list-cus-header {
+  position: relative;
+}
+.user-stories-list-cus-alert {
   position: absolute;
   left: 40%;
-  transform: translateX(50%,50%);
+  transform: translateX(50%, 50%);
+}
+.a7x2 {
+  margin-bottom: 1rem;
 }
 @media screen and (max-width: 768px) {
   .user-stories-custom-row {
     display: flex;
     flex-direction: column !important;
     justify-content: start !important;
+  }
+  .a7x2 {
+    margin-bottom: 1rem;
   }
 }

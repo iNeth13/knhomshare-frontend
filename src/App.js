@@ -14,6 +14,8 @@ import SingleStoryPage from "./pages/SingleStoryPage/SingleStoryPage";
 import SearchResult from "./pages/SearchResult/SearchResult";
 import SearchPageForMobile from "./pages/SearchPageForMobile/SearchPageForMobile";
 import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
+import AboutPage from "./pages/AboutPage/AboutPage";
+import CreatorPage from "./pages/CreatorPage/CreatorPage";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path="/auth" component={AuthenticationPage} exact />
         <Route path="/write" component={WritePage} exact />
         <Route path="/story/:id" component={SingleStoryPage} exact />
+        <Route path="/about" component={AboutPage} exact />
+        <Route path="/creator" component={CreatorPage} exact />
         <Route path="*" component={ErrorPage} exact />
       </Switch>
     </React.Fragment>

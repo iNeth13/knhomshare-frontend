@@ -9,7 +9,7 @@
 .user-stories-info {
   height: 70%;
   display: flex;
-justify-content: space-between;
+  justify-content: space-between;
   width: 100%;
 }
 .user-stories-left {
@@ -49,14 +49,14 @@ justify-content: space-between;
   cursor: pointer;
 }
 
-@media screen and (max-width:910px) {
-    .user-stories-title{
-        font-size: 14px;
-    }
+@media screen and (max-width: 910px) {
+  .user-stories-title {
+    font-size: 14px;
+  }
 }
 
-@media screen and (max-width:768px) {
-    .user-stories-list-container{
-        margin-bottom: 1rem;
-    }
+@media screen and (max-width: 768px) {
+  .user-stories-list-container {
+   
+  }
 }

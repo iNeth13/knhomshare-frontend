@@ -1,3 +1,4 @@
+
 .icon {
   font-size: 18px;
   cursor: pointer;
@@ -8,13 +9,29 @@
   position: absolute;
   right: 300px !important;
 }
-@media screen and (max-width: 509px) {
-  .header-text {
-    font-size: 12px;
-  }
+.header-text-mobile {
+  display: none;
+}
+@media screen and (max-width: 550px) {
   .brand-image {
     width: 90px !important;
     height: 70px !important;
+  }
+  .icon {
+    font-size: 14px;
+  }
+  .header-username {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .header-text {
+    display: none;
+  }
+  .header-text-mobile {
+    display: block;
+    font-weight: bold;
+    font-size: 12px;
   }
 }
 @media screen and (max-width: 400px) {

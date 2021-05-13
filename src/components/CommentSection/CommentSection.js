@@ -16,20 +16,31 @@ export default function CommentSection({ singleStory }) {
   const [numberOfComments, setNumberOfComments] = useState(10);
   useEffect(() => {
     let socket = openSocket(process.env.REACT_APP_DEFAULT_URL);
-    console.log(socket);
     socket.on("comment", (data) => {
-      console.log(data.data);
-      setStoryComments((prev) => {
-        let newestComment = [...prev];
-        newestComment.unshift(data.data);
-        console.log(newestComment);
-        return newestComment;
-      });
+      if (data.action === "postComment") {
+        setStoryComments((prev) => {
+          let newestComment = [...prev];
+          console.log(newestComment);
+          newestComment.unshift(data.data);
+          return newestComment;
+        });
+      }
+      if (data.action === "removeDeletedComment") {
+        console.log(storyComments && storyComments);
+        setStoryComments((prev) => {
+          try {
+            const newCommentList = prev.filter(
+              (comment) => comment._id !== data.data
+            );
+            return newCommentList;
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      }
     });
   }, []);
-  console.log(totalComments, storyComments);
   useEffect(() => {
-    console.log("i got called line 32");
     setStoryComments(() => totalComments.slice(0, numberOfComments));
   }, [numberOfComments]);
   return (
@@ -52,7 +63,7 @@ export default function CommentSection({ singleStory }) {
           </div>
         )}
       </div>
-      <CommentList comments={storyComments} />
+      <CommentList comments={storyComments} storyId={singleStory._id} />
       {numberOfComments < totalComments.length && (
         <Button
           style={{ width: "100%" }}

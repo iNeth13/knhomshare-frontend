@@ -1,4 +1,4 @@
-import React ,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaPlusSquare } from "react-icons/fa";
 
@@ -9,7 +9,6 @@ import topics from "../../constants/topics";
 import { Container, Card, Row, Col, Button } from "react-bootstrap";
 
 export default function TopicPage() {
-
   return (
     <Container fluid="lg md sm">
       {topics.map((topic) => {
@@ -23,8 +22,9 @@ export default function TopicPage() {
                 {topic.category}
               </h5>
               {topic.topicList.map((item) => {
+                console.log(item.topic.split(" ").join("-"));
                 return (
-                  <Col lg={4} md={4} sm={6} xs={12} className='p-0'>
+                  <Col lg={4} md={4} sm={6} xs={12} className="p-0">
                     <Card className="my-3" style={{ borderRadius: "0" }}>
                       <Card.Img
                         src={item.imageUrl}
@@ -39,7 +39,10 @@ export default function TopicPage() {
                             {item.topic}
                           </Card.Title>
                           <NavLink
-                            to={`/topic/${item.topic.toLowerCase()}`}
+                            to={`/topic/${item.topic
+                              .split(" ")
+                              .join("-")
+                              .toLowerCase()}`}
                           >
                             <Button
                               size="sm"

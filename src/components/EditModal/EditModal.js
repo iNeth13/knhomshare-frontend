@@ -80,9 +80,7 @@ export default function EditModal({ showModal, setShowModal, userToken }) {
   console.log(convertedContent);
   return (
     <div>
-      {editStoryLoading ? (
-        <Loader pAbsolute />
-      ) : (
+      {editStoryLoading ? null : (
         <Formik
           initialValues={{
             title: "" || title,

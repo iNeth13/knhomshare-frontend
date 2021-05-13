@@ -28,7 +28,7 @@ export default function SingleStoryMainContent({ singleStory }) {
       <div className="px-3">{ReactHtmlParser(content.paragraph)}</div>
       <div className="d-flex justify-content-center">
         {content.images
-          .slice(1, content.images.length - 1)
+          .slice(1, content.images.length)
           .map((image, index) => {
             return (
               <Image

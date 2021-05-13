@@ -22,11 +22,8 @@ import Recommend from "../Recommend/Recommend";
 const Story = React.lazy(() => import("../Story/Story"));
 
 export default function TopContainer() {
-  const {
-    handleRecommendAuthor,
-    recommendedAuthors,
-    aLoading,
-  } = useAuthorContext();
+  const { handleRecommendAuthor, recommendedAuthors, aLoading } =
+    useAuthorContext();
   const { handlePopularStories, sLoading, popularStories } = useStoryContext();
   let name = "inetca";
   let title =
@@ -75,6 +72,7 @@ export default function TopContainer() {
     handleRecommendAuthor();
     handlePopularStories();
   }, []);
+  console.log(recommendedAuthors);
   return (
     <div className="">
       <Row style={{ minHeight: "466px" }}>
@@ -133,8 +131,9 @@ export default function TopContainer() {
                 style={{
                   textTransform: "uppercase",
                   fontWeight: "bold",
-                  fontSize: "15px",
+                  fontSize: "13px",
                 }}
+                className="b-shadow"
               >
                 Authors To Follow
               </p>
@@ -161,8 +160,9 @@ export default function TopContainer() {
                 style={{
                   textTransform: "uppercase",
                   fontWeight: "bold",
-                  fontSize: "15px",
+                  fontSize: "13px",
                 }}
+                className="b-shadow"
               >
                 Topics To Follow
               </p>
