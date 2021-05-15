@@ -60,7 +60,12 @@ export default function MainContainer() {
   }, [page]);
   return (
     <Row style={{ minHeight: "200px" }}>
-      <Col lg={8} md={8} sm={12} xs={12}>
+      <Col
+        lg={{ span: 8, order: 1 }}
+        md={{ span: 8, order: 1 }}
+        sm={{ span: 12, order: 2 }}
+        xs={{ span: 12, order: 2 }}
+      >
         <p
           style={{
             textTransform: "uppercase",
@@ -73,9 +78,17 @@ export default function MainContainer() {
           <FiEdit3 /> Newest Stories
         </p>
         <Story stories={newestStories || []} mainContainer />
-        <div ref={loader}>{nLoading && <MainStoriesLoader />}</div>
+        <div ref={loader} style={{ overflow: "hidden" }}>
+          {nLoading && <MainStoriesLoader />}
+        </div>
       </Col>
-      <Col style={{ overflow: "visible" }}>
+      <Col
+        style={{ overflow: "visible" }}
+        xs={{ span: 12, order: 1 }}
+        lg={{ span: 4, order: 2 }}
+        md={{ span: 4, order: 2 }}
+        sm={{ span: 12, order: 1 }}
+      >
         <div className="float-right-content ">
           <p
             style={{
@@ -96,7 +109,7 @@ export default function MainContainer() {
           >
             {allTopics?.map((topic, index) => (
               <Link
-                to={`/topic/${topic.split("=").join("-").toLowerCase()}`}
+                to={`/topic/${topic.split(" ").join("-").toLowerCase()}`}
                 key={index}
               >
                 <Button variant="outline-dark" size="sm" className="m-1">

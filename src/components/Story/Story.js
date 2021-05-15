@@ -19,7 +19,11 @@ export default function Story({
   return (
     <Row className="cos-row">
       {sLoading && topContainer ? (
-        [1, 2, 3].map((number, index) => <TopStoriesLoader key={index} />)
+        [1, 2, 3].map((number, index) => (
+          <div style={{ overflow: "hidden" }}>
+            <TopStoriesLoader key={index} />
+          </div>
+        ))
       ) : (
         <div>
           {stories?.map((story, index) => {
@@ -85,8 +89,11 @@ export default function Story({
                       </Link>
                       {/*  this content will show on main container but hide on top container instead (for style purpose) */}
                       <Link to={`/story/${_id}`}>
-                        <p className={`${!mainContainer ? "d-none" : ""}`}>
-                          {subtitle}...
+                        <p
+                          className={`${!mainContainer ? "d-none" : ""}`}
+                          style={{ opacity: "0.8", fontSize: "16px" }}
+                        >
+                          {subtitle.slice(0, 120)}...
                         </p>
                       </Link>
                     </div>
@@ -107,8 +114,11 @@ export default function Story({
                   </div>
                   {/* this content will hide on main container */}
                   <Link to={`/story/${_id}`}>
-                    <p className={`${mainContainer ? "d-none" : ""}`}>
-                      {subtitle}
+                    <p
+                      className={`${mainContainer ? "d-none" : ""}`}
+                      style={{ opacity: "0.8", fontSize: "16px" }}
+                    >
+                      {subtitle.slice(0, 100)}
                       ...
                     </p>
                   </Link>

@@ -4,7 +4,7 @@ import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
 
 import "./TopContainer.css";
 
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
 
 //contextAPI
 import { useAuthorContext } from "../../context/provider/authorContext";
@@ -12,12 +12,14 @@ import { useStoryContext } from "../../context/provider/storyContext";
 
 //content loaders
 import RecommendLoader from "../ContentLoaders/RecommendLoader";
+import TopMainStoryLoader from "../ContentLoaders/TopMainStoryLoader";
 
 //components for top homepage
 //components using react.lazy();
 
 //this will show recommend stories and authors
 import Recommend from "../Recommend/Recommend";
+import changeDateFormat from "../utils/changeDateFormat";
 //this will show popular stories
 const Story = React.lazy(() => import("../Story/Story"));
 
@@ -68,43 +70,59 @@ export default function TopContainer() {
       image: img,
     },
   ];
+  const newDateFormat = changeDateFormat(
+    popularStories && popularStories[0].createdAt
+  );
+  console.log(newDateFormat);
   useEffect(() => {
     handleRecommendAuthor();
     handlePopularStories();
   }, []);
-  console.log(recommendedAuthors);
   return (
-    <div className="">
+    <div className="" >
       <Row style={{ minHeight: "466px" }}>
         <Col lg={8} md={12} sm={12} xs={12}>
           <Row>
-            <Col lg={6} md={6} sm={6} xs={12}>
-              <Link>
-                <div className="main-story-image-container">
-                  <Image src={img} className="w-100 main-story-image" />
+            <Col lg={6} md={6} sm={6} xs={12} style={{ overflow: "hidden" }}>
+              {sLoading ? (
+                <div>
+                  <TopMainStoryLoader />
                 </div>
-              </Link>
-              <div className="by-info-container">
-                <Image
-                  style={{ height: "25px", width: "25px", marginRight: "5px" }}
-                  src={img}
-                  rounded
-                  onClick={() => console.log("to sth")}
-                />
+              ) : (
+                <div>
+                  <Link>
+                    <div className="main-story-image-container">
+                      <Image src={img} className="w-100 main-story-image" />
+                    </div>
+                  </Link>
+                  <div className="by-info-container">
+                    <Image
+                      style={{
+                        height: "25px",
+                        width: "25px",
+                        marginRight: "5px",
+                      }}
+                      src={img}
+                      rounded
+                      onClick={() => console.log("to sth")}
+                    />
 
-                <span className="by-info">@{name}</span>
-              </div>
-              <Link>
-                <h5
-                  style={{ overflow: "hidden" }}
-                  onClick={() => console.log("to sth")}
-                >
-                  {title.length >= 99 ? title.slice(0, 95) : title}
-                </h5>
-                <p onClick={() => console.log("to sth")}>
-                  {content.slice(0, 80)}...
-                </p>
-              </Link>
+                    <span className="by-info">{name}</span>
+                    <span></span>
+                  </div>
+                  <Link>
+                    <h5
+                      style={{ overflow: "hidden" }}
+                      onClick={() => console.log("to sth")}
+                    >
+                      {title.length >= 99 ? title.slice(0, 95) : title}
+                    </h5>
+                    <p onClick={() => console.log("to sth")}>
+                      {content.slice(0, 80)}...
+                    </p>
+                  </Link>
+                </div>
+              )}
             </Col>
             <Col
               lg={6}
@@ -164,7 +182,18 @@ export default function TopContainer() {
                 }}
                 className="b-shadow"
               >
-                Topics To Follow
+                Topics To Follow{" "}
+                <Link to="/topics">
+                  <span
+                    style={{
+                      marginLeft: "1rem",
+                      opacity: "0.5",
+                      fontSize: "10px",
+                    }}
+                  >
+                    MORE...
+                  </span>
+                </Link>
               </p>
 
               {recommendTopics.map((topic, index) => {

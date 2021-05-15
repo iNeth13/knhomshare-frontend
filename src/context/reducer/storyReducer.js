@@ -26,8 +26,15 @@ import {
   STORY_DELETE_COMMENT_REQ,
   STORY_DELETE_COMMENT_SUCCESS,
   STORY_DELETE_COMMENT_FAIL,
+  STORY_EACH_TOPIC_REQ,
+  STORY_EACH_TOPIC_SUCCESS,
+  STORY_EACH_TOPIC_FAIL,
 } from "../action/storyAction";
-import { RESET_STORY_ERROR, RESET_POST_MESSAGE } from "../action/sharedAction";
+import {
+  RESET_STORY_ERROR,
+  RESET_POST_MESSAGE,
+  RESET_EACH_TOPIC_STORIES,
+} from "../action/sharedAction";
 
 const storyReducer = (state, action) => {
   switch (action.type) {
@@ -160,6 +167,23 @@ const storyReducer = (state, action) => {
         deleteStoryLoading: false,
         message: action.payload,
       };
+    case STORY_EACH_TOPIC_REQ:
+      return {
+        ...state,
+        eachTopicLoading: true,
+      };
+    case STORY_EACH_TOPIC_SUCCESS:
+      return {
+        ...state,
+        eachTopicLoading: false,
+        eachTopicStories: action.payload.eachTopicStories,
+        totalStories: action.payload.totalStories,
+      };
+    case STORY_EACH_TOPIC_FAIL:
+      return {
+        ...state,
+        eachTopicLoading: false,
+      };
     case RESET_STORY_ERROR:
       return {
         ...state,
@@ -175,6 +199,13 @@ const storyReducer = (state, action) => {
         ...state,
         message: null,
       };
+    case RESET_EACH_TOPIC_STORIES: {
+      return {
+        ...state,
+        eachTopicStories: null,
+        totalStories: null,
+      };
+    }
     default:
       return state;
   }

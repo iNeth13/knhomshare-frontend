@@ -30,8 +30,15 @@ import {
   STORY_DELETE_COMMENT_REQ,
   STORY_DELETE_COMMENT_SUCCESS,
   STORY_DELETE_COMMENT_FAIL,
+  STORY_EACH_TOPIC_REQ,
+  STORY_EACH_TOPIC_SUCCESS,
+  STORY_EACH_TOPIC_FAIL,
 } from "../action/storyAction";
-import { RESET_STORY_ERROR, RESET_POST_MESSAGE } from "../action/sharedAction";
+import {
+  RESET_STORY_ERROR,
+  RESET_POST_MESSAGE,
+  RESET_EACH_TOPIC_STORIES,
+} from "../action/sharedAction";
 import storyReducer from "../reducer/storyReducer";
 import { useLocation } from "react-router";
 
@@ -118,11 +125,11 @@ export default function StoryProvider({ children }) {
     } catch (error) {}
   };
 
-  const handlePopularStories = async () => {
+  const handlePopularStories = async (topic) => {
     try {
       dispatch({ type: STORY_GET_POPULAR_REQ });
       const response = await fetch(
-        `${process.env.REACT_APP_DEFAULT_URL}/api/story/popular?page=${1}`
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/popular?topic=${topic}`
       );
       const responseData = await response.json();
       if (!response.ok) {
@@ -293,11 +300,37 @@ export default function StoryProvider({ children }) {
     }
   };
 
+  const handleEachTopic = async (topic, page) => {
+    console.log(topic, page);
+    try {
+      dispatch({ type: STORY_EACH_TOPIC_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/story/topic/${topic}/${page}`
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        console.log(responseData);
+      }
+      dispatch({
+        type: STORY_EACH_TOPIC_SUCCESS,
+        payload: {
+          eachTopicStories: responseData.eachTopicStories,
+          totalStories: responseData.totalStories,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: STORY_EACH_TOPIC_FAIL, payload: error.message });
+    }
+  };
+
   const handleResetStoryError = () => {
     dispatch({ type: RESET_STORY_ERROR });
   };
   const handleResetPostMessage = () => {
     dispatch({ type: RESET_POST_MESSAGE });
+  };
+  const handleResetEachTopicStories = () => {
+    dispatch({ type: RESET_EACH_TOPIC_STORIES });
   };
 
   useEffect(() => {
@@ -321,6 +354,8 @@ export default function StoryProvider({ children }) {
         handleStoryEdit,
         handleStoryDelete,
         handleDeleteStoryComment,
+        handleEachTopic,
+        handleResetEachTopicStories,
       }}
     >
       {children}
