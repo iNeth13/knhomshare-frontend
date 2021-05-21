@@ -44,7 +44,7 @@ export default function Story({
               >
                 {/* profile Pic , username and date */}
                 <div>
-                  <div className="story-user-info-container">
+                  <div className="story-user-info-container d-flex align-items-center">
                     <Image
                       style={{
                         height: "25px",
@@ -97,7 +97,9 @@ export default function Story({
                         </p>
                       </Link>
                     </div>
-                    <div className="story-right-info">
+                    <div
+                      className="story-right-info"
+                    >
                       <Link to={`/story/${_id}`}>
                         <Image
                           thumbnail
@@ -106,8 +108,8 @@ export default function Story({
                               ? `${process.env.REACT_APP_DEFAULT_URL}/${content.images[0]}`
                               : ""
                           }
+                          height={`${topContainer ? "70px" : "120px"}`}
                           className="story-right-image"
-                          style={{ height: `${topContainer ? "70px" : ""}` }}
                         />
                       </Link>
                     </div>

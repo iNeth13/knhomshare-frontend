@@ -342,7 +342,7 @@ export default function WriteForm({
                   handleErrorModalHide={handleErrorModalHide}
                   show={errorModal}
                   errorMessage={error}
-                  handleResetStoryError={handleResetStoryError}
+                  handleResetError={handleResetStoryError}
                 />
               )}
             </Form>

@@ -14,7 +14,12 @@
 .a7x2 {
   margin-bottom: 1rem;
 }
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 785px) and (min-width: 768px) {
+  
+}
+
+@media screen and (max-width: 767px) {
   .user-stories-custom-row {
     display: flex;
     flex-direction: column !important;

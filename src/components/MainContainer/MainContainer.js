@@ -11,9 +11,11 @@ import MainStoriesLoader from "../ContentLoaders/MainStoriesLoader";
 import Story from "../Story/Story";
 import topics from "../../constants/topics";
 import { useStoryContext } from "../../context/provider/storyContext";
+import { useTopicContext } from "../../context/provider/topicContext";
 
 export default function MainContainer() {
   const { newestStories, handleNewestStories, nLoading } = useStoryContext();
+  const { handleRecommendTopic } = useTopicContext();
   const [page, setPage] = useState(3);
   const [allTopics, setAlltopics] = useState();
   let loader = useRef(null);
@@ -34,7 +36,7 @@ export default function MainContainer() {
   useEffect(() => {
     var options = {
       root: null,
-      rootMargin: "100px",
+      rootMargin: "500px",
       threshold: 1,
     };
     const observer = new IntersectionObserver(handleObserver, options);

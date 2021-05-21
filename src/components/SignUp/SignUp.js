@@ -25,11 +25,11 @@ export default function SignUp({ handleModeChange }) {
       .required("Username is empty."),
     password: Yup.string()
       .min(8, "Password is too short.")
+      .required("Password is empty.")
       .matches(
-        /^(?=.*[A-Za-z ])(?=.*\d)(?=.*[@$!%*#^?&()])[A-Za-z\d@$!%*#?&() ]{8,}$/,
-        "Minimum eight characters, at least one letter, one number and one special character(!,@,#,$,%,^,&,*,(,) )."
-      )
-      .required("Password is empty."),
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number."
+      ),
     confirmPassword: Yup.string()
       .when("password", {
         is: (val) => (val && val.length > 0 ? true : false),
@@ -73,6 +73,7 @@ export default function SignUp({ handleModeChange }) {
             touched,
           }) => (
             <Form onSubmit={handleSubmit}>
+              {console.log(values)}
               <FormGroup>
                 <Form.Label>
                   <FaEnvelope className="form-icons mr-2" />
@@ -210,12 +211,20 @@ export default function SignUp({ handleModeChange }) {
                 <Button variant="outline-dark" type="submit">
                   Sign Up
                 </Button>
-                <p style={{ fontSize: "14px", marginBottom: "0" }}>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    marginBottom: "0",
+                    marginTop: "1rem",
+                  }}
+                >
                   Back to
                   <Link
-                    to={`auth?signin&redirect=/`}
-                    onClick={() => handleModeChange(false)}
+                    to={"/auth/login"}
                     className="ml-1"
+                    style={{
+                      borderBottom: "1px solid black",
+                    }}
                   >
                     sign in.
                   </Link>

@@ -1,0 +1,12 @@
+.single-story-main-image-container {
+}
+.single-story-main-image {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 576px) {
+  .single-story-main-image {
+  
+  }
+}

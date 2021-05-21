@@ -7,11 +7,10 @@
 }
 .story-right-info {
   width: 40%;
-  min-height: 70px;
 }
-.story-right-image{
-  width: 100%;
-  height : 135px;
+.story-right-image {
+  max-width: 100%;
+  height: auto;
 }
 .story-left-info {
   width: 70%;
@@ -25,7 +24,7 @@
 
 @media screen and (max-width: 576px) {
   .story-right-image {
-    width: 100%;
-    height : 100px
+    max-width: 100%;
+    height: auto;
   }
 }

@@ -45,6 +45,7 @@ export default function SingleStoryPage() {
         className="overflow-hidden single-story-container"
         style={{
           minHeight: "5rem",
+         
         }}
       >
         <Col lg={3} md={3} sm={12} className="">

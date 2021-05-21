@@ -1,4 +1,9 @@
-.write-comment-container{
-    margin-bottom: 1.5rem;
-    width:'100%'
+.write-comment-container {
+  margin-bottom: 1.5rem;
+  width: "100%";
+}
+@media screen and (max-width: 992px) {
+  .cmt-form {
+    padding-left: 1rem;
+  }
 }

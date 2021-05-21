@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
+import openSocket from "socket.io-client";
 
 import "./TopContainer.css";
 
@@ -9,6 +10,7 @@ import { Container, Row, Col, Image, Button } from "react-bootstrap";
 //contextAPI
 import { useAuthorContext } from "../../context/provider/authorContext";
 import { useStoryContext } from "../../context/provider/storyContext";
+import { useTopicContext } from "../../context/provider/topicContext";
 
 //content loaders
 import RecommendLoader from "../ContentLoaders/RecommendLoader";
@@ -20,6 +22,8 @@ import TopMainStoryLoader from "../ContentLoaders/TopMainStoryLoader";
 //this will show recommend stories and authors
 import Recommend from "../Recommend/Recommend";
 import changeDateFormat from "../utils/changeDateFormat";
+import ErrorBanner from "../ErrorBanner/ErrorBanner";
+import { useUserContext } from "../../context/provider/userContext";
 //this will show popular stories
 const Story = React.lazy(() => import("../Story/Story"));
 
@@ -27,59 +31,22 @@ export default function TopContainer() {
   const { handleRecommendAuthor, recommendedAuthors, aLoading } =
     useAuthorContext();
   const { handlePopularStories, sLoading, popularStories } = useStoryContext();
-  let name = "inetca";
-  let title =
-    "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";
-  let content =
-    "title title title title title title  title title titletitletitletitletitletitletitletitletitletitle";
-  let stories = [
-    {
-      user: "user",
-      userImage: img,
-      image: img,
-      title,
-      content,
-    },
-    {
-      user: "user",
-      userImage: img,
-      image: img,
-      title,
-      content,
-    },
-    {
-      user: "user",
-      userImage: img,
-      image: img,
-      title,
-      content,
-    },
-  ];
-
-  let recommendTopics = [
-    {
-      name: "author1",
-      image: img,
-    },
-    {
-      name: "author1",
-      image: img,
-    },
-    {
-      name: "author1",
-      image: img,
-    },
-  ];
+  const { handleRecommendTopic, recommendedTopic, tLoading } =
+    useTopicContext();
+  const { handleCurrentUser, currentUser = {} } = useUserContext();
   const newDateFormat = changeDateFormat(
     popularStories && popularStories[0].createdAt
   );
-  console.log(newDateFormat);
+
+  const { date, day, month, hourAndMinute, year } = newDateFormat;
   useEffect(() => {
     handleRecommendAuthor();
     handlePopularStories();
+    handleRecommendTopic();
+    handleCurrentUser();
   }, []);
   return (
-    <div className="" >
+    <div className="">
       <Row style={{ minHeight: "466px" }}>
         <Col lg={8} md={12} sm={12} xs={12}>
           <Row>
@@ -90,35 +57,58 @@ export default function TopContainer() {
                 </div>
               ) : (
                 <div>
-                  <Link>
+                  <Link
+                    to={`/story/${popularStories && popularStories[0]._id}`}
+                  >
                     <div className="main-story-image-container">
-                      <Image src={img} className="w-100 main-story-image" />
+                      <Image
+                        src={`${process.env.REACT_APP_DEFAULT_URL}/${
+                          popularStories && popularStories[0].content.images[0]
+                        }`}
+                        className="main-story-image"
+                      />
                     </div>
                   </Link>
-                  <div className="by-info-container">
+                  <div className="by-info-container d-flex align-items-center">
                     <Image
                       style={{
                         height: "25px",
                         width: "25px",
                         marginRight: "5px",
                       }}
-                      src={img}
+                      src={`${process.env.REACT_APP_DEFAULT_URL}/${
+                        popularStories && popularStories[0].user.profilePic
+                      }`}
                       rounded
                       onClick={() => console.log("to sth")}
                     />
 
-                    <span className="by-info">{name}</span>
-                    <span></span>
+                    <span className="by-info">
+                      {popularStories && popularStories[0].user.username}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "12px",
+                        opacity: "0.6",
+                        marginLeft: "1rem",
+                      }}
+                    >
+                      {day} {date} {month} {year} {hourAndMinute}
+                    </span>
                   </div>
                   <Link>
                     <h5
                       style={{ overflow: "hidden" }}
                       onClick={() => console.log("to sth")}
                     >
-                      {title.length >= 99 ? title.slice(0, 95) : title}
+                      {popularStories && popularStories[0].title.length >= 99
+                        ? popularStories && popularStories[0].title.slice(0, 95)
+                        : popularStories && popularStories[0].title}
                     </h5>
                     <p onClick={() => console.log("to sth")}>
-                      {content.slice(0, 80)}...
+                      {popularStories &&
+                        popularStories[0].subtitle.slice(0, 100)}
+                      ...
                     </p>
                   </Link>
                 </div>
@@ -160,7 +150,8 @@ export default function TopContainer() {
                     <RecommendLoader key={index} />
                   ))
                 : recommendedAuthors?.map((author, index) => {
-                    const { bio, profilePic, username } = author;
+                    const { bio, profilePic, username, _id } = author;
+                    console.log(_id);
                     return (
                       <Recommend
                         bio={bio}
@@ -168,6 +159,8 @@ export default function TopContainer() {
                         name={username}
                         recommendedType="author"
                         key={index}
+                        currentUser={currentUser}
+                        authorId={_id}
                       />
                     );
                   })}
@@ -195,18 +188,24 @@ export default function TopContainer() {
                   </span>
                 </Link>
               </p>
-
-              {recommendTopics.map((topic, index) => {
-                const { image, name } = topic;
-                return (
-                  <Recommend
-                    image={image}
-                    name={name}
-                    recommendedType="topic"
-                    key={index}
-                  />
-                );
-              })}
+              {tLoading
+                ? [1, 2, 3].map((number, index) => (
+                    <RecommendLoader key={index} />
+                  ))
+                : recommendedTopic?.map((t, index) => {
+                    let image;
+                    let { topic } = t;
+                    image = topic.toLowerCase() === "book" ? img : "";
+                    return (
+                      <Recommend
+                        image={image}
+                        name={topic}
+                        recommendedType="topic"
+                        key={index}
+                        currentUser={currentUser}
+                      />
+                    );
+                  })}
             </div>
           </div>
         </Col>

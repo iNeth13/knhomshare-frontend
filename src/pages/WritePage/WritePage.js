@@ -11,14 +11,21 @@ import { useStoryContext } from "../../context/provider/storyContext";
 export default function WritePage() {
   const { push } = useHistory();
   const { user } = useUserContext();
-  const { handleStoryPost, sLoading, error ,handleResetStoryError,sMessage,handleResetPostMessage} = useStoryContext();
+  const {
+    handleStoryPost,
+    sLoading,
+    error,
+    handleResetStoryError,
+    sMessage,
+    handleResetPostMessage,
+  } = useStoryContext();
   if (!user) {
-    push("/auth?redirect=write");
+    push("/auth/login?redirect=write");
   }
-  if(sMessage){
-    setTimeout(()=>{
+  if (sMessage) {
+    setTimeout(() => {
       handleResetPostMessage();
-    },5000)
+    }, 5000);
   }
   return (
     <div>

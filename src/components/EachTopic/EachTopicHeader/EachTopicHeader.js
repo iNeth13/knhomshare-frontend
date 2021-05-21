@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import openSocket from "socket.io-client";
 import "./EachTopicHeader.css";
 
 import { Row, Col, Button, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useStoryContext } from "../../../context/provider/storyContext";
+import useTopicFollow from "../../utils/useTopicFollow";
+import { useUserContext } from "../../../context/provider/userContext";
 
 export default function EachTopicHeader({
   sLoading,
   popularStories = [],
   topic,
+  topicDes,
+  currentUser = {},
 }) {
-  if(topic==='mental-health'){
-    topic= 'Mental Health'
+  if (topic === "Mental-health") {
+    topic = "Mental Health";
   }
   const { totalStories } = useStoryContext();
+  const { user } = useUserContext();
+  const [followedTopics, handleFollowTopic] = useTopicFollow(currentUser);
   const mainStory = popularStories.length > 0 ? popularStories.slice(0, 1) : {};
-  console.log(totalStories);
   return (
     <div className="each-topic-header-container">
       <Row>
@@ -61,18 +67,52 @@ export default function EachTopicHeader({
               <h6 style={{ textTransform: "uppercase", marginBottom: "0" }}>
                 {topic}
               </h6>
-              <Button size="sm" variant="outline-success" className="ml-5">
-                Follow
-              </Button>
+              {followedTopics?.includes(topic) ? (
+                <Button
+                  size="sm"
+                  variant="outline-success"
+                  className="ml-5"
+                  onClick={() =>
+                    handleFollowTopic(
+                      user && user.userId,
+                      user && user.token,
+                      topic,
+                      "unfollow"
+                    )
+                  }
+                >
+                  Followed
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="outline-success"
+                  className="ml-5"
+                  onClick={() =>
+                    handleFollowTopic(
+                      user && user.userId,
+                      user && user.token,
+                      topic,
+                      "follow"
+                    )
+                  }
+                  disabled={user ? false : true}
+                >
+                  Follow
+                </Button>
+              )}
             </div>
             <p style={{ textTransform: "uppercase", fontSize: "12px" }}>
               Total Stories : {totalStories && totalStories}
             </p>
-            <p>
-              From building your vocabulary to reducing stress, preventing
-              age-related cognitive decline and increasing your ability to
-              empathize, reading books is an easy way to look after your mind
-              and body.
+            <p
+              style={{
+                fontSize: "14px",
+                textTransform: "uppercase",
+                paddingBottom: "2rem",
+              }}
+            >
+              {topicDes}
             </p>
           </div>
         </Col>

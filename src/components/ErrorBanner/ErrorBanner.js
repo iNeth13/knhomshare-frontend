@@ -5,14 +5,14 @@ export default function ErrorBanner({
   errorMessage,
   show,
   handleErrorModalHide,
-  handleResetStoryError,
+  handleResetError,
 }) {
   return (
     <Modal
       show={show}
       onHide={() => {
         handleErrorModalHide(false);
-        handleResetStoryError();
+        handleResetError();
       }}
       centered
     >

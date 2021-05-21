@@ -9,7 +9,7 @@ import {} from "react-router-dom";
 import {} from "react-bootstrap";
 import {} from "react-icons";
 
-export default function CommentList({ comments,storyId }) {
+export default function CommentList({ comments, storyId }) {
   console.log(comments);
   return (
     <div className="py-3">
@@ -29,7 +29,21 @@ export default function CommentList({ comments,storyId }) {
           );
         })
       ) : (
-        <p>This story doesn't have any comments yet. Leave one.</p>
+        <p
+          className=""
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            fontSize: "12px",
+            fontWeight: "bold",
+            backgroundColor: "rgba(0,0,0,0.7)",
+            color: "#fff",
+            padding: "1rem 0",
+            borderRadius:'.6rem'
+          }}
+        >
+          This story doesn't have any comments yet. Leave one.
+        </p>
       )}
     </div>
   );

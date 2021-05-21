@@ -18,6 +18,9 @@ import {
   USER_PASSWORD_CHANGE_REQ,
   USER_PASSWORD_CHANGE_SUCCESS,
   USER_PASSWORD_CHANGE_FAIL,
+  USER_GET_CURRENTUSER_REQ,
+  USER_GET_CURRENTUSER_SUCCESS,
+  USER_GET_CURRENTUSER_FAIL,
 } from "../action/userAction";
 import {
   RESET_USER_ERROR,
@@ -150,6 +153,23 @@ const userReducer = (state, action) => {
       return {
         ...state,
         uLoading: false,
+        error: action.payload,
+      };
+    case USER_GET_CURRENTUSER_REQ:
+      return {
+        ...state,
+        currentUserLoading: true,
+      };
+    case USER_GET_CURRENTUSER_SUCCESS:
+      return {
+        ...state,
+        currentUserLoading: false,
+        currentUser: action.payload,
+      };
+    case USER_GET_CURRENTUSER_FAIL:
+      return {
+        ...state,
+        currentUserLoading: false,
         error: action.payload,
       };
     case RESET_PROFILE_MESSAGE:

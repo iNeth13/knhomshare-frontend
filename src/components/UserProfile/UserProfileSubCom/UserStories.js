@@ -65,7 +65,9 @@ export default function UserStories({ totalPages, stories }) {
         className=" user-stories-custom-row justify-content-center"
       >
         {userStoriesLoading ? (
-          <Loader />
+          <div className="d-flex justify-content-center w-100">
+            <Loader />
+          </div>
         ) : stories && stories.length >= 1 ? (
           stories?.map((story) => {
             const { createdAt, content, subtitle, title, _id } = story;

@@ -54,7 +54,7 @@ export default function CommentSection({ singleStory }) {
           <div>
             You are not signed in. Please{" "}
             <Link
-              to={`/auth?redirect=story&id=${singleStory._id}`}
+              to={`/auth/login?redirect=story&id=${singleStory._id}`}
               className="sign-in-link"
             >
               sign in

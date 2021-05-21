@@ -89,7 +89,7 @@ export default function SingleStoryLeftContent({ singleStory }) {
             <RiWechatLine style={{ fontSize: "30px" }} />
             <span>{totalComments.length}</span>
           </a>
-          <div>
+          <div className='ml-4'>
             <AiOutlineHeart style={{ fontSize: "30px" }} />
             <span>{totalLikes}</span>
           </div>

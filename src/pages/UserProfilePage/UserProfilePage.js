@@ -46,7 +46,7 @@ export default function UserProfilePage({ history }) {
         <Col lg={3} md={3} sm={12}>
           <SideNavigate setNavigate={setNavigate} />
         </Col>
-        <Col>
+        <Col lg={9} md={9} sm={12}>
           {toolbar <= 768 && <div style={{ marginTop: "20px" }} />}
           {uLoading ? (
             <Loader />

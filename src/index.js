@@ -11,6 +11,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import UserProvider from "./context/provider/userContext";
 import StoryProvider from "./context/provider/storyContext";
 import AuthorProvider from "./context/provider/authorContext";
+import TopicProvider from "./context/provider/topicContext";
 
 //bootstrap css
 
@@ -22,9 +23,11 @@ ReactDOM.render(
   <Router>
     <UserProvider>
       <AuthorProvider>
-        <StoryProvider>
-          <App />
-        </StoryProvider>
+        <TopicProvider>
+          <StoryProvider>
+            <App />
+          </StoryProvider>
+        </TopicProvider>
       </AuthorProvider>
     </UserProvider>
   </Router>,

@@ -32,6 +32,9 @@ import {
   USER_PASSWORD_CHANGE_REQ,
   USER_PASSWORD_CHANGE_SUCCESS,
   USER_PASSWORD_CHANGE_FAIL,
+  USER_GET_CURRENTUSER_REQ,
+  USER_GET_CURRENTUSER_SUCCESS,
+  USER_GET_CURRENTUSER_FAIL,
 } from "../action/userAction";
 
 //imported share action
@@ -96,11 +99,15 @@ export default function UserProvider({ children }) {
     //     ? "/"
     //     : "";
     let redirect;
-    if (search.split("=")[1].startsWith("write")) {
-      redirect = "/write";
-    } else if (search.split("=")[1].startsWith("story")) {
-      redirect = `/story/${search.split("=")[2]}`;
-    } else if (search.split("=")[1].startsWith("homepage")) {
+    if (search) {
+      if (search.split("=")[1].startsWith("write")) {
+        redirect = "/write";
+      } else if (search.split("=")[1].startsWith("story")) {
+        redirect = `/story/${search.split("=")[2]}`;
+      } else if (search.split("=")[1].startsWith("homepage")) {
+        redirect = "/";
+      }
+    } else {
       redirect = "/";
     }
     try {
@@ -174,7 +181,7 @@ export default function UserProvider({ children }) {
       if (!response.ok) {
         throw new Error();
       }
-     
+
       dispatch({
         type: "USER_GET_STORIES_SUCCESS",
         payload: {
@@ -183,8 +190,7 @@ export default function UserProvider({ children }) {
           currentPage: responseData.currentPage,
         },
       });
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleProfileImageChange = async (file, userId, userToken) => {
@@ -286,7 +292,7 @@ export default function UserProvider({ children }) {
       );
       const responseData = await response.json();
       if (!response.ok) {
-       // console.log(responseData.message);
+        // console.log(responseData.message);
         throw new Error(responseData.message);
       }
       //(responseData.message);
@@ -296,6 +302,29 @@ export default function UserProvider({ children }) {
       });
     } catch (error) {
       dispatch({ type: USER_PASSWORD_CHANGE_FAIL, payload: error.message });
+    }
+  };
+
+  const handleCurrentUser = async () => {
+    if (state.user) {
+      try {
+        dispatch({ type: USER_GET_CURRENTUSER_REQ });
+        console.log(state.user.userId);
+        const response = await fetch(
+          `${process.env.REACT_APP_DEFAULT_URL}/api/user/current-user/${state.user.userId}`
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+        console.log(responseData);
+        dispatch({
+          type: USER_GET_CURRENTUSER_SUCCESS,
+          payload: responseData.currentUser,
+        });
+      } catch (error) {
+        dispatch({ type: USER_GET_CURRENTUSER_FAIL, payload: error.message });
+      }
     }
   };
 
@@ -320,6 +349,7 @@ export default function UserProvider({ children }) {
         handleUsernameAndBioChange,
         handlePasswordChange,
         handleUserStories,
+        handleCurrentUser,
       }}
     >
       {children}

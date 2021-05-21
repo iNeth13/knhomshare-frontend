@@ -122,10 +122,15 @@ export default function SignIn({ handleModeChange }) {
                 </Button>
                 <p
                   style={{ fontSize: "14px", marginBottom: "0" }}
-                  onClick={() => handleModeChange(true)}
+                  className="s-up-now-btn"
                 >
-                  New user?
-                  <Link to={`auth?signup&redirect=/`}>Sign up now!</Link>
+                  New user?{" "}
+                  <Link
+                    to="/auth/signup"
+                    style={{ borderBottom: "black solid 1px" }}
+                  >
+                    Sign up now!
+                  </Link>
                 </p>
               </div>
             </Form>

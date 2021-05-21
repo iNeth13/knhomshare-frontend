@@ -44,7 +44,7 @@ export default function WriteComment({ user, storyId }) {
           handleBlur,
           values,
         }) => (
-          <Form style={{ width: "93%" }} onSubmit={handleSubmit}>
+          <Form style={{ width: "93%" }} onSubmit={handleSubmit} className='cmt-form'>
             {console.log(values, errors, touched)}
             <Form.Group style={{ marginBottom: "0" }}>
               <Form.Control
@@ -61,6 +61,7 @@ export default function WriteComment({ user, storyId }) {
                 onBlur={handleBlur}
                 name="comment"
                 value={values.comment}
+                className='cmt-textarea'
               />
               {errors.comment && touched.comment && (
                 <Form.Control.Feedback

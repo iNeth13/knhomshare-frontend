@@ -16,15 +16,23 @@
 }
 
 @media screen and (max-width : 992px){
+  .custom-signin-container{
+    width: 50%;
+  }
   .form-footer{
     flex-direction: column;
     align-items: flex-start;
+    
+  }
+  .s-up-now-btn{
+    margin-top: 1rem !important;
   }
 }
 
 @media screen and (max-width : 576px){
     .custom-signin-container{
-      width: 70%;
+      width: 90%;
+      transform: translateY(-15%);
     }
   
 }

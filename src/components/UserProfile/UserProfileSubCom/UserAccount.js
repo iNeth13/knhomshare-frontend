@@ -111,6 +111,8 @@ export default function UserAccount({
             src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
             rounded
             className="user-profile-image"
+            width={100}
+            height={100}
           />
           <div className={`${showEdit && "show-edit"} edit-profile-container`}>
             <p className="edit-profile" onClick={handleOpenFileBrowser}>

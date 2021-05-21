@@ -53,7 +53,7 @@ export default function Header() {
   }, []);
   console.log(showOverlay);
   return (
-    <Navbar bg="light" className="fixed-top nav-border-shadow" >
+    <Navbar bg="light" className="fixed-top nav-border-shadow">
       <Container fluid="lg md xs">
         <Navbar.Brand className="p-0">
           <NavLink to="/">
@@ -128,10 +128,7 @@ export default function Header() {
                   </Overlay>
                 </div>
               ) : (
-                <NavLink
-                  to={`/auth?redirect=homepage`}
-                  onClick={() => setShowOverlay(false)}
-                >
+                <NavLink to="/auth/login" onClick={() => setShowOverlay(false)}>
                   Sign In
                 </NavLink>
               )}

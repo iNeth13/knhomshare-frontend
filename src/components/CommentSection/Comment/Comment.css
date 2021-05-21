@@ -4,3 +4,9 @@
 .like-button:hover {
   cursor: pointer;
 }
+
+@media screen and (max-width: 992px) {
+  .cmt-container {
+    padding-left: 1rem;
+  }
+}
