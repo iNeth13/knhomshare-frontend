@@ -29,7 +29,12 @@ const usePopover = (setShowOverlay) => {
               ></Image>
             </div>
             <div className=" d-flex flex-column justify-content-center">
-              <h5 style={{ fontSize: "18px", margin: "0" }}>
+              <h5
+                style={{
+                  fontSize: "18px",
+                  margin: "0",
+                }}
+              >
                 {user && user.email}
               </h5>
               <p style={{ fontSize: "12px", marginBottom: "0" }}>
@@ -65,7 +70,6 @@ const usePopover = (setShowOverlay) => {
             coming soon...
           </p>
           <hr />
-          <p className="p-tag">Setting</p>
           <p className="p-tag" onClick={handleSignout}>
             Sign Out
           </p>

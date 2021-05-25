@@ -22,7 +22,7 @@ export default function MainContainer() {
   const handleObserver = (entities) => {
     const target = entities[0];
     if (target.isIntersecting) {
-      setPage((prev) => prev + 3);
+      setPage((prev) => prev + 7);
     }
   };
   const getAllTopics = () => {
@@ -36,7 +36,7 @@ export default function MainContainer() {
   useEffect(() => {
     var options = {
       root: null,
-      rootMargin: "500px",
+      rootMargin: "20px",
       threshold: 1,
     };
     const observer = new IntersectionObserver(handleObserver, options);

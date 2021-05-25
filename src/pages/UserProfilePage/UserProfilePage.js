@@ -20,6 +20,7 @@ export default function UserProfilePage({ history }) {
     uLoading,
     totalPages,
     currentPage,
+    // handleUserFollowersAndFollowing,
   } = useUserContext();
   const { pathname, search } = useLocation();
   const [navigate, setNavigate] = useState("account");
@@ -35,7 +36,7 @@ export default function UserProfilePage({ history }) {
     window.addEventListener("resize", getWindowWidth);
   }, []);
   useEffect(() => {
-    handleUserProfile(user.token);
+    handleUserProfile(user && user.token);
   }, []);
   if (pathname === "/profile" && !search) {
     history.push("/profile?action=account");

@@ -35,7 +35,7 @@ export default function SignUp({ handleModeChange }) {
         is: (val) => (val && val.length > 0 ? true : false),
         then: Yup.string().oneOf(
           [Yup.ref("password")],
-          "Passwords are not matched"
+          "Passwords do not match."
         ),
       })
       .required("Confirm Passowrd is empty."),
@@ -43,7 +43,7 @@ export default function SignUp({ handleModeChange }) {
   });
   return (
     <div className="custom-signup-container">
-      <h5 className="d-flex justify-content-start">
+      <h5 className="d-flex justify-content-start" className="signup-header">
         Join us , many amazing stories await you , share as many as you want!
       </h5>
       <p style={{ borderBottom: "2px solid black", width: "30%" }} />
@@ -121,6 +121,14 @@ export default function SignUp({ handleModeChange }) {
                     type="invalid"
                   >
                     {errors.username}
+                  </Form.Control.Feedback>
+                )}
+                {error?.startsWith("Username") && (
+                  <Form.Control.Feedback
+                    style={{ display: "block" }}
+                    type="invalid"
+                  >
+                    {error}
                   </Form.Control.Feedback>
                 )}
               </FormGroup>

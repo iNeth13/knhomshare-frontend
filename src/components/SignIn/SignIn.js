@@ -106,6 +106,9 @@ export default function SignIn({ handleModeChange }) {
                     type="invalid"
                   >
                     {errors.password}
+                    <Link className="reset-pw-link" to="/req-reset">
+                      Forgot Password?
+                    </Link>
                   </Form.Control.Feedback>
                 ) : error?.startsWith("Password") ? (
                   <Form.Control.Feedback
@@ -120,6 +123,7 @@ export default function SignIn({ handleModeChange }) {
                 <Button variant="outline-dark" type="submit">
                   Sign In
                 </Button>
+
                 <p
                   style={{ fontSize: "14px", marginBottom: "0" }}
                   className="s-up-now-btn"

@@ -1,6 +1,5 @@
 .single-story-left-main {
-  display: flex;
-  justify-content: center;
+  
 }
 .single-story-left-container {
   padding: 0 1rem;
@@ -68,8 +67,8 @@
     margin-bottom: 1rem;
   }
 }
-@media screen and (max-width:400px) {
-  .show-on-sm{
+@media screen and (max-width: 400px) {
+  .show-on-sm {
     font-size: 12px;
   }
 }

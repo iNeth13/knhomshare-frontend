@@ -12,7 +12,6 @@ import Loader from "../../Loader/Loader";
 export default function UserProfileMain({
   userInfo = "",
   totalPages,
-  currentPage,
 }) {
   const { search } = useLocation();
   const [renderedComponent, setRenderedComponent] = useState({});
@@ -35,7 +34,6 @@ export default function UserProfileMain({
         <UserStories
           totalPages={totalPages}
           stories={userInfo?.stories}
-          currentPage={currentPage}
         />
       ),
     },
@@ -45,7 +43,9 @@ export default function UserProfileMain({
     },
     {
       name: "followers",
-      component: <UserFollower />,
+      component: (
+        <UserFollower />
+      ),
     },
   ];
   useEffect(() => {

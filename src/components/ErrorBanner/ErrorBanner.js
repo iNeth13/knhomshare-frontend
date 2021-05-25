@@ -12,7 +12,9 @@ export default function ErrorBanner({
       show={show}
       onHide={() => {
         handleErrorModalHide(false);
-        handleResetError();
+        if (handleResetError) {
+          handleResetError();
+        }
       }}
       centered
     >

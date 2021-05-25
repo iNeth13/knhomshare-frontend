@@ -17,10 +17,12 @@ import SingleStoryMainContent from "../../components/SingleStory/SingleStoryMain
 import SingleStoryRightContent from "../../components/SingleStory/SingleStoryRightContent/SingleStoryRightContent";
 import Loader from "../../components/Loader/Loader";
 import AlertMessage from "../../components/AlertMessage/AlertMessage";
+import { useUserContext } from "../../context/provider/userContext";
 
 export default function SingleStoryPage() {
   const { id } = useParams();
   const { push } = useHistory();
+
   const {
     handleSingleStory,
     singleStory = "",
@@ -28,11 +30,15 @@ export default function SingleStoryPage() {
     error,
     handleResetStoryError,
   } = useStoryContext();
+  const { currentUser, handleCurrentUser } = useUserContext();
   useEffect(() => {
     handleSingleStory(id);
     handleResetStoryError();
   }, [id]);
   console.log(singleStory);
+  useEffect(() => {
+    handleCurrentUser();
+  }, []);
   return (
     <Container fluid>
       <Helmet>
@@ -45,14 +51,16 @@ export default function SingleStoryPage() {
         className="overflow-hidden single-story-container"
         style={{
           minHeight: "5rem",
-         
         }}
       >
         <Col lg={3} md={3} sm={12} className="">
           {sLoading ? (
             <Loader />
           ) : (
-            <SingleStoryLeftContent singleStory={singleStory} />
+            <SingleStoryLeftContent
+              singleStory={singleStory}
+              currentUser={currentUser}
+            />
           )}
         </Col>
         <Col className="custom-main-content">

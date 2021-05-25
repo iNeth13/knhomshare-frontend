@@ -9,7 +9,13 @@ export default function SideNavigate({ setNavigate }) {
   const { search } = useLocation();
   const [activeNav, setActiveNav] = useState("");
   const handleClick = (toComponent) => {
+    console.log(toComponent);
     if (toComponent === "my-stories") {
+      push(`/profile?action=${toComponent}&page=1`);
+    } else if (toComponent === "followers") {
+      console.log("followers got called");
+      push(`/profile?action=${toComponent}&page=1`);
+    } else if (toComponent === "following") {
       push(`/profile?action=${toComponent}&page=1`);
     } else {
       push(`/profile?action=${toComponent}`);
@@ -20,7 +26,6 @@ export default function SideNavigate({ setNavigate }) {
     const getQuery = search && search.split("=")[1];
     setActiveNav(getQuery.split("&")[0]);
   }, []);
-  console.log(activeNav);
   return (
     <div>
       <ButtonGroup

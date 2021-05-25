@@ -15,7 +15,7 @@ export default function SingleStoryMainContent({ singleStory }) {
   const mainImage = content.images[0];
   return (
     <div style={{ overflow: "hidden" }}>
-      <h3 style={{ fontWeight: "normal" }} className="px-3">
+      <h3 style={{}} className="px-3">
         {title}
       </h3>
       <div className="my-4 single-story-main-image-container">

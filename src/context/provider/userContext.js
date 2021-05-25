@@ -35,6 +35,15 @@ import {
   USER_GET_CURRENTUSER_REQ,
   USER_GET_CURRENTUSER_SUCCESS,
   USER_GET_CURRENTUSER_FAIL,
+  USER_GET_FOLLOWERS_FOLLOWING_REQ,
+  USER_GET_FOLLOWERS_FOLLOWING_SUCCESS,
+  USER_GET_FOLLOWERS_FOLLOWING_FAIL,
+  USER_REQ_PASSWORD_RESET_REQ,
+  USER_REQ_PASSWORD_RESET_SUCCESS,
+  USER_REQ_PASSWORD_RESET_FAIL,
+  USER_RESET_PASSWORD_REQ,
+  USER_RESET_PASSWORD_SUCCESS,
+  USER_RESET_PASSWORD_FAIL,
 } from "../action/userAction";
 
 //imported share action
@@ -78,8 +87,12 @@ export default function UserProvider({ children }) {
         }
       );
       const responseData = await response.json();
+      console.log(responseData, response);
       if (!response.ok) {
-        dispatch({ type: USER_SIGN_UP_FAIL, payload: responseData.message });
+        return dispatch({
+          type: USER_SIGN_UP_FAIL,
+          payload: responseData.message,
+        });
       }
       localStorage.setItem("c-user", JSON.stringify(responseData.data));
       dispatch({ type: USER_SIGN_UP_SUCCESS, payload: responseData.data });
@@ -134,7 +147,7 @@ export default function UserProvider({ children }) {
     }
   };
 
-  const handleUserProfile = async (token, page) => {
+  const handleUserProfile = async (token, action = "", page) => {
     try {
       dispatch({ type: USER_PROFILE_REQ });
       const response = await fetch(
@@ -163,6 +176,34 @@ export default function UserProvider({ children }) {
       dispatch({ type: USER_PROFILE_FAIL, payload: error.message });
     }
   };
+  const handleUserFollowersAndFollowing = async (token, action, page) => {
+    console.log(page);
+    try {
+      dispatch({ type: USER_GET_FOLLOWERS_FOLLOWING_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/user/profile/fu?action=${action}&page=${page}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          method: "GET",
+        }
+      );
+      const responseData = await response.json();
+      console.log(responseData);
+      dispatch({
+        type: USER_GET_FOLLOWERS_FOLLOWING_SUCCESS,
+        payload: {
+          totalPages: responseData.totalPages,
+          followers: responseData.followers,
+          following: responseData.following,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleUserStories = async (token, page) => {
     try {
@@ -181,7 +222,6 @@ export default function UserProvider({ children }) {
       if (!response.ok) {
         throw new Error();
       }
-
       dispatch({
         type: "USER_GET_STORIES_SUCCESS",
         payload: {
@@ -190,7 +230,9 @@ export default function UserProvider({ children }) {
           currentPage: responseData.currentPage,
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleProfileImageChange = async (file, userId, userToken) => {
@@ -328,6 +370,79 @@ export default function UserProvider({ children }) {
     }
   };
 
+  const handleReqPasswordReset = async (email) => {
+    try {
+      dispatch({ type: USER_REQ_PASSWORD_RESET_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/user/reset-password`,
+        {
+          method: "POST",
+          body: JSON.stringify({ email }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      dispatch({ type: USER_REQ_PASSWORD_RESET_SUCCESS });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: USER_REQ_PASSWORD_RESET_FAIL, payload: error.message });
+    }
+  };
+  const handleResetPassword = async (password, token) => {
+    console.log("i got called");
+    try {
+      dispatch({ type: USER_RESET_PASSWORD_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/user/reset`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ password }),
+        }
+      );
+      if (!response.ok && response.status === 500) {
+        return dispatch({ type: "RESET_LINK_EXPIRES" });
+      }
+      const responseData = await response.json();
+      localStorage.setItem("c-user", JSON.stringify(responseData.responseUser));
+      dispatch({
+        type: USER_RESET_PASSWORD_SUCCESS,
+        payload: responseData.responseUser,
+      });
+      push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleValidLink = async (token) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/user/check/${token}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      if (!response.ok) {
+        return dispatch({ type: "RESET_LINK_EXPIRES" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSignout = () => {
     localStorage.setItem("c-user", []);
     dispatch({ type: USER_SIGN_OUT });
@@ -350,6 +465,10 @@ export default function UserProvider({ children }) {
         handlePasswordChange,
         handleUserStories,
         handleCurrentUser,
+        handleUserFollowersAndFollowing,
+        handleReqPasswordReset,
+        handleValidLink,
+        handleResetPassword,
       }}
     >
       {children}

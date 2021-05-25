@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import openSocket from "socket.io-client";
 
 import "./Recommend.css";
@@ -8,6 +9,8 @@ import { useUserContext } from "../../context/provider/userContext";
 import { useTopicContext } from "../../context/provider/topicContext";
 import useTopicFollow from "../../components/utils/useTopicFollow";
 import useAuthorFollow from "../../components/utils/useAuthorFollow";
+import { useAuthorContext } from "../../context/provider/authorContext";
+import ErrorBanner from "../ErrorBanner/ErrorBanner";
 
 export default function Recommend({
   bio,
@@ -18,10 +21,18 @@ export default function Recommend({
   authorId,
 }) {
   const { user } = useUserContext();
+  const { authorErrorMessage, handleErrorAuthorError } = useAuthorContext();
   //custom hook
   const [followedTopics, handleFollowTopic] = useTopicFollow(currentUser);
-  const [followedAuthors, handleFollowAuthor] = useAuthorFollow(currentUser);
-  console.log(followedTopics);
+  const [followingAuthor, handleFollowAuthor] = useAuthorFollow(currentUser);
+  const [showModal, setShowModal] = useState(false);
+  const handleErrorModalHide = (value) => {
+    setShowModal(value);
+  };
+  useEffect(() => {
+    handleErrorModalHide(true);
+  }, [authorErrorMessage]);
+  console.log(followingAuthor);
 
   return (
     <div className="d-flex mb-3 align-items-center w-100">
@@ -31,13 +42,20 @@ export default function Recommend({
             ? `${process.env.REACT_APP_DEFAULT_URL}/${image}`
             : image
         }
-        style={{ width: "50px", height: "50px" }}
+        width={50}
+        height={50}
+        style={{ maxWidth: "50px", height: "50px" }}
         roundedCircle
         className="mr-2"
       />
+
       <div style={{ width: "50%" }}>
         <p className="mb-0" style={{ fontWeight: "bold", fontSize: "16px" }}>
-          {name}
+          {recommendedType === "topic" ? (
+            <Link to={`/topic/${name}`}>{name}</Link>
+          ) : (
+            <Link to={`/${name}/${authorId}`}>{name}</Link>
+          )}
         </p>
         {recommendedType === "author" ? (
           <div style={{ fontSize: "14px" }}>
@@ -56,7 +74,7 @@ export default function Recommend({
       <div style={{ width: "20%", marginLeft: "auto" }}>
         {recommendedType === "topic" ? (
           // topic-btn
-          followedTopics?.includes(name) ? (
+          user && followedTopics?.includes(name) ? (
             <Button
               type="button"
               size="sm"
@@ -69,6 +87,7 @@ export default function Recommend({
                   "unfollow"
                 )
               }
+              style={{ backgroundColor: "#02b875", color: "#fff" }}
             >
               Followed
             </Button>
@@ -91,7 +110,7 @@ export default function Recommend({
             </Button>
           )
         ) : //author-btn
-        followedAuthors?.includes(authorId) ? (
+        user && followingAuthor?.includes(authorId) ? (
           <Button
             type="button"
             size="sm"
@@ -104,6 +123,7 @@ export default function Recommend({
                 "unfollow"
               )
             }
+            style={{ backgroundColor: "#02b875", color: "#fff" }}
           >
             Followed
           </Button>
@@ -120,9 +140,18 @@ export default function Recommend({
                 "follow"
               )
             }
+            disabled={user ? false : true}
           >
             Follow
           </Button>
+        )}
+        {authorErrorMessage && (
+          <ErrorBanner
+            show={showModal}
+            errorMessage={authorErrorMessage}
+            handleErrorModalHide={handleErrorModalHide}
+            handleResetError={handleErrorAuthorError}
+          />
         )}
       </div>
     </div>

@@ -120,12 +120,6 @@ export default function WriteForm({
   };
   //end here
 
-  const keyBindingFn = (e) => {
-    if (e.key === "Enter") {
-      return null;
-    }
-  };
-
   useEffect(() => {
     handleErrorModalHide(true);
   }, [error]);

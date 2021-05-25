@@ -1,8 +1,18 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import img from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
-import openSocket from "socket.io-client";
-
+import imgBook from "../../assets/topicImage/art-entertainment/bookLogo.jpeg";
+import imgFirm from "../../assets/topicImage/art-entertainment/filmLogo.jpeg";
+import imgGaming from "../../assets/topicImage/art-entertainment/gamingLogo.jpeg";
+import imgMusic from "../../assets/topicImage/art-entertainment/musicLogo.jpeg";
+import imgFood from "../../assets/topicImage/culture/foodLogo.jpeg";
+import imgStyle from "../../assets/topicImage/culture/styleLogo.jpeg";
+import imgTravel from "../../assets/topicImage/culture/travelLogo.jpeg";
+import imgCorona from "../../assets/topicImage/health/coronaVirusLogo.png";
+import imgFitness from "../../assets/topicImage/health/fitnessLogo.jpeg";
+import imgHealth from "../../assets/topicImage/health/healthLogo.jpeg";
+import imgMentalHealth from "../../assets/topicImage/health/mentalHealthLogo.jpeg";
+import imgJS from "../../assets/topicImage/programming/jsLogo.png";
+import imgProgramming from "../../assets/topicImage/programming/programmingLogo.jpeg";
 import "./TopContainer.css";
 
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
@@ -70,18 +80,21 @@ export default function TopContainer() {
                     </div>
                   </Link>
                   <div className="by-info-container d-flex align-items-center">
-                    <Image
-                      style={{
-                        height: "25px",
-                        width: "25px",
-                        marginRight: "5px",
-                      }}
-                      src={`${process.env.REACT_APP_DEFAULT_URL}/${
-                        popularStories && popularStories[0].user.profilePic
-                      }`}
-                      rounded
-                      onClick={() => console.log("to sth")}
-                    />
+                    <Link
+                      to={`/story/${popularStories && popularStories[0]._id}`}
+                    >
+                      <Image
+                        style={{
+                          height: "25px",
+                          width: "25px",
+                          marginRight: "5px",
+                        }}
+                        src={`${process.env.REACT_APP_DEFAULT_URL}/${
+                          popularStories && popularStories[0].user.profilePic
+                        }`}
+                        rounded
+                      />
+                    </Link>
 
                     <span className="by-info">
                       {popularStories && popularStories[0].user.username}
@@ -96,11 +109,10 @@ export default function TopContainer() {
                       {day} {date} {month} {year} {hourAndMinute}
                     </span>
                   </div>
-                  <Link>
-                    <h5
-                      style={{ overflow: "hidden" }}
-                      onClick={() => console.log("to sth")}
-                    >
+                  <Link
+                    to={`/story/${popularStories && popularStories[0]._id}`}
+                  >
+                    <h5 style={{ overflow: "hidden" }}>
                       {popularStories && popularStories[0].title.length >= 99
                         ? popularStories && popularStories[0].title.slice(0, 95)
                         : popularStories && popularStories[0].title}
@@ -114,13 +126,7 @@ export default function TopContainer() {
                 </div>
               )}
             </Col>
-            <Col
-              lg={6}
-              md={6}
-              sm={6}
-              xs={12}
-              style={{ borderRight: "1px solid grey" }}
-            >
+            <Col lg={6} md={6} sm={6} xs={12} className="border-right">
               <Suspense fallback={<RecommendLoader />}>
                 <Story
                   stories={popularStories?.slice(1, 4)}
@@ -195,7 +201,24 @@ export default function TopContainer() {
                 : recommendedTopic?.map((t, index) => {
                     let image;
                     let { topic } = t;
-                    image = topic.toLowerCase() === "book" ? img : "";
+                    image =
+                      topic.toLowerCase() === "book"
+                        ? imgBook
+                        : topic.toLowerCase() === "film"
+                        ? imgFirm
+                        : topic.toLowerCase() === "gaming"
+                        ? imgGaming
+                        : topic.toLowerCase() === "music"
+                        ? imgMusic
+                        : topic.toLowerCase() === "food"
+                        ? imgFood
+                        : topic.toLowerCase() === "style"
+                        ? imgStyle
+                        : topic.toLowerCase() === "travel"
+                        ? imgTravel
+                        : topic.toLowerCase() === "coronavirus"
+                        ? imgCorona
+                        : "";
                     return (
                       <Recommend
                         image={image}

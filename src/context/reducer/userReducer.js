@@ -21,6 +21,15 @@ import {
   USER_GET_CURRENTUSER_REQ,
   USER_GET_CURRENTUSER_SUCCESS,
   USER_GET_CURRENTUSER_FAIL,
+  USER_GET_FOLLOWERS_FOLLOWING_REQ,
+  USER_GET_FOLLOWERS_FOLLOWING_SUCCESS,
+  USER_GET_FOLLOWERS_FOLLOWING_FAIL,
+  USER_REQ_PASSWORD_RESET_REQ,
+  USER_REQ_PASSWORD_RESET_SUCCESS,
+  USER_REQ_PASSWORD_RESET_FAIL,
+  USER_RESET_PASSWORD_REQ,
+  USER_RESET_PASSWORD_SUCCESS,
+  USER_RESET_PASSWORD_FAIL,
 } from "../action/userAction";
 import {
   RESET_USER_ERROR,
@@ -171,6 +180,58 @@ const userReducer = (state, action) => {
         ...state,
         currentUserLoading: false,
         error: action.payload,
+      };
+    case USER_GET_FOLLOWERS_FOLLOWING_REQ:
+      return {
+        ...state,
+        getFollowersFollowingLoading: true,
+      };
+    case USER_GET_FOLLOWERS_FOLLOWING_SUCCESS:
+      return {
+        ...state,
+        getFollowersFollowingLoading: false,
+        totalFUPages: action.payload.totalPages,
+        followers: action.payload.followers,
+        following: action.payload.following,
+      };
+    case USER_REQ_PASSWORD_RESET_REQ:
+      return {
+        ...state,
+        loading: true,
+      };
+    case USER_REQ_PASSWORD_RESET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isSubmitted: true,
+      };
+    case USER_REQ_PASSWORD_RESET_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case USER_RESET_PASSWORD_REQ:
+      return {
+        ...state,
+        loading: true,
+      };
+    case USER_RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case USER_RESET_PASSWORD_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case "RESET_LINK_EXPIRES":
+      return {
+        ...state,
+        linkExpires: true,
       };
     case RESET_PROFILE_MESSAGE:
       return {

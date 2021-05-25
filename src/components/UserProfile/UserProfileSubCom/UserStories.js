@@ -16,8 +16,7 @@ const EditModal = React.lazy(() => import("../../EditModal/EditModal"));
 
 export default function UserStories({ totalPages, stories }) {
   const { userStoriesLoading, user, handleUserStories } = useUserContext();
-  const { handleStoryEdit, editSubmitLoading, message, editTime, deleteTime } =
-    useStoryContext();
+  const { handleStoryEdit, message, editTime, deleteTime } = useStoryContext();
   const { search } = useLocation();
   const history = useHistory();
   const [page, setPage] = useState();
@@ -25,8 +24,8 @@ export default function UserStories({ totalPages, stories }) {
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const query = new URLSearchParams(search).get("page");
+  console.log(query);
   useEffect(() => {
-    console.log("i got called line 29 " + page + editTime);
     handleUserStories(user.token, !page ? Number(query) : page);
     history.push(
       `/profile?action=my-stories&page=${!page ? Number(query) : page}`

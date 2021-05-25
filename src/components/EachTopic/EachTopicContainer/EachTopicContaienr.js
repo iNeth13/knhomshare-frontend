@@ -18,14 +18,14 @@ export default function EachTopicContaienr(topic) {
     const target = entities[0];
     console.log(target);
     if (target.isIntersecting) {
-      setPage((prev) => prev + 4);
+      setPage((prev) => prev + 7);
     }
   };
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
       threshold: 1,
       root: null,
-      rootMargin: "500px",
+      rootMargin: "20px",
     });
     if (loader.current) {
       observer.observe(loader.current);

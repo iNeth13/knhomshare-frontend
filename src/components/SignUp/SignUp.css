@@ -7,29 +7,30 @@
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
   -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
   -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
-  height : 500px;
+  height: 500px;
   overflow: scroll;
 }
 
 .custom-signup-container::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .custom-signup-container {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-@media screen and (max-width : 992px){
-  .custom-signup-container{
+@media screen and (max-width: 992px) {
+  .custom-signup-container {
     width: 55%;
   }
-
 }
 
-@media screen and (max-width : 576px){
-  .custom-signup-container{
+@media screen and (max-width: 576px) {
+  .custom-signup-container {
     width: 70%;
   }
-
+  .signup-header {
+    font-size: 16px;
+  }
 }

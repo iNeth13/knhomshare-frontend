@@ -9,30 +9,33 @@
   -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.73);
 }
 
-.form-footer{
-    display : flex;
-    justify-content: space-between;
-    align-items: flex-end;
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.reset-pw-link {
+  color: red !important;
+  margin-left: 1rem;
+  border-bottom: 1px solid red;
 }
 
-@media screen and (max-width : 992px){
-  .custom-signin-container{
+@media screen and (max-width: 992px) {
+  .custom-signin-container {
     width: 50%;
   }
-  .form-footer{
+  .form-footer {
     flex-direction: column;
     align-items: flex-start;
-    
   }
-  .s-up-now-btn{
+  .s-up-now-btn {
     margin-top: 1rem !important;
   }
 }
 
-@media screen and (max-width : 576px){
-    .custom-signin-container{
-      width: 90%;
-      transform: translateY(-15%);
-    }
-  
+@media screen and (max-width: 576px) {
+  .custom-signin-container {
+    width: 90%;
+    transform: translateY(-15%);
+  }
 }

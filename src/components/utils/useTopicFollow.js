@@ -7,7 +7,6 @@ const useTopicFollow = (currentUser) => {
   useEffect(() => {
     setFollowedTopic(currentUser.followedTopics);
   }, [currentUser]);
-  console.log(followedTopics, currentUser);
   useEffect(() => {
     const socket = openSocket(`${process.env.REACT_APP_DEFAULT_URL}`);
     socket.on("topic", (data) => {

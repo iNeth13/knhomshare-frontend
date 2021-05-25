@@ -39,6 +39,12 @@ const authorReducer = (state, action) => {
       return {
         ...state,
         authorFollowLoading: false,
+        authorErrorMessage: action.payload,
+      };
+    case "RESET_AUTHOR_ERROR":
+      return {
+        ...state,
+        authorErrorMessage: null,
       };
     default:
       return state;

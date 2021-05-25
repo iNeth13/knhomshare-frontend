@@ -18,6 +18,8 @@ import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import CreatorPage from "./pages/CreatorPage/CreatorPage";
 import EachTopicPage from "./pages/EachTopicPage/EachTopicPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
+import ReqResetPasswordPage from "./pages/ReqResetPasswordPage/ReqResetPasswordPage";
 
 import {
   BOOK_DES,
@@ -48,6 +50,8 @@ function App() {
         <Route path="/topics" component={TopicPage} exact />
         <Route path="/auth/login" component={AuthLoginPage} exact />
         <Route path="/auth/signup" component={AuthSignupPage} exact />
+        <Route path="/req-reset" component={ReqResetPasswordPage} exact />
+        <Route path="/reset/:token/:id" component={ResetPasswordPage} exact />
         <Route path="/write" component={WritePage} exact />
         <Route path="/story/:id" component={SingleStoryPage} exact />
         <Route path="/about" component={AboutPage} exact />
