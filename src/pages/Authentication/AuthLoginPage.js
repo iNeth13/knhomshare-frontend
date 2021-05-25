@@ -7,8 +7,6 @@ import SignIn from "../../components/SignIn/SignIn";
 import { Container, Button } from "react-bootstrap";
 
 export default function AuthLoginPage() {
-  const [signup, setSignupMode] = useState(false);
-  const { search } = useLocation();
   const history = useHistory();
 
   const loggedInUser = localStorage.getItem("c-user")

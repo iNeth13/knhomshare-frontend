@@ -43,12 +43,11 @@ export default function ResetPassword() {
   }, []);
   console.log(loading, newValue);
   return (
-    <div className="custom-signin-container">
+    <div className="custom-signin-container req-password-container">
       {linkExpires ? (
         <div
           style={{
             fontWeight: "bold",
-           
           }}
         >
           Your link has expired,please request another one.

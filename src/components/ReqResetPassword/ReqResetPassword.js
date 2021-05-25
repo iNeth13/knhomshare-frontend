@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./ReqResetPassword.css";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, FormGroup, Button } from "react-bootstrap";
@@ -15,7 +16,7 @@ export default function ReqResetPassword() {
   const { error, loading, handleReqPasswordReset, isSubmitted } =
     useUserContext();
   return (
-    <div className="custom-signin-container">
+    <div className="custom-signin-container req-password-container">
       <h5
         className="d-flex justify-content-start mb-4"
         style={{ borderBottom: "2px solid black" }}
