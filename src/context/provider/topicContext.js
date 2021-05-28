@@ -5,6 +5,9 @@ import {
   TOPIC_GET_RECOMMEND_SUCCESS,
   TOPIC_GET_RECOMMEND_FAIL,
   TOPIC_POST_FOLLOW_SUCCESS,
+  TOPIC_GET_RELATED_REQ,
+  TOPIC_GET_RELATED_SUCCESS,
+  TOPIC_GET_RELATED_FAIL,
   TOPIC_ERROR_FOLLOW,
 } from "../action/topicAction";
 import topicReducer from "../reducer/topicReducer";
@@ -66,10 +69,39 @@ export default function TopicProvider({ children }) {
       console.log(error);
     }
   };
+  const handleRelatedStories = async (topics) => {
+    console.log(topics);
+    try {
+      dispatch({ type: TOPIC_GET_RELATED_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/topic/get-related`,
+        {
+          method: "POST",
+          body: JSON.stringify({ topics }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      dispatch({ type: TOPIC_GET_RELATED_SUCCESS, payload: responseData });
+      console.log(responseData);
+    } catch (error) {
+      dispatch({ type: TOPIC_GET_RELATED_FAIL, payload: error.message });
+    }
+  };
 
   return (
     <topicContext.Provider
-      value={{ ...state, handleRecommendTopic, handleFollowTopic }}
+      value={{
+        ...state,
+        handleRecommendTopic,
+        handleFollowTopic,
+        handleRelatedStories,
+      }}
     >
       {children}
     </topicContext.Provider>

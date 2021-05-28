@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./SingleStoryLeftContainer.css";
 
 import { RiWechatLine } from "react-icons/ri";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Image, Button } from "react-bootstrap";
+import openSocket from "socket.io-client";
 
 import changeDateFormat from "../../utils/changeDateFormat";
-import { Link } from "react-router-dom";
 import useAuthorFollow from "../../utils/useAuthorFollow";
 import { useUserContext } from "../../../context/provider/userContext";
 import ErrorBanner from "../../ErrorBanner/ErrorBanner";
@@ -16,20 +17,37 @@ export default function SingleStoryLeftContent({
   singleStory,
   currentUser = {},
 }) {
+  console.log(currentUser);
   const [followingAuthor, handleFollowAuthor] = useAuthorFollow(currentUser);
-  const { user } = useUserContext();
+  const { user, handleLoveStories } = useUserContext();
   const { handleErrorAuthorError, authorErrorMessage } = useAuthorContext();
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [isLoved, setIsLoved] = useState(
+    currentUser && currentUser.lovedStories
+  );
+  const [storyTotalLikes, setStoryTotalLikes] = useState(
+    singleStory && singleStory.totalLikes
+  );
   const handleErrorModalHide = (value) => {
     setShowErrorModal(value);
   };
   useEffect(() => {
     handleErrorModalHide(true);
   }, [authorErrorMessage]);
+  useEffect(() => {
+    const socket = openSocket(`${process.env.REACT_APP_DEFAULT_URL}`);
+    socket.on("user", (data) => {
+      console.log(data);
+      if (data.action === "love" || data.action === "unfollow") {
+        setIsLoved(data.res.lovedStories);
+        setStoryTotalLikes(data.res.storyTotalLikes);
+      }
+    });
+  }, []);
   if (!singleStory) {
     return null;
   }
-  const { totalView, totalLikes, totalComments } = singleStory;
+  const { totalView, totalLikes, totalComments } = singleStory && singleStory;
   const {
     profilePic,
     gender,
@@ -40,7 +58,7 @@ export default function SingleStoryLeftContent({
     stories,
     createdAt,
     _id,
-  } = singleStory.user;
+  } = singleStory?.user;
   const newDateFormat = changeDateFormat(createdAt);
   const { day, date, month, year } = newDateFormat;
   return (
@@ -54,7 +72,9 @@ export default function SingleStoryLeftContent({
             className="user-profile"
           />
           <div>
-            <span className="single-story-left-username">{username}</span>
+            <span className="single-story-left-username">
+              <Link to={`/author/${username}/${_id}`}>{username}</Link>
+            </span>
             <span>
               {user && followingAuthor?.includes(_id) ? (
                 <Button
@@ -126,28 +146,70 @@ export default function SingleStoryLeftContent({
           >
             Total Followers : {followers.length}
           </p>
+          {/* since this component is also used for author profile , this wont show on author profile*/}
           <div className="single-story-left-footer">
             <a href="#comment-section">
               <RiWechatLine style={{ fontSize: "30px" }} />
               <span>{totalComments.length}</span>
             </a>
             <div>
-              <AiOutlineHeart style={{ fontSize: "30px" }} />
-              <span>{totalLikes}</span>
+              {user && isLoved?.includes(singleStory._id) ? (
+                <AiFillHeart
+                  style={{
+                    fontSize: "30px",
+                    cursor: "pointer",
+                    color: "#ff4c4c",
+                  }}
+                  onClick={() =>
+                    handleLoveStories(singleStory._id, user.userId, "unfollow")
+                  }
+                />
+              ) : (
+                <AiOutlineHeart
+                  style={{ fontSize: "30px", cursor: "pointer" }}
+                  onClick={() =>
+                    user
+                      ? handleLoveStories(singleStory._id, user.userId, "love")
+                      : null
+                  }
+                />
+              )}
+              <span>{storyTotalLikes}</span>
             </div>
           </div>
           <div style={{ width: "100%", borderBottom: "1px solid black" }} />
         </div>
-        <div className="single-story-left-footer show-on-sm">
-          <a href="#comment-section">
-            <RiWechatLine style={{ fontSize: "30px" }} />
-            <span>{totalComments.length}</span>
-          </a>
-          <div className="ml-4">
-            <AiOutlineHeart style={{ fontSize: "30px" }} />
-            <span>{totalLikes}</span>
+        {/* since this component is also used for author profile , this wont show on author profile*/}
+          <div className="single-story-left-footer show-on-sm">
+            <a href="#comment-section">
+              <RiWechatLine style={{ fontSize: "30px" }} />
+              <span>{totalComments.length}</span>
+            </a>
+            <div className="ml-4">
+              {user && isLoved?.includes(singleStory._id) ? (
+                <AiFillHeart
+                  style={{
+                    fontSize: "30px",
+                    cursor: "pointer",
+                    color: "#ff4c4c",
+                  }}
+                  onClick={() =>
+                    handleLoveStories(singleStory._id, user.userId, "unfollow")
+                  }
+                />
+              ) : (
+                <AiOutlineHeart
+                  style={{ fontSize: "30px", cursor: "pointer" }}
+                  onClick={() =>
+                    user
+                      ? handleLoveStories(singleStory._id, user.userId, "love")
+                      : null
+                  }
+                />
+              )}
+              <span>{storyTotalLikes}</span>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );

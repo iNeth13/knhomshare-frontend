@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import "./SingleStoryPage.css";
 import favIcon from "../../assets/knhomShare.ico";
 import { useParams, useHistory } from "react-router-dom";
@@ -10,6 +10,7 @@ import Img from "../../assets/404Error.png";
 
 //context API
 import { useStoryContext } from "../../context/provider/storyContext";
+import { useTopicContext } from "../../context/provider/topicContext";
 
 //single story components
 import SingleStoryLeftContent from "../../components/SingleStory/SingleStoryLeftContent/SingleStoryLeftContent";
@@ -21,8 +22,6 @@ import { useUserContext } from "../../context/provider/userContext";
 
 export default function SingleStoryPage() {
   const { id } = useParams();
-  const { push } = useHistory();
-
   const {
     handleSingleStory,
     singleStory = "",
@@ -35,7 +34,6 @@ export default function SingleStoryPage() {
     handleSingleStory(id);
     handleResetStoryError();
   }, [id]);
-  console.log(singleStory);
   useEffect(() => {
     handleCurrentUser();
   }, []);
@@ -44,18 +42,37 @@ export default function SingleStoryPage() {
       <Helmet>
         <meta charSet="utf-8" />
         <title>{singleStory.title}</title>
-        <link rel="canonical" href={`knhomshare.cam/write/${id}`} />
+        <link rel="canonical" href={`https://knhomshare.cam/story/${id}`} />
         <link rel="icon" href={favIcon} />
+        <meta name="description" content={singleStory?.subtitle} />
+        <meta
+          property="image"
+          content={`${process.env.REACT_APP_DEFAULT_URL}/${singleStory?.content?.images[0]}`}
+        />
+        <meta property="url" content={`https://knhomshare.cam/story/${id}`} />
+        <meta property="title" content={singleStory?.title} />
+        <meta name="og:description" content={singleStory?.subtitle} />
+        <meta
+          property="og:image"
+          content={`${process.env.REACT_APP_DEFAULT_URL}/${singleStory?.content?.images[0]}`}
+        />
+        <meta
+          property="og:url"
+          content={`https://knhomshare.cam/story/${id}`}
+        />
+        <meta property="og:title" content={singleStory?.title} />
       </Helmet>
       <Row
-        className="overflow-hidden single-story-container"
+        className="single-story-container"
         style={{
-          minHeight: "5rem",
+          minHeight: "200px",
         }}
       >
-        <Col lg={3} md={3} sm={12} className="">
+        <Col lg={3} md={3} sm={12} className="" style={{ overflow: "visible" }}>
           {sLoading ? (
-            <Loader />
+            <div>
+              <Loader />
+            </div>
           ) : (
             <SingleStoryLeftContent
               singleStory={singleStory}
@@ -65,15 +82,20 @@ export default function SingleStoryPage() {
         </Col>
         <Col className="custom-main-content">
           {sLoading ? (
-            <Loader />
+            <div className="hide-on-sm">
+              <Loader />
+            </div>
           ) : error ? (
             <AlertMessage variant="danger" alertMessage={error} />
           ) : (
             <SingleStoryMainContent singleStory={singleStory} />
           )}
         </Col>
-        <Col lg={3} md={3} sm={12} className="">
-          <SingleStoryRightContent />
+        <Col lg={3} md={3} sm={12} style={{ overflow: "visible" }}>
+          <SingleStoryRightContent
+            singleStory={singleStory}
+            sLoading={sLoading}
+          />
         </Col>
       </Row>
     </Container>

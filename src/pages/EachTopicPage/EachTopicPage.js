@@ -1,5 +1,6 @@
 import React, { useEffect, Suspense } from "react";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import "./EachTopicPage.css";
 
 //import EachTopicContaienr from "../../components/EachTopic/EachTopicContainer/EachTopicContaienr";
@@ -20,18 +21,13 @@ const EachTopicContaienr = React.lazy(() =>
 
 export default function EachTopicPage({ topic, topicDes }) {
   const {
-    handleEachTopic,
     handlePopularStories,
     sLoading,
     popularStories,
     handleResetEachTopicStories,
   } = useStoryContext();
   const { handleFollowTopic } = useTopicContext();
-  const {
-    handleCurrentUser,
-    currentUser = {},
-    currentUserLoading,
-  } = useUserContext();
+  const { handleCurrentUser, currentUser = {} } = useUserContext();
   useEffect(() => {
     handlePopularStories(topic);
     handleCurrentUser();
@@ -42,6 +38,27 @@ export default function EachTopicPage({ topic, topicDes }) {
   console.log(topic);
   return (
     <Container fluid="lg md sm">
+      <Helmet>
+        <title>{topic} Section</title>
+        <meta name="description" content={`${topicDes}`} />
+        <meta property="image" content="src/assets/brand.png" />
+        <meta
+          property="url"
+          content={`https://knhomshare.cam/topic/${topic.toLowerCase()}`}
+        />
+        <meta property="title" content={`${topic} Section`} />
+        <meta name="og:description" content={`${topicDes}`} />
+        <meta property="og:image" content="src/assets/brand.png" />
+        <meta
+          property="og:url"
+          content={`https://knhomshare.cam/topic/${topic.toLowerCase()}`}
+        />
+        <meta property="og:title" content={`${topic} Section`} />
+        <link
+          rel="canonical"
+          href={`https://knhomshare.cam/topic/${topic.toLowerCase()}`}
+        />
+      </Helmet>
       <Suspense fallback={<div></div>}>
         <EachTopicHeader
           sLoading={sLoading}

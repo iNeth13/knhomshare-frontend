@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 
 import authorReducer from "../reducer/authorReducer";
 
@@ -10,7 +10,11 @@ import {
   AUTHOR_GET_FOLLOW_REQ,
   AUTHOR_GET_FOLLOW_SUCCESS,
   AUTHOR_GET_FOLLOW_FAIL,
+  AUTHOR_GET_PROFILE_REQ,
+  AUTHOR_GET_PROFILE_SUCCESS,
+  AUTHOR_GET_PROFILE_FAIL,
 } from "../action/authorAction";
+import { useLocation } from "react-router";
 
 const authorContext = React.createContext();
 
@@ -71,9 +75,45 @@ export default function AuthorProvider({ children }) {
       dispatch({ type: AUTHOR_GET_FOLLOW_FAIL, payload: error.message });
     }
   };
+  const handleAuthorProfile = async (authorId, page, fetchNew) => {
+    try {
+      if (fetchNew) {
+        dispatch({ type: "AUTHOR_GET_PPROFILE_MORESTORIES_REQ" });
+        const response = await fetch(
+          `${process.env.REACT_APP_DEFAULT_URL}/api/author/profile/${authorId}/${page}`
+        );
+        const responseAuthor = await response.json();
+        console.log(response, responseAuthor, "line 84");
+        if (!response.ok) {
+          throw new Error(responseAuthor.message);
+        }
+        return dispatch({
+          type: AUTHOR_GET_PROFILE_SUCCESS,
+          payload: responseAuthor,
+        });
+      }
+      dispatch({ type: AUTHOR_GET_PROFILE_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/author/profile/${authorId}/${page}`
+      );
+      const responseAuthor = await response.json();
+      console.log(response, responseAuthor, "line 84");
+      if (!response.ok) {
+        throw new Error(responseAuthor.message);
+      }
+      dispatch({ type: AUTHOR_GET_PROFILE_SUCCESS, payload: responseAuthor });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: AUTHOR_GET_PROFILE_FAIL, payload: error.message });
+    }
+  };
   const handleErrorAuthorError = () => {
     dispatch({ type: "RESET_AUTHOR_ERROR" });
   };
+  // useEffect(() => {
+  //   //this function called every url change , to remove preview author
+  //   dispatch({ type: "REMOVE_AUTHOR_PROFILE" });
+  // }, [useLocation().pathname]);
   return (
     <authorContext.Provider
       value={{
@@ -81,6 +121,7 @@ export default function AuthorProvider({ children }) {
         handleRecommendAuthor,
         handleFollowAuthor,
         handleErrorAuthorError,
+        handleAuthorProfile,
       }}
     >
       {children}

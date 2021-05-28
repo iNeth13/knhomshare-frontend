@@ -12,9 +12,12 @@ import Story from "../Story/Story";
 import topics from "../../constants/topics";
 import { useStoryContext } from "../../context/provider/storyContext";
 import { useTopicContext } from "../../context/provider/topicContext";
+import { useUserContext } from "../../context/provider/userContext";
 
 export default function MainContainer() {
   const { newestStories, handleNewestStories, nLoading } = useStoryContext();
+  const { handleCurrentUser, currentUser } =
+    useUserContext();
   const { handleRecommendTopic } = useTopicContext();
   const [page, setPage] = useState(3);
   const [allTopics, setAlltopics] = useState();
@@ -46,6 +49,7 @@ export default function MainContainer() {
   }, []);
   useEffect(() => {
     handleNewestStories(3);
+    handleCurrentUser();
     getAllTopics();
     let socket = openSocket(process.env.REACT_APP_DEFAULT_URL);
     socket.on("posts", (data) => {
@@ -79,7 +83,11 @@ export default function MainContainer() {
         >
           <FiEdit3 /> Newest Stories
         </p>
-        <Story stories={newestStories || []} mainContainer />
+        <Story
+          stories={newestStories || []}
+          mainContainer
+          currentUser={currentUser}
+        />
         <div ref={loader} style={{ overflow: "hidden" }}>
           {nLoading && <MainStoriesLoader />}
         </div>

@@ -52,7 +52,9 @@ const usePopover = (setShowOverlay) => {
           <Link to="/write" onClick={() => setShowOverlay(false)}>
             <p className="p-tag">Write</p>
           </Link>
-          <p className="p-tag">Favorite</p>
+          <Link to="/favorite" onClick={() => setShowOverlay(false)}>
+            <p className="p-tag">Favorite</p>
+          </Link>
           <Link
             to="/profile?action=account"
             onClick={() => setShowOverlay(false)}

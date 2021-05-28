@@ -1,0 +1,5 @@
+@media screen and (max-width: 768px) {
+  .author-profile_ {
+    flex-direction: column !important;
+  }
+}

@@ -21,6 +21,11 @@
   flex-direction: row;
   align-items: stretch;
 }
+.cos-column-fav {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+}
 
 @media screen and (max-width: 576px) {
   .story-right-image {

@@ -4,6 +4,9 @@ import {
   TOPIC_GET_RECOMMEND_FAIL,
   TOPIC_POST_FOLLOW_SUCCESS,
   TOPIC_ERROR_FOLLOW,
+  TOPIC_GET_RELATED_REQ,
+  TOPIC_GET_RELATED_SUCCESS,
+  TOPIC_GET_RELATED_FAIL,
 } from "../action/topicAction";
 export default function topicReducer(state, action) {
   console.log("hi from topic reducer");
@@ -28,6 +31,23 @@ export default function topicReducer(state, action) {
       return {
         ...state,
         followMessage: action.payload,
+      };
+    case TOPIC_GET_RELATED_REQ:
+      return {
+        ...state,
+        tLoading: true,
+      };
+    case TOPIC_GET_RELATED_SUCCESS:
+      return {
+        ...state,
+        tLoading: false,
+        relatedStories: action.payload,
+      };
+    case TOPIC_GET_RELATED_FAIL:
+      return {
+        ...state,
+        tLoading: false,
+        error: action.payload,
       };
     case TOPIC_ERROR_FOLLOW:
       return {

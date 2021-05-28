@@ -18,8 +18,10 @@ import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import CreatorPage from "./pages/CreatorPage/CreatorPage";
 import EachTopicPage from "./pages/EachTopicPage/EachTopicPage";
+import FavoritePage from "./pages/FavoritePage/FavoritePage";
 import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import ReqResetPasswordPage from "./pages/ReqResetPasswordPage/ReqResetPasswordPage";
+import AuthorProfilePage from "./pages/AuthorProfilePage/AuthorProfilePage";
 
 import {
   BOOK_DES,
@@ -47,6 +49,11 @@ function App() {
         <Route path="/search/:keyword" component={SearchResult} exact />
         <Route path="/search" component={SearchPageForMobile} exact />
         <Route path="/profile" component={UserProfilePage} exact />
+        <Route
+          path="/author/:username/:authorId"
+          component={AuthorProfilePage}
+          exact
+        />
         <Route path="/topics" component={TopicPage} exact />
         <Route path="/auth/login" component={AuthLoginPage} exact />
         <Route path="/auth/signup" component={AuthSignupPage} exact />
@@ -56,6 +63,7 @@ function App() {
         <Route path="/story/:id" component={SingleStoryPage} exact />
         <Route path="/about" component={AboutPage} exact />
         <Route path="/creator" component={CreatorPage} exact />
+        <Route path="/favorite" component={FavoritePage} exact />
         <Route path="/topic/book" exact>
           <EachTopicPage topic="Book" topicDes={BOOK_DES} />
         </Route>

@@ -132,6 +132,7 @@ export default function TopContainer() {
                   stories={popularStories?.slice(1, 4)}
                   topContainer
                   sLoading={sLoading}
+                  currentUser={currentUser}
                 />
               </Suspense>
             </Col>
@@ -218,7 +219,17 @@ export default function TopContainer() {
                         ? imgTravel
                         : topic.toLowerCase() === "coronavirus"
                         ? imgCorona
-                        : "";
+                        : topic.toLowerCase() === "fitness"
+                        ? imgFitness
+                        : topic.toLowerCase() === "health"
+                        ? imgHealth
+                        : topic.toLowerCase() === "mental-health"
+                        ? imgMentalHealth
+                        : topic.toLowerCase() === "javascript"
+                        ? imgJS
+                        : topic.toLowerCase() === "programming"
+                        ? imgProgramming
+                        : imgMentalHealth;
                     return (
                       <Recommend
                         image={image}

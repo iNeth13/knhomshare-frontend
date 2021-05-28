@@ -1,9 +1,10 @@
 .single-story-left-main {
-  
+  position: sticky !important;
+  top: 100px;
 }
 .single-story-left-container {
   padding: 0 1rem;
-  position: fixed;
+
   display: flex;
   flex-direction: column;
 }

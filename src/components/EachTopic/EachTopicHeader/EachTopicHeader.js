@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useStoryContext } from "../../../context/provider/storyContext";
 import useTopicFollow from "../../utils/useTopicFollow";
 import { useUserContext } from "../../../context/provider/userContext";
+import EachTopicMainStoryLoader from "../../ContentLoaders/EachTopicMainStoryLoader";
 
 export default function EachTopicHeader({
   sLoading,
@@ -32,7 +33,9 @@ export default function EachTopicHeader({
           xs={{ span: 12, order: 2 }}
         >
           {sLoading ? (
-            <div>Loading</div>
+            <div style={{ overflow: "hidden" }}>
+              <EachTopicMainStoryLoader />
+            </div>
           ) : (
             <div className="each-topic-left-container">
               {console.log(mainStory[0])}

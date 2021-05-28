@@ -4,14 +4,15 @@ import "./SingleStoryMainContent.css";
 
 import CommentSection from "../../CommentSection/CommentSection";
 
-import { Image } from "react-bootstrap";
+import { Image, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function SingleStoryMainContent({ singleStory }) {
   if (!singleStory) {
     return null;
   }
-  const { title, content } = singleStory;
-  console.log(content);
+  const { title, content, topics } = singleStory;
+
   const mainImage = content.images[0];
   return (
     <div style={{ overflow: "hidden" }}>
@@ -38,6 +39,54 @@ export default function SingleStoryMainContent({ singleStory }) {
               width={600}
               height={350}
             />
+          );
+        })}
+        <div className="d-flex justify-content-around" style={{ width: "10%" }}>
+          <p
+            style={{
+              width: "5px",
+              height: "5px",
+              backgroundColor: "grey",
+              borderRadius: "50%",
+              marginBottom: "0",
+            }}
+          />
+          <p
+            style={{
+              width: "5px",
+              height: "5px",
+              backgroundColor: "grey",
+              borderRadius: "50%",
+              marginBottom: "0",
+            }}
+          />
+          <p
+            style={{
+              width: "5px",
+              height: "5px",
+              backgroundColor: "grey",
+              borderRadius: "50%",
+              marginBottom: "0",
+            }}
+          />
+        </div>
+      </div>
+      <div className="ml-3 mt-3">
+        {topics?.map((tag, index) => {
+          if (tag === "Mental Health") {
+            tag = "mental-health";
+          }
+          return (
+            <Link to={`/topic/${tag.toLowerCase()}`}>
+              <Button
+                key={index}
+                size="sm"
+                variant="outline-dark"
+                style={{ borderRadius: ".4rem", marginRight: ".5rem" }}
+              >
+                {tag === "mental-health" ? "Mental Health" : tag}
+              </Button>
+            </Link>
           );
         })}
       </div>

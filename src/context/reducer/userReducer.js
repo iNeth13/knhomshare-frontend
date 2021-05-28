@@ -30,6 +30,12 @@ import {
   USER_RESET_PASSWORD_REQ,
   USER_RESET_PASSWORD_SUCCESS,
   USER_RESET_PASSWORD_FAIL,
+  USER_LOVE_STORY_REQ,
+  USER_LOVE_STORY_SUCCESS,
+  USER_LOVE_STORY_FAIL,
+  GET_USER_FAVORITE_FAIL,
+  GET_USER_FAVORITE_REQ,
+  GET_USER_FAVORITE_SUCCESS,
 } from "../action/userAction";
 import {
   RESET_USER_ERROR,
@@ -227,6 +233,37 @@ const userReducer = (state, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case USER_LOVE_STORY_REQ:
+      return {
+        ...state,
+        lLoading: true,
+      };
+    case USER_LOVE_STORY_SUCCESS:
+      return {
+        ...state,
+        lLoading: false,
+      };
+    case USER_LOVE_STORY_FAIL:
+      return {
+        ...state,
+        lLoading: false,
+      };
+    case GET_USER_FAVORITE_REQ:
+      return {
+        ...state,
+        fLoading: true,
+      };
+    case GET_USER_FAVORITE_SUCCESS:
+      return {
+        ...state,
+        fLoading: false,
+        favoriteStories: action.payload,
+      };
+    case GET_USER_FAVORITE_FAIL:
+      return {
+        ...state,
+        fLoading: false,
       };
     case "RESET_LINK_EXPIRES":
       return {

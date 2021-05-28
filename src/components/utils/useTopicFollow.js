@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import openSocket from "socket.io-client";
 import { useTopicContext } from "../../context/provider/topicContext";
+
 const useTopicFollow = (currentUser) => {
   const { handleFollowTopic } = useTopicContext();
   const [followedTopics, setFollowedTopic] = useState();
@@ -22,3 +23,5 @@ const useTopicFollow = (currentUser) => {
   return [followedTopics, handleFollowTopic];
 };
 export default useTopicFollow;
+
+

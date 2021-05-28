@@ -2,6 +2,9 @@
   .single-story-container {
     flex-direction: column !important;
   }
+  .hide-on-sm {
+    display: none;
+  }
 }
 
 .custom-main-content {

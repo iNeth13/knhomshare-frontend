@@ -36,25 +36,31 @@ export default function Recommend({
 
   return (
     <div className="d-flex mb-3 align-items-center w-100">
-      <Image
-        src={
-          recommendedType === "author"
-            ? `${process.env.REACT_APP_DEFAULT_URL}/${image}`
-            : image
-        }
-        width={50}
-        height={50}
-        style={{ maxWidth: "50px", height: "50px" }}
-        roundedCircle
-        className="mr-2"
-      />
+      <Link
+        to={`${
+          recommendedType === "author" ? `/author/${name}/${authorId}` : `/topic/${name}`
+        }`}
+      >
+        <Image
+          src={
+            recommendedType === "author"
+              ? `${process.env.REACT_APP_DEFAULT_URL}/${image}`
+              : image
+          }
+          width={50}
+          height={50}
+          style={{ maxWidth: "50px", height: "50px" }}
+          roundedCircle
+          className="mr-2"
+        />
+      </Link>
 
       <div style={{ width: "50%" }}>
         <p className="mb-0" style={{ fontWeight: "bold", fontSize: "16px" }}>
           {recommendedType === "topic" ? (
             <Link to={`/topic/${name}`}>{name}</Link>
           ) : (
-            <Link to={`/${name}/${authorId}`}>{name}</Link>
+            <Link to={`/author/${name}/${authorId}`}>{name}</Link>
           )}
         </p>
         {recommendedType === "author" ? (

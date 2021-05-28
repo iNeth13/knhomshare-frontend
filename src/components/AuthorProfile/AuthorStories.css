@@ -1,0 +1,5 @@
+.author-stories-container {
+  box-shadow: 5px 5px 5px 0px rgba(244, 244, 244, 0.75);
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(244, 244, 244, 0.75);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(244, 244, 244, 0.75);
+}

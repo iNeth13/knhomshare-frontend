@@ -65,7 +65,9 @@ export default function StoryProvider({ children }) {
     for (const image of images) {
       formData.append("images", image);
     }
-    formData.append("tags", tags);
+    for (const tag of tags) {
+      formData.append("tag", tag);
+    }
     formData.append("paragraph", content);
     formData.append("userId", user.userId);
     try {

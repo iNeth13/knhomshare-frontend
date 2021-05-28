@@ -13,7 +13,7 @@ export default function EachTopicContaienr(topic) {
   const { handleEachTopic, eachTopicLoading, eachTopicStories } =
     useStoryContext();
   const loader = useRef(null);
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(5);
   const handleObserver = (entities) => {
     const target = entities[0];
     console.log(target);
@@ -32,7 +32,7 @@ export default function EachTopicContaienr(topic) {
     }
   }, []);
   useEffect(() => {
-    handleEachTopic(topic.topic, 3);
+    handleEachTopic(topic.topic, 5);
   }, []);
   useEffect(() => {
     handleEachTopic(topic.topic, page);

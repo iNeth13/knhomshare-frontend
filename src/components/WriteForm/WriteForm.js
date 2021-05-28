@@ -142,7 +142,6 @@ export default function WriteForm({
           }}
           validationSchema={storySchema}
           onSubmit={(values, action) => {
-            console.log(action);
             setTitle(values.title);
             setSubtitle(values.subtitle);
             handleStoryPost(

@@ -6,10 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function AboutPage() {
   return (
-    <Container
-      style={{ background: "black", paddingBottom: "1rem" }}
-      fluid
-    >
+    <Container style={{ background: "black", paddingBottom: "1rem" }} fluid>
       <div
         className="d-flex justify-content-center about-page-header"
         style={{ backgroundColor: "white" }}
@@ -53,6 +50,10 @@ export default function AboutPage() {
           projects, and of course it's about financial as well, some features
           charge money :( But I promise to include them in the upcoming update
           after my current project is finished. See you at KnhomShare v2.
+        </h6>
+        <h6 className="about-text-line-height">
+          Last but not least, let me say thank you to Mr.Sun Tropichwathna for
+          this beautiful logo. I really love it man.
         </h6>
         <h6 className="about-text-line-height">
           Have fun and don't forget to follow our awesome authors , leave

@@ -44,6 +44,12 @@ import {
   USER_RESET_PASSWORD_REQ,
   USER_RESET_PASSWORD_SUCCESS,
   USER_RESET_PASSWORD_FAIL,
+  USER_LOVE_STORY_REQ,
+  USER_LOVE_STORY_SUCCESS,
+  USER_LOVE_STORY_FAIL,
+  GET_USER_FAVORITE_FAIL,
+  GET_USER_FAVORITE_REQ,
+  GET_USER_FAVORITE_SUCCESS,
 } from "../action/userAction";
 
 //imported share action
@@ -63,6 +69,7 @@ const initialValues = {
   user: getUserFromLocalStorage,
   error: null,
 };
+
 
 export default function UserProvider({ children }) {
   const { push } = useHistory();
@@ -443,6 +450,57 @@ export default function UserProvider({ children }) {
     }
   };
 
+  const handleLoveStories = async (storyId, userId, type) => {
+    try {
+      console.log(state.lLoading);
+      if (state.lLoading) {
+        console.log("i got called");
+        return;
+      }
+      dispatch({ type: USER_LOVE_STORY_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/user/love/${type}/${userId}/${storyId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.user?.token}`,
+          },
+        }
+      );
+      dispatch({ type: USER_LOVE_STORY_SUCCESS });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: USER_LOVE_STORY_FAIL });
+    }
+  };
+
+  const handleUserFavorite = async () => {
+    try {
+      dispatch({ type: GET_USER_FAVORITE_REQ });
+      const response = await fetch(
+        `${process.env.REACT_APP_DEFAULT_URL}/api/user/favorite`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.user.token}`,
+          },
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      console.log(responseData, response);
+      dispatch({
+        type: GET_USER_FAVORITE_SUCCESS,
+        payload: responseData.favoriteStories,
+      });
+    } catch (error) {
+      dispatch({ type: GET_USER_FAVORITE_FAIL });
+    }
+  };
+
   const handleSignout = () => {
     localStorage.setItem("c-user", []);
     dispatch({ type: USER_SIGN_OUT });
@@ -451,7 +509,7 @@ export default function UserProvider({ children }) {
   useEffect(() => {
     dispatch({ type: RESET_USER_ERROR });
     dispatch({ type: RESET_PROFILE_MESSAGE });
-  }, [useLocation().search]);
+  }, [useLocation().search, useLocation().pathname]);
   return (
     <userContext.Provider
       value={{
@@ -468,6 +526,8 @@ export default function UserProvider({ children }) {
         handleUserFollowersAndFollowing,
         handleReqPasswordReset,
         handleValidLink,
+        handleLoveStories,
+        handleUserFavorite,
         handleResetPassword,
       }}
     >
