@@ -45,7 +45,7 @@ export default function TopContainer() {
     useTopicContext();
   const { handleCurrentUser, currentUser = {} } = useUserContext();
   const newDateFormat = changeDateFormat(
-    popularStories && popularStories[0].createdAt
+    popularStories && popularStories[0]?.createdAt
   );
 
   const { date, day, month, hourAndMinute, year } = newDateFormat;
@@ -68,12 +68,12 @@ export default function TopContainer() {
               ) : (
                 <div>
                   <Link
-                    to={`/story/${popularStories && popularStories[0]._id}`}
+                    to={`/story/${popularStories && popularStories[0]?._id}`}
                   >
                     <div className="main-story-image-container">
                       <Image
                         src={`${process.env.REACT_APP_DEFAULT_URL}/${
-                          popularStories && popularStories[0].content.images[0]
+                          popularStories && popularStories[0]?.content.images[0]
                         }`}
                         className="main-story-image"
                       />
@@ -81,7 +81,7 @@ export default function TopContainer() {
                   </Link>
                   <div className="by-info-container d-flex align-items-center">
                     <Link
-                      to={`/story/${popularStories && popularStories[0]._id}`}
+                      to={`/story/${popularStories && popularStories[0]?._id}`}
                     >
                       <Image
                         style={{
@@ -90,14 +90,14 @@ export default function TopContainer() {
                           marginRight: "5px",
                         }}
                         src={`${process.env.REACT_APP_DEFAULT_URL}/${
-                          popularStories && popularStories[0].user.profilePic
+                          popularStories && popularStories[0]?.user.profilePic
                         }`}
                         rounded
                       />
                     </Link>
 
                     <span className="by-info">
-                      {popularStories && popularStories[0].user.username}
+                      {popularStories && popularStories[0]?.user.username}
                     </span>
                     <span
                       style={{
@@ -110,16 +110,16 @@ export default function TopContainer() {
                     </span>
                   </div>
                   <Link
-                    to={`/story/${popularStories && popularStories[0]._id}`}
+                    to={`/story/${popularStories && popularStories[0]?._id}`}
                   >
                     <h5 style={{ overflow: "hidden" }}>
-                      {popularStories && popularStories[0].title.length >= 99
-                        ? popularStories && popularStories[0].title.slice(0, 95)
-                        : popularStories && popularStories[0].title}
+                      {popularStories && popularStories[0]?.title.length >= 99
+                        ? popularStories && popularStories[0]?.title.slice(0, 95)
+                        : popularStories && popularStories[0]?.title}
                     </h5>
                     <p onClick={() => console.log("to sth")}>
                       {popularStories &&
-                        popularStories[0].subtitle.slice(0, 100)}
+                        popularStories[0]?.subtitle.slice(0, 100)}
                       ...
                     </p>
                   </Link>

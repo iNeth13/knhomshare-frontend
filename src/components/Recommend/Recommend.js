@@ -38,7 +38,9 @@ export default function Recommend({
     <div className="d-flex mb-3 align-items-center w-100">
       <Link
         to={`${
-          recommendedType === "author" ? `/author/${name}/${authorId}` : `/topic/${name}`
+          recommendedType === "author"
+            ? `/author/${name}/${authorId}`
+            : `/topic/${name}`
         }`}
       >
         <Image
@@ -66,7 +68,7 @@ export default function Recommend({
         {recommendedType === "author" ? (
           <div style={{ fontSize: "14px" }}>
             {bio && bio.length > 1 ? (
-              bio.slice(0, 40)
+              bio.slice(0, 50) + "..."
             ) : (
               <div style={{ fontStyle: "italic" }}>
                 this author does not have bio yet.
