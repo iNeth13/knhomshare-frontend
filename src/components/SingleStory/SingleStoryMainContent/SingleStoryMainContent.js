@@ -29,12 +29,12 @@ export default function SingleStoryMainContent({ singleStory }) {
         />
       </div>
       <div className="px-3">{ReactHtmlParser(content.paragraph)}</div>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center" style={{flexDirection:"column"}}>
         {content.images.slice(1, content.images.length).map((image, index) => {
           return (
             <Image
               src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
-              style={{ width: "100%", height: "auto" }}
+              style={{ width: "100%", height: "auto",marginBottom:'1.5rem' }}
               key={index}
               width={600}
               height={350}
@@ -42,7 +42,7 @@ export default function SingleStoryMainContent({ singleStory }) {
           );
         })}
       </div>
-      <div style={{width:"100%"}} className="d-flex justify-content-center mt-3">
+      <div style={{width:"100%"}} className="d-flex justify-content-center mt-2">
         <div className="d-flex justify-content-around" style={{ width: "10%" }}>
        <p
             style={{
