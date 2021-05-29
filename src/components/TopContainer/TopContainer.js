@@ -119,7 +119,7 @@ export default function TopContainer() {
                     </h5>
                     <p onClick={() => console.log("to sth")}>
                       {popularStories &&
-                        popularStories[0]?.subtitle.slice(0, 100)}
+                        popularStories[0]?.subtitle}
                       ...
                     </p>
                   </Link>
