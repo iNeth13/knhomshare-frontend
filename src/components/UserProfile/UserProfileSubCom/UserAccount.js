@@ -114,7 +114,7 @@ export default function UserAccount({
             width={100}
             height={100}
           />
-          <div className={`${showEdit && "show-edit"} edit-profile-container`}>
+          <div className="show-edit" edit-profile-container`}>
             <p className="edit-profile" onClick={handleOpenFileBrowser}>
               Edit
             </p>
