@@ -29,7 +29,7 @@ export default function SingleStoryMainContent({ singleStory }) {
         />
       </div>
       <div className="px-3">{ReactHtmlParser(content.paragraph)}</div>
-        <div className="d-flex justify-content-around" style={{ width: "10%" }}>
+      <div className="d-flex justify-content-around" style={{ width: "10%" }} />
       <div className="d-flex justify-content-center">
         {content.images.slice(1, content.images.length).map((image, index) => {
           return (
@@ -69,7 +69,6 @@ export default function SingleStoryMainContent({ singleStory }) {
               marginBottom: "0",
             }}
           />
-        </div>
       </div>
       <div className="ml-3 mt-3">
         {topics?.map((tag, index) => {
