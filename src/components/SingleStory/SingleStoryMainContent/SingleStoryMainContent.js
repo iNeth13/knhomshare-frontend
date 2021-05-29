@@ -29,7 +29,21 @@ export default function SingleStoryMainContent({ singleStory }) {
         />
       </div>
       <div className="px-3">{ReactHtmlParser(content.paragraph)}</div>
-      <div className="d-flex justify-content-around" style={{ width: "10%" }}>
+      <div className="d-flex justify-content-center">
+        {content.images.slice(1, content.images.length).map((image, index) => {
+          return (
+            <Image
+              src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
+              style={{ width: "100%", height: "auto" }}
+              key={index}
+              width={600}
+              height={350}
+            />
+          );
+        })}
+      </div>
+      <div style={{width:"100%"}} className="d-flex justify-content-center">
+        <div className="d-flex justify-content-around" style={{ width: "10%" }}>
        <p
             style={{
               width: "5px",
@@ -58,18 +72,6 @@ export default function SingleStoryMainContent({ singleStory }) {
             }}
           />
       </div>
-      <div className="d-flex justify-content-center">
-        {content.images.slice(1, content.images.length).map((image, index) => {
-          return (
-            <Image
-              src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
-              style={{ width: "100%", height: "auto" }}
-              key={index}
-              width={600}
-              height={350}
-            />
-          );
-        })}
       </div>
       <div className="ml-3 mt-3">
         {topics?.map((tag, index) => {
