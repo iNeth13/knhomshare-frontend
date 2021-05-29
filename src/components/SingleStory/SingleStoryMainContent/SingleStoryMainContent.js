@@ -29,6 +29,7 @@ export default function SingleStoryMainContent({ singleStory }) {
         />
       </div>
       <div className="px-3">{ReactHtmlParser(content.paragraph)}</div>
+        <div className="d-flex justify-content-around" style={{ width: "10%" }}>
       <div className="d-flex justify-content-center">
         {content.images.slice(1, content.images.length).map((image, index) => {
           return (
@@ -41,7 +42,6 @@ export default function SingleStoryMainContent({ singleStory }) {
             />
           );
         })}
-        <div className="d-flex justify-content-around" style={{ width: "10%" }}>
           <p
             style={{
               width: "5px",
