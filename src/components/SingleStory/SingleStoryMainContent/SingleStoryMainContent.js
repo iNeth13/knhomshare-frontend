@@ -42,7 +42,7 @@ export default function SingleStoryMainContent({ singleStory }) {
           );
         })}
       </div>
-      <div style={{width:"100%"}} className="d-flex justify-content-center">
+      <div style={{width:"100%"}} className="d-flex justify-content-center mt-3">
         <div className="d-flex justify-content-around" style={{ width: "10%" }}>
        <p
             style={{
