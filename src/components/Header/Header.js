@@ -40,7 +40,7 @@ export default function Header() {
   };
   const handleShowSearchBox = () => {
     setShowSearchBox(!showSearchBox);
-    if (windowWidth < 768) {
+    if (windowWidth <= 768) {
       push("/search");
     }
   };
