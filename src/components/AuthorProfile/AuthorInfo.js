@@ -32,7 +32,7 @@ export default function AuthorInfo({ authorProfile, currentUser = {} }) {
       <div className="single-story-left-container">
         <div className="user-info-container">
           <Image
-            src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
+            src={profilePic}
             style={{ width: "50px", height: "50px", marginRight: ".5rem" }}
             roundedCircle
             className="user-profile"
@@ -101,7 +101,7 @@ export default function AuthorInfo({ authorProfile, currentUser = {} }) {
               textTransform: "uppercase",
             }}
           >
-            Total Stories : {stories.length}
+            Total Stories : {stories?.length}
           </p>
           <p
             style={{

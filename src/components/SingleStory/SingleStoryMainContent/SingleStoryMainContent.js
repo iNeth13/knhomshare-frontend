@@ -12,8 +12,9 @@ export default function SingleStoryMainContent({ singleStory }) {
     return null;
   }
   const { title, content, topics } = singleStory;
-
+  console.log(singleStory);
   const mainImage = content.images[0];
+  console.log(mainImage);
   return (
     <div style={{ overflow: "hidden" }}>
       <h3 style={{}} className="px-3">
@@ -21,7 +22,7 @@ export default function SingleStoryMainContent({ singleStory }) {
       </h3>
       <div className="my-4 single-story-main-image-container">
         <Image
-          src={`${process.env.REACT_APP_DEFAULT_URL}/${mainImage}`}
+          src={mainImage}
           className="single-story-main-image"
           rounded
           width={700}
@@ -29,11 +30,14 @@ export default function SingleStoryMainContent({ singleStory }) {
         />
       </div>
       <div className="px-3">{ReactHtmlParser(content.paragraph)}</div>
-      <div className="d-flex justify-content-center">
+      <div
+        className="d-flex justify-content-center mb-2"
+        style={{ flexDirection: "column" }}
+      >
         {content.images.slice(1, content.images.length).map((image, index) => {
           return (
             <Image
-              src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
+              src={image}
               style={{ width: "100%", height: "auto" }}
               key={index}
               width={600}
@@ -41,6 +45,8 @@ export default function SingleStoryMainContent({ singleStory }) {
             />
           );
         })}
+      </div>
+      <div className="d-flex justify-content-center w-100 mt-2">
         <div className="d-flex justify-content-around" style={{ width: "10%" }}>
           <p
             style={{

@@ -23,10 +23,10 @@ export default function AuthorStories({ authorProfile = {} }) {
                   rounded
                   width={700}
                   height={400}
-                  src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
+                  src={image}
                 />
               </div>
-              <h3 style={{}}>{title}</h3>
+              <h3>{title}</h3>
               <p>{subtitle}</p>
             </Link>
           </div>

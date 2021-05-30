@@ -81,34 +81,27 @@ export default function EditModal({ showModal, setShowModal, userToken }) {
   return (
     <div>
       {editStoryLoading ? null : (
-        <Formik
-          initialValues={{
-            title: "" || title,
-            subtitle: "" || subtitle,
-          }}
-          validationSchema={editStorySchema}
-          onSubmit={(value) => {
-            value.content = convertedContent;
-            console.log(value);
-            setShowModal(false);
-            handleStoryEdit(_id, userToken, "PATCH", value);
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-          }) => (
-            <Modal
-              show={showModal}
-              onHide={handleHide}
-              centered
-              scrollable={true}
-              size="lg"
-            >
+        <Modal show={showModal} onHide={handleHide} centered size="lg">
+          <Formik
+            initialValues={{
+              title: "" || title,
+              subtitle: "" || subtitle,
+            }}
+            validationSchema={editStorySchema}
+            onSubmit={(value) => {
+              value.content = convertedContent;
+              setShowModal(false);
+              handleStoryEdit(_id, userToken, "PATCH", value);
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+            }) => (
               <Form onSubmit={handleSubmit}>
                 <Modal.Header closeButton className="d-flex align-items-center">
                   <Modal.Title as="h6" style={{ marginRight: "2rem" }}>
@@ -166,9 +159,9 @@ export default function EditModal({ showModal, setShowModal, userToken }) {
                   />
                 </Modal.Body>
               </Form>
-            </Modal>
-          )}
-        </Formik>
+            )}
+          </Formik>
+        </Modal>
       )}
     </div>
   );

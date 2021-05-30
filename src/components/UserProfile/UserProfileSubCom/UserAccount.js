@@ -108,13 +108,13 @@ export default function UserAccount({
           onMouseLeave={() => setShowEdit(false)}
         >
           <Image
-            src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
+            src={profilePic}
             rounded
             className="user-profile-image"
             width={100}
             height={100}
           />
-          <div className={`${showEdit && "show-edit"} edit-profile-container`}>
+          <div className={`show-edit edit-profile-container`}>
             <p className="edit-profile" onClick={handleOpenFileBrowser}>
               Edit
             </p>

@@ -19,7 +19,7 @@ export default function Comment({ storyUser, comment, date, commentId }) {
       <div className="cmt-user-image-container" style={{ width: "7%" }}>
         <Link to={"#"}>
           <Image
-            src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
+            src={profilePic}
             style={{ height: "30px", width: "30px" }}
             roundedCircle
           />

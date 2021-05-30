@@ -81,7 +81,7 @@ export default function AuthorProfilePage() {
             )}
             <div ref={loader} />
             {mLoading && !aLoading && (
-              <div style={{ margin: "0" }}>
+              <div style={{ marginBottom: "1rem" }}>
                 <Loader />
               </div>
             )}

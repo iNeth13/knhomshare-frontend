@@ -40,7 +40,7 @@ export default function Header() {
   };
   const handleShowSearchBox = () => {
     setShowSearchBox(!showSearchBox);
-    if (windowWidth < 768) {
+    if (windowWidth <= 768) {
       push("/search");
     }
   };
@@ -82,6 +82,7 @@ export default function Header() {
           >
             Good Day!
           </Navbar.Text>
+          {/* search box */}
           <Nav className="ml-auto d-flex align-items-center justify-content-between">
             {windowWidth > 768 && (
               <Collapse in={showSearchBox} className="search-box-container">

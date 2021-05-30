@@ -72,7 +72,7 @@ export default function Story({
                           width: "25px",
                           marginRight: "5px",
                         }}
-                        src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic} `}
+                        src={profilePic}
                         rounded
                         onClick={() => console.log("to profile")}
                       />
@@ -175,9 +175,7 @@ export default function Story({
                         <Image
                           thumbnail
                           src={
-                            content.images.length >= 1
-                              ? `${process.env.REACT_APP_DEFAULT_URL}/${content.images[0]}`
-                              : ""
+                            content.images.length >= 1 ? content.images[0] : ""
                           }
                           height={`${topContainer ? "70px" : "120px"}`}
                           className="story-right-image"

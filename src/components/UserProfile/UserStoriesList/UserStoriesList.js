@@ -41,7 +41,7 @@ export default function UserStoriesList({
           {followers || following ? (
             <Link to={`${title}/${id}`}>
               <Image
-                src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
+                src={image}
                 width={65}
                 height={65}
                 style={{ maxWidth: "100%" }}
@@ -51,7 +51,7 @@ export default function UserStoriesList({
           ) : (
             <Link to={`story/${id}`}>
               <Image
-                src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
+                src={image}
                 className="user-stories-right-image"
                 rounded
               />
@@ -80,7 +80,13 @@ export default function UserStoriesList({
               size="sm"
               variant="outline-danger"
               onClick={() =>
-                handleFollowAuthor(user.userId, user.token, id, "unfollow",'remove')
+                handleFollowAuthor(
+                  user.userId,
+                  user.token,
+                  id,
+                  "unfollow",
+                  "remove"
+                )
               }
             >
               Remove

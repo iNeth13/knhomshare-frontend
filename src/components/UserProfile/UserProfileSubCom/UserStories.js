@@ -70,7 +70,7 @@ export default function UserStories({ totalPages, stories }) {
         ) : stories && stories.length >= 1 ? (
           stories?.map((story) => {
             const { createdAt, content, subtitle, title, _id } = story;
-            const image = content.images[0];
+            const image = content?.images[0];
             return (
               <Col lg={6} md={6} sm={12} key={_id} className="a7x2">
                 <UserStoriesList

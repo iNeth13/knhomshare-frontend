@@ -1,4 +1,3 @@
-
 .icon {
   font-size: 18px;
   cursor: pointer;
@@ -7,7 +6,7 @@
 }
 .search-box-container {
   position: absolute;
-  right: 300px !important;
+  transform: translateX(-100%) !important;
 }
 .header-text-mobile {
   display: none;

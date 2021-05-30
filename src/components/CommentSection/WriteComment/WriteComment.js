@@ -23,7 +23,7 @@ export default function WriteComment({ user, storyId }) {
         <Image
           style={{ height: "30px", width: "30px" }}
           roundedCircle
-          src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
+          src={profilePic}
         />
       </div>
       <Formik
@@ -44,7 +44,11 @@ export default function WriteComment({ user, storyId }) {
           handleBlur,
           values,
         }) => (
-          <Form style={{ width: "93%" }} onSubmit={handleSubmit} className='cmt-form'>
+          <Form
+            style={{ width: "93%" }}
+            onSubmit={handleSubmit}
+            className="cmt-form"
+          >
             {console.log(values, errors, touched)}
             <Form.Group style={{ marginBottom: "0" }}>
               <Form.Control
@@ -61,7 +65,7 @@ export default function WriteComment({ user, storyId }) {
                 onBlur={handleBlur}
                 name="comment"
                 value={values.comment}
-                className='cmt-textarea'
+                className="cmt-textarea"
               />
               {errors.comment && touched.comment && (
                 <Form.Control.Feedback

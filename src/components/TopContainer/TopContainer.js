@@ -67,6 +67,7 @@ export default function TopContainer() {
                 </div>
               ) : (
                 <div>
+                {/* main story top container */}
                   <Link
                     to={`/story/${popularStories && popularStories[0]?._id}`}
                   >
@@ -114,18 +115,18 @@ export default function TopContainer() {
                   >
                     <h5 style={{ overflow: "hidden" }}>
                       {popularStories && popularStories[0]?.title.length >= 99
-                        ? popularStories && popularStories[0]?.title.slice(0, 95)
+                        ? popularStories &&
+                          popularStories[0]?.title.slice(0, 95)
                         : popularStories && popularStories[0]?.title}
                     </h5>
                     <p onClick={() => console.log("to sth")}>
-                      {popularStories &&
-                        popularStories[0]?.subtitle.slice(0, 100)}
-                      ...
+                      {popularStories && popularStories[0]?.subtitle}
                     </p>
                   </Link>
                 </div>
               )}
             </Col>
+            {/* ends here */}
             <Col lg={6} md={6} sm={6} xs={12} className="border-right">
               <Suspense fallback={<RecommendLoader />}>
                 <Story

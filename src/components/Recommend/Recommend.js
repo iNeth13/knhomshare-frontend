@@ -46,7 +46,9 @@ export default function Recommend({
         <Image
           src={
             recommendedType === "author"
-              ? `${process.env.REACT_APP_DEFAULT_URL}/${image}`
+              ? image.startsWith("upload")
+                ? `${process.env.REACT_APP_DEFAULT_URL}/${image}`
+                : image
               : image
           }
           width={50}

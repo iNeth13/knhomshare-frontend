@@ -66,7 +66,7 @@ export default function SingleStoryLeftContent({
       <div className="single-story-left-container">
         <div className="user-info-container">
           <Image
-            src={`${process.env.REACT_APP_DEFAULT_URL}/${profilePic}`}
+            src={profilePic}
             style={{ width: "50px", height: "50px", marginRight: ".5rem" }}
             roundedCircle
             className="user-profile"
@@ -180,36 +180,36 @@ export default function SingleStoryLeftContent({
           <div style={{ width: "100%", borderBottom: "1px solid black" }} />
         </div>
         {/* since this component is also used for author profile , this wont show on author profile*/}
-          <div className="single-story-left-footer show-on-sm">
-            <a href="#comment-section">
-              <RiWechatLine style={{ fontSize: "30px" }} />
-              <span>{totalComments.length}</span>
-            </a>
-            <div className="ml-4">
-              {user && isLoved?.includes(singleStory._id) ? (
-                <AiFillHeart
-                  style={{
-                    fontSize: "30px",
-                    cursor: "pointer",
-                    color: "#ff4c4c",
-                  }}
-                  onClick={() =>
-                    handleLoveStories(singleStory._id, user.userId, "unfollow")
-                  }
-                />
-              ) : (
-                <AiOutlineHeart
-                  style={{ fontSize: "30px", cursor: "pointer" }}
-                  onClick={() =>
-                    user
-                      ? handleLoveStories(singleStory._id, user.userId, "love")
-                      : null
-                  }
-                />
-              )}
-              <span>{storyTotalLikes}</span>
-            </div>
+        <div className="single-story-left-footer show-on-sm">
+          <a href="#comment-section">
+            <RiWechatLine style={{ fontSize: "30px" }} />
+            <span>{totalComments.length}</span>
+          </a>
+          <div className="ml-4">
+            {user && isLoved?.includes(singleStory._id) ? (
+              <AiFillHeart
+                style={{
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  color: "#ff4c4c",
+                }}
+                onClick={() =>
+                  handleLoveStories(singleStory._id, user.userId, "unfollow")
+                }
+              />
+            ) : (
+              <AiOutlineHeart
+                style={{ fontSize: "30px", cursor: "pointer" }}
+                onClick={() =>
+                  user
+                    ? handleLoveStories(singleStory._id, user.userId, "love")
+                    : null
+                }
+              />
+            )}
+            <span>{storyTotalLikes}</span>
           </div>
+        </div>
       </div>
     </div>
   );

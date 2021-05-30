@@ -42,7 +42,7 @@ export default function EachTopicHeader({
               <div className="each-topic-main-image-container">
                 <Link to={`/story/${mainStory[0]._id}`}>
                   <Image
-                    src={`${process.env.REACT_APP_DEFAULT_URL}/${mainStory[0].content.images[0]}`}
+                    src={mainStory[0].content.images[0]}
                     className="each-topic-main-image"
                     rounded
                   />
