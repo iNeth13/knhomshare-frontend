@@ -67,15 +67,15 @@ export default function TopContainer() {
                 </div>
               ) : (
                 <div>
-                {/* main story top container */}
+                  {/* main story top container */}
                   <Link
                     to={`/story/${popularStories && popularStories[0]?._id}`}
                   >
                     <div className="main-story-image-container">
                       <Image
-                        src={`${process.env.REACT_APP_DEFAULT_URL}/${
+                        src={
                           popularStories && popularStories[0]?.content.images[0]
-                        }`}
+                        }
                         className="main-story-image"
                       />
                     </div>
