@@ -114,11 +114,7 @@ export default function UserAccount({
             width={100}
             height={100}
           />
-<<<<<<< HEAD
           <div className={`show-edit edit-profile-container`}>
-=======
-          <div className="show-edit edit-profile-container" >
->>>>>>> a1f83989bd19a83edcb46f6de40b3f75fba30f5c
             <p className="edit-profile" onClick={handleOpenFileBrowser}>
               Edit
             </p>
