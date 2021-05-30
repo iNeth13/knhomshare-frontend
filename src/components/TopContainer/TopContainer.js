@@ -90,9 +90,9 @@ export default function TopContainer() {
                           width: "25px",
                           marginRight: "5px",
                         }}
-                        src={`${process.env.REACT_APP_DEFAULT_URL}/${
+                        src={
                           popularStories && popularStories[0]?.user.profilePic
-                        }`}
+                        }
                         rounded
                       />
                     </Link>
