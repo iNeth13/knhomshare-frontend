@@ -120,7 +120,13 @@ export default function TopContainer() {
                         : popularStories && popularStories[0]?.title}
                     </h5>
                     <p onClick={() => console.log("to sth")}>
+<<<<<<< HEAD
                       {popularStories && popularStories[0]?.subtitle}
+=======
+                      {popularStories &&
+                        popularStories[0]?.subtitle}
+                      ...
+>>>>>>> a1f83989bd19a83edcb46f6de40b3f75fba30f5c
                     </p>
                   </Link>
                 </div>

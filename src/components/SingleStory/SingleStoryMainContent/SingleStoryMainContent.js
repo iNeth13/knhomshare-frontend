@@ -30,6 +30,7 @@ export default function SingleStoryMainContent({ singleStory }) {
         />
       </div>
       <div className="px-3">{ReactHtmlParser(content.paragraph)}</div>
+<<<<<<< HEAD
       <div
         className="d-flex justify-content-center mb-2"
         style={{ flexDirection: "column" }}
@@ -39,6 +40,14 @@ export default function SingleStoryMainContent({ singleStory }) {
             <Image
               src={image}
               style={{ width: "100%", height: "auto" }}
+=======
+      <div className="d-flex justify-content-center" style={{flexDirection:"column"}}>
+        {content.images.slice(1, content.images.length).map((image, index) => {
+          return (
+            <Image
+              src={`${process.env.REACT_APP_DEFAULT_URL}/${image}`}
+              style={{ width: "100%", height: "auto",marginBottom:'1.5rem' }}
+>>>>>>> a1f83989bd19a83edcb46f6de40b3f75fba30f5c
               key={index}
               width={600}
               height={350}
@@ -46,9 +55,13 @@ export default function SingleStoryMainContent({ singleStory }) {
           );
         })}
       </div>
+<<<<<<< HEAD
       <div className="d-flex justify-content-center w-100 mt-2">
+=======
+      <div style={{width:"100%"}} className="d-flex justify-content-center mt-2">
+>>>>>>> a1f83989bd19a83edcb46f6de40b3f75fba30f5c
         <div className="d-flex justify-content-around" style={{ width: "10%" }}>
-          <p
+       <p
             style={{
               width: "5px",
               height: "5px",
@@ -75,7 +88,7 @@ export default function SingleStoryMainContent({ singleStory }) {
               marginBottom: "0",
             }}
           />
-        </div>
+      </div>
       </div>
       <div className="ml-3 mt-3">
         {topics?.map((tag, index) => {
