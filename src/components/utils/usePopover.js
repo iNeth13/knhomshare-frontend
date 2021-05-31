@@ -23,7 +23,7 @@ const usePopover = (setShowOverlay) => {
                 }}
                 roundedCircle
                 src={
-                  user && user.profilePic.startsWith("upload")
+                  user && user.profilePic?.startsWith("upload")
                     ? `${process.env.REACT_APP_DEFAULT_URL}/${user.profilePic}`
                     : user?.profilePic
                 }

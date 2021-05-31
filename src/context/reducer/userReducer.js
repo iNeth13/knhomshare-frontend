@@ -185,7 +185,7 @@ const userReducer = (state, action) => {
       return {
         ...state,
         currentUserLoading: false,
-        error: action.payload,
+        userError: action.payload,
       };
     case USER_GET_FOLLOWERS_FOLLOWING_REQ:
       return {

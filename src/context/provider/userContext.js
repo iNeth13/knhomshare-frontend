@@ -70,7 +70,6 @@ const initialValues = {
   error: null,
 };
 
-
 export default function UserProvider({ children }) {
   const { push } = useHistory();
   const { search } = useLocation();

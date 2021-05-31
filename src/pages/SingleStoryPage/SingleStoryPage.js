@@ -29,7 +29,7 @@ export default function SingleStoryPage() {
     error,
     handleResetStoryError,
   } = useStoryContext();
-  const { currentUser, handleCurrentUser } = useUserContext();
+  const { currentUser, handleCurrentUser, userError } = useUserContext();
   useEffect(() => {
     handleSingleStory(id);
     handleResetStoryError();
@@ -85,8 +85,8 @@ export default function SingleStoryPage() {
             <div className="hide-on-sm">
               <Loader />
             </div>
-          ) : error ? (
-            <AlertMessage variant="danger" alertMessage={error} />
+          ) : error || userError ? (
+            <AlertMessage variant="danger" alertMessage={error || userError} />
           ) : (
             <SingleStoryMainContent singleStory={singleStory} />
           )}

@@ -40,7 +40,8 @@ import {
   RESET_EACH_TOPIC_STORIES,
 } from "../action/sharedAction";
 import storyReducer from "../reducer/storyReducer";
-import { useLocation } from "react-router";
+import useLocalStorage from "../../components/utils/useLocalStorage";
+import { useLocation, useHistory } from "react-router";
 
 const storyContext = createContext();
 
@@ -51,6 +52,7 @@ const initialValues = {
 };
 export default function StoryProvider({ children }) {
   const [state, dispatch] = useReducer(storyReducer, initialValues);
+  const history = useHistory();
   const handleStoryPost = async (
     title,
     images,
@@ -59,6 +61,9 @@ export default function StoryProvider({ children }) {
     user,
     subtitle
   ) => {
+    if (!user) {
+      history.push("/");
+    }
     const formData = new FormData();
     formData.append("title", title);
     formData.append("subtitle", subtitle);

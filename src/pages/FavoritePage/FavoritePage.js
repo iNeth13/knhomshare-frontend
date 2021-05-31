@@ -13,7 +13,7 @@ export default function FavoritePage() {
     handleCurrentUser();
   }, []);
   const history = useHistory();
-  if (!user) {
+  if (!user ) {
     history.push("/");
   }
   return (
